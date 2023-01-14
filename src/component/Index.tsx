@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react'
+import React, { useState } from 'react'
 import { WrapperProps } from '../App'
 import { css } from '@emotion/react'
 import banner from '../images/banner.png'
 import loading from '../images/loading.gif';
+import axios from 'axios';
 
 const Section = ({ children }: WrapperProps) => {
     return (
@@ -197,6 +198,58 @@ const InputBox = (props: InputType) => {
     )
 }
 
+interface PositionType {
+    name: string;
+    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    children: React.ReactNode;
+    state: string;
+}
+
+const Position = (props: PositionType) => {
+    return (
+        <button css={css`
+            font-family: 'Pretendard-Medium';
+            letter-spacing: -0.03em;
+            font-size: 16px;
+            height: 3.7em;
+            border-radius: 50px;
+            border: solid;
+            border-width: 1px;
+            border-color: #707070;
+            transition: 0.5s all;
+            cursor: pointer;
+
+            ${props.name === props.state ? css`
+            color: white;
+            background-color: #ff7828;
+            border: none;
+            ` : css`
+            background-color: white;
+            color: #707070;
+
+            &:hover {
+                border-color: #ff7828;
+                color:  #ff7828;
+            }
+            `}
+        `}{...props}>{props.children}</button>
+    )
+}
+
+const PositionBox = ({ children }: WrapperProps) => {
+    return (
+        <div css={css`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 1em;
+    font-size: 16px;
+    width: 62.5em;
+`}>
+            {children}
+        </div>
+    )
+}
+
 // 로딩중을 표시하는 컴포넌트
 const Loading = () => {
     return (
@@ -230,7 +283,18 @@ const Banner = () => {
     )
 }
 
-export default function index() {
+export default function Index() {
+
+    const [frontend, setFrontEnd] = useState<boolean>(false);
+    const [backend, setBackEnd] = useState<boolean>(false);
+    const [design, setDesign] = useState<boolean>(false);
+    const [position, setPosition] = useState<string>('');
+
+    function CheckPosition(event: React.MouseEvent<HTMLButtonElement>): void {
+        const name = (event.target as HTMLButtonElement).name;
+        setPosition(name);
+    }
+
     return (
         <Section>
             <Banner />
@@ -256,6 +320,22 @@ export default function index() {
                 <InputTitle>연락처 <Require /> </InputTitle>
                 <InputBox type="number" placeholder="연락 가능한 번호를 입력해주세요" />
             </Article>
+            <Article>
+                <InputTitle>지원 포지션 <Require /> </InputTitle>
+                <PositionBox>
+                    <Position name="백엔드" onClick={CheckPosition} state={position}>백엔드</Position>
+                    <Position name="프론트엔드" onClick={CheckPosition} state={position}>프론트엔드</Position>
+                    <Position name="디자인" onClick={CheckPosition} state={position}>디자인</Position>
+                </PositionBox>
+            </Article>
+            {/* <Article>
+                <label htmlFor="select1">Label Text</label>
+                <select id="select1">
+                    <option>백앤드</option>
+                    <option>프론트엔드</option>
+                    <option>디자인</option>
+                </select>
+            </Article> */}
             <Article>
                 <InputTitle>멋쟁이사자처럼에 지원을 하게 된 동기를 알려주세요 (최대 1000자)<Require /> </InputTitle>
                 <TextAreaBox placeholder="텍스트를 입력해주세요" />
