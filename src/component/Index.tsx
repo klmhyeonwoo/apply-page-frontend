@@ -336,38 +336,42 @@ export default function Index() {
                     <option>디자인</option>
                 </select>
             </Article> */}
-            <Article>
-                <InputTitle>멋쟁이사자처럼에 지원을 하게 된 동기를 알려주세요 (최대 1000자)<Require /> </InputTitle>
-                <TextAreaBox placeholder="텍스트를 입력해주세요" />
-            </Article>
-            <Article>
-                <InputTitle>본인의 장단점은 무엇이고 이 장단점이 어떻게 활동될 수 있는지 서술해주세요 (최대 1000자)<Require /> </InputTitle>
-                <TextAreaBox placeholder="텍스트를 입력해주세요" />
-            </Article>
-            <Article>
-                <InputTitle>가장 열정적으로 했었던 일과 이를 통해서 이룬 것에 대해 느낀점 중심으로 서술해주세요 (최대 1000자)<Require /> </InputTitle>
-                <TextAreaBox placeholder="텍스트를 입력해주세요" />
-            </Article>
-            <Article>
-                <InputTitle>갈등이 발생했던 구체적인 상황과 이를 극복하기 위해 노력했던 사례를 느낀 점 중심으로 서술해주세요 (최대 1000자)<Require /> </InputTitle>
-                <TextAreaBox placeholder="텍스트를 입력해주세요" />
-            </Article>
-            <Article>
-                <InputTitle>자신이 멋쟁이사자처럼에 들어와 실현시키고 싶은 IT 서비스에 대해서 설명을 해주세요 (최대 1000자)<Require /> </InputTitle>
-                <TextAreaBox placeholder="텍스트를 입력해주세요" />
-            </Article>
-            <Article>
-                <InputTitle>포트폴리오 링크 첨부</InputTitle>
-                <InputBox type="text" placeholder="포트폴리오 링크를 첨부해주세요" />
-            </Article>
-            <Article>
-                <InputTitle>포트폴리오 파일 첨부</InputTitle>
-                <Article>
-                    <InputBox type="text" placeholder="파일형식 : JPG, PNG, PDF, PPT, PPTX, HWP, HWPX" value="" disabled={true} />
-                    <UploadButton />
-                </Article>
-            </Article>
-            <ButtonBox />
+            {position === "프론트엔드" &&
+                <>
+                    <Article>
+                        <InputTitle>멋쟁이사자처럼에 지원을 하게 된 동기를 알려주세요 (최대 1000자)<Require /> </InputTitle>
+                        <TextAreaBox placeholder="텍스트를 입력해주세요" />
+                    </Article>
+                    <Article>
+                        <InputTitle>본인의 장단점은 무엇이고 이 장단점이 어떻게 활동될 수 있는지 서술해주세요 (최대 1000자)<Require /> </InputTitle>
+                        <TextAreaBox placeholder="텍스트를 입력해주세요" />
+                    </Article>
+                    <Article>
+                        <InputTitle>가장 열정적으로 했었던 일과 이를 통해서 이룬 것에 대해 느낀점 중심으로 서술해주세요 (최대 1000자)<Require /> </InputTitle>
+                        <TextAreaBox placeholder="텍스트를 입력해주세요" />
+                    </Article>
+                    <Article>
+                        <InputTitle>갈등이 발생했던 구체적인 상황과 이를 극복하기 위해 노력했던 사례를 느낀 점 중심으로 서술해주세요 (최대 1000자)<Require /> </InputTitle>
+                        <TextAreaBox placeholder="텍스트를 입력해주세요" />
+                    </Article>
+                    <Article>
+                        <InputTitle>자신이 멋쟁이사자처럼에 들어와 실현시키고 싶은 IT 서비스에 대해서 설명을 해주세요 (최대 1000자)<Require /> </InputTitle>
+                        <TextAreaBox placeholder="텍스트를 입력해주세요" />
+                    </Article>
+                    <Article>
+                        <InputTitle>포트폴리오 링크 첨부</InputTitle>
+                        <InputBox type="text" placeholder="포트폴리오 링크를 첨부해주세요" />
+                    </Article>
+                    <Article>
+                        <InputTitle>포트폴리오 파일 첨부</InputTitle>
+                        <Article>
+                            <InputBox type="text" placeholder="파일형식 : JPG, PNG, PDF, PPT, PPTX, HWP, HWPX" value="" disabled={true} />
+                            <UploadButton />
+                        </Article>
+                    </Article>
+                    <ButtonBox />
+                </>
+            }
         </Section>
     )
 }
