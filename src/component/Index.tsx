@@ -147,7 +147,7 @@ interface InputType {
 //         }
 
 //         &::placeholder {
-//             font-family: 'Pretendard-Light';
+//             font-family: 'Pretendard-Regular';
 //             margin-left: 0.4em;
 //         }
 //         `} maxlength="1000" {...props} />
@@ -213,7 +213,7 @@ const InputBox = (props: InputType) => {
         }
 
         &::placeholder {
-            font-family: 'Pretendard-Light';
+            font-family: 'Pretendard-Regular';
             margin-left: 0.4em;
         }
         `}{...props} />
