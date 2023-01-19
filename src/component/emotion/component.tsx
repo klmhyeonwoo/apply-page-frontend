@@ -11,38 +11,38 @@ import { fadeLeft, fadeUp } from "../../styles/Keyframes";
 import { WrapperProps } from "../../App"
 
 
-// const TextAreaBox = (props: InputType) => {
-//     return (
-//         <textarea css={css`
-//         font-family: 'Pretendard-Medium';
-//         letter-spacing: -0.03em;
-//         line-height: 1.5em;
-//         padding: 0;
-//         padding-left: 1em;
-//         padding-bottom: 1em;
-//         padding-right: 1em;
-//         padding-top: 1em;
-//         width: 62.5em;
-//         height: 15em;
-//         border: solid;
-//         border-radius: 15px;
-//         border-color: #707070;
-//         border-width: 1px;
-//         font-size: 16px;
-//         box-sizing: border-box;
-//         resize: none;
+export const TextAreaBox = (props: TextAreaType) => {
+    return (
+        <textarea css={css`
+        font-family: 'Pretendard-Medium';
+        letter-spacing: -0.03em;
+        line-height: 1.5em;
+        padding: 0;
+        padding-left: 1em;
+        padding-bottom: 1em;
+        padding-right: 1em;
+        padding-top: 1em;
+        width: 62.5em;
+        height: 15em;
+        border: solid;
+        border-radius: 15px;
+        border-color: #707070;
+        border-width: 1px;
+        font-size: 16px;
+        box-sizing: border-box;
+        resize: none;
 
-//         &:focus {
-//             outline-color: #ff7828;
-//         }
+        &:focus {
+            outline-color: #ff7828;
+        }
 
-//         &::placeholder {
-//             font-family: 'Pretendard-Regular';
-//             margin-left: 0.4em;
-//         }
-//         `} maxlength="1000" {...props} />
-//     )
-// }
+        &::placeholder {
+            font-family: 'Pretendard-Regular';
+            margin-left: 0.4em;
+        }
+        `} maxlength="1000" {...props} />
+    )
+}
 
 export const UploadButton = () => {
     return (
@@ -106,7 +106,7 @@ export const InputBox = (props: InputType) => {
             font-family: 'Pretendard-Regular';
             margin-left: 0.4em;
         }
-        `}{...props} />
+        `} maxlength="30" {...props} />
     )
 }
 
@@ -140,6 +140,11 @@ export const Position = (props: PositionType) => {
             color: #707070;
 
             &:hover {
+                border-color: #ff7828;
+                color:  #ff7828;
+            }
+            &:focus {
+                outline: none;
                 border-color: #ff7828;
                 color:  #ff7828;
             }
@@ -196,6 +201,38 @@ export const Loading = () => {
         <img alt="로딩 이미지" src={loading} css={css`
             width: 12em;
         `} />
+    )
+}
+
+export const WordLength = ({ children }: WrapperProps) => {
+    return (
+        <div css={css`
+            width: 10em;
+            position: absolute;
+            text-align:center;
+            font-family: 'Pretendard-Medium';
+            letter-spacing: -0.03em;
+            font-size: 15px;
+            color: #ff7828;
+            margin-top: 16em;
+            margin-left: 57em;
+
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        `}>
+            <div css={css`
+                width: 2.5em;
+                border-box: box-sizing;
+            `}>
+                {children}
+            </div>
+            <span css={css`
+                margin-right: 0.5em;
+            `}>/</span>
+            <span css={css`
+            `}>1000</span>
+        </div>
     )
 }
 
@@ -379,4 +416,14 @@ export interface InputType {
     maxlength?: string;
     name?: string;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface TextAreaType {
+    type?: string;
+    placeholder?: string;
+    value?: string;
+    disabled?: boolean;
+    maxlength?: string;
+    name?: string;
+    onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 }
