@@ -4,6 +4,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Index from './component/Index'
 import GlobalStyles from './styles/GlobalFont';
+import Common from './component/Common';
 
 export interface WrapperProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ function App() {
         <GlobalStyles />
         <Routes>
           <Route path='/' element={<Index />} />
+          <Route path='common' element={<Common />} />
         </Routes>
       </BrowserRouter>
     </div>
