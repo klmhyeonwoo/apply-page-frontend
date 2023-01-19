@@ -10,9 +10,10 @@ import { Section, Banner, Article, InputTitle, InputBox, PositionBox, Position, 
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, TestState } from '../app/store';
+import { view, saveIndex } from '../features/fetcherSlice';
+import { useEffect } from 'react';
 
 export default function Index() {
-
     const [name, setName] = useState<string>('');
     const [id, setID] = useState<number | string>('');
     const [email, setEmail] = useState<string>('');
@@ -23,12 +24,43 @@ export default function Index() {
     const [privacy, setPrivacy] = useState<boolean>(false);
     const [buttonState, setButtonState] = useState(false);
 
-    const dispatch = useDispatch<AppDispatch>
+    const userName = useSelector((state: TestState) => state.fetcher.userName);
+    const userID = useSelector((state: TestState) => state.fetcher.userID);
+    const userPhone = useSelector((state: TestState) => state.fetcher.userPhone);
+    const userEmail = useSelector((state: TestState) => state.fetcher.userEmail);
+    const userPosition = useSelector((state: TestState) => state.fetcher.userPosition);
 
+
+    useEffect(() => {
+        // 이전 값들을 저장하기 위해서 Redux 사용
+        if (userName && userID && userPhone && userEmail && userPosition) {
+            setName(userName)
+            setID(userID)
+            setEmail(userEmail)
+            setPhone(userPhone)
+            setPosition(userPosition)
+        }
+    }, [])
+
+
+    useMemo(() => {
+        if (name && id && email && phone && position && precautions && privacy) {
+            setButtonState(false)
+        } else {
+            setButtonState(true)
+        }
+    }, [name, id, email, phone, position, precautions, privacy])
+
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     const handleClick = () => {
+        dispatch(saveIndex({ userName: name, userID: id, userPhone: phone, userEmail: email, userPosition: position }));
         navigate('/common');
+    }
+
+    const handleClick2 = () => {
+        dispatch(view());
     }
 
     function CheckPosition(event: React.MouseEvent<HTMLButtonElement>): void {
@@ -60,14 +92,6 @@ export default function Index() {
             setPhone(event.target.value);
         }
     }
-
-    useMemo(() => {
-        if (name && id && email && phone && position && precautions && privacy) {
-            setButtonState(false)
-        } else {
-            setButtonState(true)
-        }
-    }, [name, id, email, phone, position, precautions, privacy])
 
     return (
         <Section>
@@ -113,51 +137,8 @@ export default function Index() {
             </Article>
             <ButtonBox>
                 <Button name="제출하기" disabled={buttonState} onClick={handleClick}>공통문항 작성하기</Button>
+                <Button name="제출하기" disabled={buttonState} onClick={handleClick2}>Redux 확인</Button>
             </ButtonBox>
-            {/* <Article>
-                <label htmlFor="select1">Label Text</label>
-                <select id="select1">
-                    <option>백앤드</option>
-                    <option>프론트엔드</option>
-                    <option>디자인</option>
-                </select>
-            </Article> */}
-            {/*
-                <>
-                    <Article>
-                        <InputTitle>멋쟁이사자처럼에 지원을 하게 된 동기를 알려주세요 (최대 1000자)<Require /> </InputTitle>
-                        <TextAreaBox placeholder="텍스트를 입력해주세요" />
-                    </Article>
-                    <Article>
-                        <InputTitle>본인의 장단점은 무엇이고 이 장단점이 어떻게 활동될 수 있는지 서술해주세요 (최대 1000자)<Require /> </InputTitle>
-                        <TextAreaBox placeholder="텍스트를 입력해주세요" />
-                    </Article>
-                    <Article>
-                        <InputTitle>가장 열정적으로 했었던 일과 이를 통해서 이룬 것에 대해 느낀점 중심으로 서술해주세요 (최대 1000자)<Require /> </InputTitle>
-                        <TextAreaBox placeholder="텍스트를 입력해주세요" />
-                    </Article>
-                    <Article>
-                        <InputTitle>갈등이 발생했던 구체적인 상황과 이를 극복하기 위해 노력했던 사례를 느낀 점 중심으로 서술해주세요 (최대 1000자)<Require /> </InputTitle>
-                        <TextAreaBox placeholder="텍스트를 입력해주세요" />
-                    </Article>
-                    <Article>
-                        <InputTitle>자신이 멋쟁이사자처럼에 들어와 실현시키고 싶은 IT 서비스에 대해서 설명을 해주세요 (최대 1000자)<Require /> </InputTitle>
-                        <TextAreaBox placeholder="텍스트를 입력해주세요" />
-                    </Article>
-                    <Article>
-                        <InputTitle>포트폴리오 링크 첨부</InputTitle>
-                        <InputBox type="text" placeholder="포트폴리오 링크를 첨부해주세요" />
-                    </Article>
-                    <Article>
-                        <InputTitle>포트폴리오 파일 첨부</InputTitle>
-                        <Article>
-                            <InputBox type="text" placeholder="파일형식 : JPG, PNG, PDF, PPT, PPTX, HWP, HWPX" value="" disabled={true} />
-                            <UploadButton />
-                        </Article>
-                    </Article>
-                    <ButtonBox />
-                </>
-        */}
         </Section>
     )
 }
