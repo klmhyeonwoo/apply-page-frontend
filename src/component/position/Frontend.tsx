@@ -5,7 +5,8 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, TestState } from '../../app/store';
 import { saveCommon, saveIndex, view, saveFrontEnd } from '../../features/fetcherSlice';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import axios from 'axios';
 
 export default function Frontend() {
 
@@ -15,12 +16,17 @@ export default function Frontend() {
     const [usingStack, setUsingStack] = useState('');
     const [teamProject, setTeamProject] = useState('');
     const [achieve, setAchieve] = useState('');
+    const [buttonState, setButtonState] = useState(false);
+    const [portfolioLink, setPortfolioLink] = useState('');
+    const [submitCount, setSubmitCount] = useState<number>(0);
+
 
     const userName = useSelector((state: TestState) => state.fetcher.userName);
     const userID = useSelector((state: TestState) => state.fetcher.userID);
     const userPhone = useSelector((state: TestState) => state.fetcher.userPhone);
     const userEmail = useSelector((state: TestState) => state.fetcher.userEmail);
     const userPosition = useSelector((state: TestState) => state.fetcher.userPosition);
+    const userDepartment = useSelector((state: TestState) => state.fetcher.userDepartment);
 
     const userMotiv = useSelector((state: TestState) => state.fetcher.userMotiv);
     const userHardWork = useSelector((state: TestState) => state.fetcher.userHardWork);
@@ -31,6 +37,7 @@ export default function Frontend() {
     const userUsingStack = useSelector((state: TestState) => state.fetcher.userUsingStack);
     const userTeamProject = useSelector((state: TestState) => state.fetcher.userTeamProject);
     const userAchieve = useSelector((state: TestState) => state.fetcher.userAchieve);
+    const userPortfolioLink = useSelector((state: TestState) => state.fetcher.userPortfolioLinkFront);
 
     useEffect(() => {
 
@@ -53,22 +60,140 @@ export default function Frontend() {
         if (userAchieve) {
             setAchieve(userAchieve)
         }
+        if (userPortfolioLink) {
+            setPortfolioLink(userPortfolioLink)
+        }
     }, [])
+
+    useMemo(() => {
+        if (whyFrontend && usingStack && teamProject && achieve) {
+            setButtonState(false)
+        } else {
+            setButtonState(true)
+        }
+        if (submitCount >= 1) {
+            setButtonState(true);
+        }
+    }, [whyFrontend, usingStack, teamProject, achieve, submitCount])
 
 
     const Back = () => {
-        dispatch(saveFrontEnd({ userWhyFrontend: whyFrontend, userUsingStack: usingStack, userTeamProject: teamProject, userAchieve: achieve }));
+        setSubmitCount((prev) => (prev + 1))
+        dispatch(saveFrontEnd({ userWhyFrontend: whyFrontend, userUsingStack: usingStack, userTeamProject: teamProject, userAchieve: achieve, userPortfolioLinkFront: portfolioLink }));
         navigate('/common');
     }
 
-    const PartHistoy = () => {
+
+    const TempSave = () => {
+        setSubmitCount((prev) => (prev + 1));
+        if (userPosition === "프론트엔드") {
+            axios.post('/frontendApplication', JSON.stringify({
+                department: userDepartment,
+                whyFrontend: whyFrontend,
+                email: userEmail,
+                hardWork: userHardWork,
+                usingStack: usingStack,
+                keyWord: userKeyWord,
+                mostDeeplyWork: userMostDeeplyWork,
+                motive: userMotiv,
+                name: userName,
+                passOrNot: true,
+                phoneNumber: userPhone,
+                portfolioFile: "",
+                portfolioLink: portfolioLink,
+                sid: userID,
+                teamProject: teamProject,
+                achieve: achieve
+            }),
+                {
+                    headers: {
+                        "Content-type": "application/json",
+                    }
+                }
+            )
+                .then((res) => {
+                    console.log(res);
+                    dispatch(saveFrontEnd({
+                        userWhyFrontend: '',
+                        userUsingStack: '',
+                        userAchieve: '',
+                        userPortfolioLinkFront: '',
+                        userTeamProject: '',
+                    }));
+                    dispatch(saveCommon({
+                        userMotiv: '',
+                        userHardWork: '',
+                        userKeyWord: '',
+                        userMostDeeplyWork: '',
+                    }))
+                    dispatch(saveIndex({
+                        userName: '',
+                        userID: '',
+                        userDepartment: '',
+                        userEmail: '',
+                        userPhone: '',
+                        userPosition: '',
+                    }))
+                    navigate('/');
+                })
+        }
     }
 
-    const handleClick2 = () => {
-        dispatch(view());
+
+    const Submit = () => {
+        setSubmitCount((prev) => (prev + 1))
+        axios.post('/frontendApplication', JSON.stringify({
+            department: userDepartment,
+            whyFrontend: whyFrontend,
+            email: userEmail,
+            hardWork: userHardWork,
+            usingStack: usingStack,
+            keyWord: userKeyWord,
+            mostDeeplyWork: userMostDeeplyWork,
+            motive: userMotiv,
+            name: userName,
+            passOrNot: true,
+            phoneNumber: userPhone,
+            portfolioFile: "",
+            portfolioLink: portfolioLink,
+            sid: userID,
+            teamProject: teamProject,
+            achieve: achieve
+        }),
+            {
+                headers: {
+                    "Content-type": "application/json",
+                }
+            }
+        )
+            .then((res) => {
+                console.log(res);
+                dispatch(saveFrontEnd({
+                    userWhyFrontend: '',
+                    userUsingStack: '',
+                    userAchieve: '',
+                    userPortfolioLinkFront: '',
+                    userTeamProject: '',
+                }));
+                dispatch(saveCommon({
+                    userMotiv: '',
+                    userHardWork: '',
+                    userKeyWord: '',
+                    userMostDeeplyWork: '',
+                }))
+                dispatch(saveIndex({
+                    userName: '',
+                    userID: '',
+                    userDepartment: '',
+                    userEmail: '',
+                    userPhone: '',
+                    userPosition: '',
+                }))
+                navigate('/');
+            })
     }
 
-    const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const handleChange = (event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>) => {
         if (event.target.name === "동기") {
             setWhyFrontend(event.target.value);
         }
@@ -83,6 +208,10 @@ export default function Frontend() {
 
         if (event.target.name === "성장") {
             setAchieve(event.target.value);
+        }
+
+        if (event.target.name === "포트폴리오") {
+            setPortfolioLink(event.target.value);
         }
     }
 
@@ -109,11 +238,14 @@ export default function Frontend() {
                 <TextAreaBox placeholder="텍스트를 입력해주세요" name="성장" onChange={handleChange} value={achieve} />
                 <WordLength>{achieve.length}</WordLength>
             </Article>
+            <Article>
+                <InputTitle>포트폴리오 링크가 있다면 첨부해주세요 </InputTitle>
+                <InputBox type="text" placeholder="포트폴리오 링크를 입력해주세요" maxLength={200} name="포트폴리오" onChange={handleChange} value={portfolioLink} />
+            </Article>
             <ButtonBox>
-                <Button name="임시저장" onClick={PartHistoy}>임시저장</Button>
-                <Button name="제출하기" onClick={Back}>뒤로가기</Button>
-                <Button name="제출하기" onClick={PartHistoy}>제출하기</Button>
-                <Button name="제출하기" onClick={handleClick2}>Redux 확인</Button>
+                <Button name="임시저장" onClick={TempSave} disabled={buttonState}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `임시저장`}</Button>
+                <Button name="제출하기" onClick={Back}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `뒤로가기`}</Button>
+                <Button name="제출하기" onClick={Submit} disabled={buttonState}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `제출하기`}</Button>
             </ButtonBox>
         </Section>
     )

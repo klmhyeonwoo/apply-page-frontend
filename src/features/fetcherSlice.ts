@@ -5,6 +5,7 @@ export const fetcherSlice = createSlice({
     initialState: {
         userName: '',
         userID: '',
+        userDepartment: '',
         userEmail: '',
         userPhone: '',
         userPosition: '',
@@ -29,14 +30,21 @@ export const fetcherSlice = createSlice({
         userToolExperience: '',
         userTeamworkExperience: '',
         userDesignGrowth: '',
+
+        // 공통 포트폴리오
+        userPortfolioLinkFront: '',
+        userPortfolioLinkBack: '',
+        userPortfolioLinkDesign: '',
+
+
     },
     reducers: {
         saveIndex: (state, action) => {
-            // console.log(state);
-            console.log(action);
-            console.log(action.payload);
+            // console.log(action);
+            // console.log(action.payload);
             state.userName = action.payload.userName;
             state.userID = action.payload.userID;
+            state.userDepartment = action.payload.userDepartment;
             state.userEmail = action.payload.userEmail;
             state.userPhone = action.payload.userPhone;
             state.userPosition = action.payload.userPosition;
@@ -52,17 +60,20 @@ export const fetcherSlice = createSlice({
             state.userToolExperience = action.payload.userToolExperience;
             state.userTeamworkExperience = action.payload.userTeamworkExperience;
             state.userDesignGrowth = action.payload.userDesignGrowth;
+            state.userPortfolioLinkDesign = action.payload.userPortfolioLinkDesign;
         },
         saveFrontEnd: (state, action) => {
             state.userWhyFrontend = action.payload.userWhyFrontend;
             state.userUsingStack = action.payload.userUsingStack;
             state.userTeamProject = action.payload.userTeamProject;
             state.userAchieve = action.payload.userAchieve;
+            state.userPortfolioLinkFront = action.payload.userPortfolioLinkFront;
         },
         saveBackEnd: (state, action) => {
             state.userDifficultAndOvercoming = action.payload.userDifficultAndOvercoming;
             state.userStudyFramework = action.payload.userStudyFramework;
             state.userImportantGroup = action.payload.userImportantGroup;
+            state.userPortfolioLinkBack = action.payload.userPortfolioLinkBack;
         },
         view: (state) => {
             console.log(state.userName);

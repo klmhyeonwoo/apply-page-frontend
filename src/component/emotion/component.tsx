@@ -9,6 +9,7 @@ import { useMemo } from 'react';
 import { css, keyframes } from "@emotion/react";
 import { fadeLeft, fadeUp } from "../../styles/Keyframes";
 import { WrapperProps } from "../../App"
+import human from '../../images/human.png';
 
 
 export const TextAreaBox = (props: TextAreaType) => {
@@ -40,7 +41,7 @@ export const TextAreaBox = (props: TextAreaType) => {
             font-family: 'Pretendard-Regular';
             margin-left: 0.4em;
         }
-        `} maxlength="1000" {...props} />
+        `} maxLength={1000} {...props} />
     )
 }
 
@@ -106,7 +107,7 @@ export const InputBox = (props: InputType) => {
             font-family: 'Pretendard-Regular';
             margin-left: 0.4em;
         }
-        `} maxlength="30" {...props} />
+        `} maxLength={30} {...props} />
     )
 }
 
@@ -153,6 +154,71 @@ export const Position = (props: PositionType) => {
     )
 }
 
+export const ModalFrame = ({ children }: WrapperProps) => {
+    return (
+        <div css={css`
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 999;
+        cursor: pointer;
+        display: block;
+        `}>
+            {children}
+        </div>
+    )
+}
+
+export const Modal = ({ children }: WrapperProps) => {
+    return (
+        <ModalFrame>
+            <div css={css`
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            `}>
+                <div css={css`
+                    font-family: 'Pretendard-Bold';
+                    letter-spacing: -0.03em;
+                    border-radius: 20px;
+                    background-color: white;
+                    display: fixed;
+                    font-size: 18px;
+                    width: 40em;
+                    height: 30em;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    animation: ${fadeUp} 1s ease-in-out;
+                `}>
+                    <div css={css`
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        animation: ${fadeUp} 1.3s ease-in-out;
+                    `}>
+                        <img alt="사람" src={human} css={css`
+                            width: 10em;
+                            margin-bottom: 2em;
+                            animation: ${fadeUp} 1.5s ease-in-out;
+                        `} />
+                        <span css={css`
+                            animation: ${fadeUp} 1.5s ease-in-out;
+                        `}>앗, 임시저장된 지원서가 발견되었어요 다시 작성할까요?</span>
+                        <ButtonBox>
+                            {children}
+                        </ButtonBox>
+                    </div>
+                </div>
+            </div>
+        </ModalFrame>
+    )
+}
+
 export const Precautions = () => {
     return (
         <div css={css`
@@ -170,7 +236,7 @@ export const Precautions = () => {
                 flex-direction: column;
                 row-gap: 0.5em;
             `}>
-                <span>· 지원서 최종 제출 후 지원서의 수정은 불가하니 이 점 양해부탁드립니다.</span>
+                <span>· 지원서 최종 제출 후에도 지원서의 수정은 가능합니다.</span>
                 <span>· 지원서의 정보 저장을 위해 제출 전 임시저장을 통해 데이터를 저장해주시기 바랍니다.</span>
                 <span>· 지원서 접수 마감일에는 지원자가 몰려 지원이 어려울 수 있으니, 여유있게 미리 제출해주시기바랍니다.</span>
                 <span>· 지원서의 내용이 사실과 다를 경우, 합격이 취소되거나 전형 상의 불이익을 받을 수 있습니다.</span>
@@ -184,12 +250,12 @@ export const Precautions = () => {
 export const PositionBox = ({ children }: WrapperProps) => {
     return (
         <div css={css`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 1em;
-    font-size: 16px;
-    width: 62.5em;
-`}>
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            column-gap: 1em;
+            font-size: 16px;
+            width: 62.5em;
+        `}>
             {children}
         </div>
     )
@@ -401,7 +467,7 @@ export const ButtonBox = ({ children }: WrapperProps) => {
             display: flex;
             column-gap: 1em;
             margin-top: 3em;
-            animation: ${fadeUp} 3s ease-in-out;
+            animation: ${fadeUp} 2s ease-in-out;
         `}>
             {children}
         </div>
@@ -413,7 +479,7 @@ export interface InputType {
     placeholder?: string;
     value?: string | number;
     disabled?: boolean;
-    maxlength?: string;
+    maxLength?: number;
     name?: string;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -423,7 +489,7 @@ export interface TextAreaType {
     placeholder?: string;
     value?: string;
     disabled?: boolean;
-    maxlength?: string;
+    maxLength?: number;
     name?: string;
     onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 }

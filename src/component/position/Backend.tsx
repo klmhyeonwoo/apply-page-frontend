@@ -5,7 +5,8 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, TestState } from '../../app/store';
 import { saveCommon, saveIndex, view, saveBackEnd } from '../../features/fetcherSlice';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import axios from 'axios';
 
 export default function Backend() {
 
@@ -14,12 +15,17 @@ export default function Backend() {
     const [difficultAndOvercoming, setDifficultAndOvercoming] = useState('');
     const [studyFramework, setStudyFramework] = useState('');
     const [importantGroup, setImportantGroup] = useState('');
+    const [portfolioLink, setPortfolioLink] = useState('');
+    const [buttonState, setButtonState] = useState(false);
+    const [submitCount, setSubmitCount] = useState<number>(0);
+
 
     const userName = useSelector((state: TestState) => state.fetcher.userName);
     const userID = useSelector((state: TestState) => state.fetcher.userID);
     const userPhone = useSelector((state: TestState) => state.fetcher.userPhone);
     const userEmail = useSelector((state: TestState) => state.fetcher.userEmail);
     const userPosition = useSelector((state: TestState) => state.fetcher.userPosition);
+    const userDepartment = useSelector((state: TestState) => state.fetcher.userDepartment);
 
     const userMotiv = useSelector((state: TestState) => state.fetcher.userMotiv);
     const userHardWork = useSelector((state: TestState) => state.fetcher.userHardWork);
@@ -29,6 +35,7 @@ export default function Backend() {
     const userDifficultAndOvercoming = useSelector((state: TestState) => state.fetcher.userDifficultAndOvercoming);
     const userStudyFramework = useSelector((state: TestState) => state.fetcher.userStudyFramework);
     const userImportantGroup = useSelector((state: TestState) => state.fetcher.userImportantGroup);
+    const userPortfolioLink = useSelector((state: TestState) => state.fetcher.userPortfolioLinkBack);
 
     useEffect(() => {
         if (!userName && !userID && !userPhone && !userEmail && !userPosition) {
@@ -48,22 +55,133 @@ export default function Backend() {
         if (userImportantGroup) {
             setImportantGroup(userImportantGroup);
         }
+
+        if (userPortfolioLink) {
+            setPortfolioLink(userPortfolioLink)
+        }
     }, [])
+
+    useMemo(() => {
+        if (difficultAndOvercoming && studyFramework && importantGroup) {
+            setButtonState(false)
+        } else {
+            setButtonState(true)
+        }
+        if (submitCount >= 1) {
+            setButtonState(true);
+        }
+    }, [difficultAndOvercoming, studyFramework, importantGroup, submitCount])
 
 
     const Back = () => {
-        dispatch(saveBackEnd({ userDifficultAndOvercoming: difficultAndOvercoming, userStudyFramework: studyFramework, userImportantGroup: importantGroup }));
-        navigate(-1);
+        setSubmitCount((prev) => (prev + 1))
+        dispatch(saveBackEnd({ userDifficultAndOvercoming: difficultAndOvercoming, userStudyFramework: studyFramework, userImportantGroup: importantGroup, userPortfolioLinkBack: portfolioLink }));
+        navigate('/common');
     }
 
-    const PartHistoy = () => {
+    const TempSave = () => {
+        setSubmitCount((prev) => (prev + 1))
+        axios.post('/backendApplication', JSON.stringify({
+            department: userDepartment,
+            difficultAndOvercoming: difficultAndOvercoming,
+            email: userEmail,
+            hardWork: userHardWork,
+            importantGroup: importantGroup,
+            keyWord: userKeyWord,
+            mostDeeplyWork: userMostDeeplyWork,
+            motive: userMotiv,
+            name: userName,
+            passOrNot: true,
+            phoneNumber: userPhone,
+            portfolioFile: "",
+            portfolioLink: portfolioLink,
+            sid: userID,
+            studyFramework: studyFramework,
+        }),
+            {
+                headers: {
+                    "Content-type": "application/json",
+                }
+            }
+        )
+            .then((res) => {
+                console.log(res);
+                dispatch(saveBackEnd({
+                    userDifficultAndOvercoming: '',
+                    userImportantGroup: '',
+                    userPortfolioLink: '',
+                    userStudyFramework: '',
+                }));
+                dispatch(saveCommon({
+                    userMotiv: '',
+                    userHardWork: '',
+                    userKeyWord: '',
+                    userMostDeeplyWork: '',
+                }))
+                dispatch(saveIndex({
+                    userName: '',
+                    userID: '',
+                    userDepartment: '',
+                    userEmail: '',
+                    userPhone: '',
+                    userPosition: '',
+                }))
+                navigate('/');
+            })
     }
 
-    const handleClick2 = () => {
-        dispatch(view());
+    const Submit = () => {
+        setSubmitCount((prev) => (prev + 1))
+        axios.post('/backendApplication', JSON.stringify({
+            department: userDepartment,
+            difficultAndOvercoming: difficultAndOvercoming,
+            email: userEmail,
+            hardWork: userHardWork,
+            importantGroup: importantGroup,
+            keyWord: userKeyWord,
+            mostDeeplyWork: userMostDeeplyWork,
+            motive: userMotiv,
+            name: userName,
+            passOrNot: true,
+            phoneNumber: userPhone,
+            portfolioFile: "",
+            portfolioLink: portfolioLink,
+            sid: userID,
+            studyFramework: studyFramework,
+        }),
+            {
+                headers: {
+                    "Content-type": "application/json",
+                }
+            }
+        )
+            .then((res) => {
+                console.log(res);
+                dispatch(saveBackEnd({
+                    userDifficultAndOvercoming: '',
+                    userImportantGroup: '',
+                    userPortfolioLink: '',
+                    userStudyFramework: '',
+                }));
+                dispatch(saveCommon({
+                    userMotiv: '',
+                    userHardWork: '',
+                    userKeyWord: '',
+                    userMostDeeplyWork: '',
+                }))
+                dispatch(saveIndex({
+                    userName: '',
+                    userID: '',
+                    userDepartment: '',
+                    userEmail: '',
+                    userPhone: '',
+                    userPosition: '',
+                }))
+                navigate('/');
+            })
     }
 
-    const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const handleChange = (event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>) => {
         if (event.target.name === "극복") {
             setDifficultAndOvercoming(event.target.value);
         }
@@ -74,6 +192,10 @@ export default function Backend() {
 
         if (event.target.name === "팀워크") {
             setImportantGroup(event.target.value);
+        }
+
+        if (event.target.name === "포트폴리오") {
+            setPortfolioLink(event.target.value);
         }
     }
 
@@ -95,11 +217,14 @@ export default function Backend() {
                 <TextAreaBox placeholder="텍스트를 입력해주세요" name="팀워크" onChange={handleChange} value={importantGroup} />
                 <WordLength>{importantGroup.length}</WordLength>
             </Article>
+            <Article>
+                <InputTitle>포트폴리오 링크가 있다면 첨부해주세요 </InputTitle>
+                <InputBox type="text" placeholder="포트폴리오 링크를 입력해주세요" maxLength={200} name="포트폴리오" onChange={handleChange} value={portfolioLink} />
+            </Article>
             <ButtonBox>
-                <Button name="임시저장" onClick={PartHistoy}>임시저장</Button>
-                <Button name="제출하기" onClick={Back}>뒤로가기</Button>
-                <Button name="제출하기" onClick={PartHistoy}>제출하기</Button>
-                <Button name="제출하기" onClick={handleClick2}>Redux 확인</Button>
+                <Button name="임시저장" onClick={TempSave}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `임시저장`}</Button>
+                <Button name="제출하기" onClick={Back} disabled={buttonState}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `뒤로가기`}</Button>
+                <Button name="제출하기" onClick={Submit} disabled={buttonState}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `제출하기`}</Button>
             </ButtonBox>
         </Section>
     )
