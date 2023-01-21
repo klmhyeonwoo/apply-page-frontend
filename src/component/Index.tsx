@@ -12,10 +12,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, TestState } from '../app/store';
 import { view, saveIndex, saveBackEnd, saveCommon, saveFrontEnd, saveDesign } from '../features/fetcherSlice';
 import { useEffect } from 'react';
+import human from '../images/human.png';
 
 export default function Index() {
     const [name, setName] = useState<string>('');
-    const [id, setID] = useState<number | string>('');
+    const [id, setID] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [phone, setPhone] = useState<number | string>('');
     const [department, setDepartment] = useState<string>('');
@@ -36,7 +37,6 @@ export default function Index() {
     const userPosition = useSelector((state: TestState) => state.fetcher.userPosition);
     const userDepartment = useSelector((state: TestState) => state.fetcher.userDepartment);
 
-
     useEffect(() => {
         // 이전 값들을 저장하기 위해서 Redux 사용
         if (userName && userID && userPhone && userEmail && userPosition && userDepartment) {
@@ -50,8 +50,12 @@ export default function Index() {
     }, [])
 
     useMemo(() => {
-        if (name && id && email && phone && position && precautions && privacy && department) {
-            setButtonState(false)
+        if (name && email && phone && position && precautions && privacy && department) {
+            if (id.length >= 9) {
+                setButtonState(false)
+            } else {
+                setButtonState(true)
+            }
         } else {
             setButtonState(true)
         }
@@ -68,74 +72,6 @@ export default function Index() {
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-
-    const handleTemp = async () => {
-        if (position) {
-            if (position === "백엔드") {
-                await axios.get(`/backendApplication?sid=${id}`)
-                    .then(async (res) => {
-                        if (res.data.motiv || res.data.hardwork || res.data.keyword || res.data.mostDeeplyWork) {
-                            setTemp(!temp);
-                            if (window.confirm("임시저장된 게시물을 이어서 쓸까요?")) {
-                                await dispatch(saveIndex({ userName: res.data.name, userID: res.data.sid, userPhone: res.data.phoneNumber, userEmail: res.data.email, userPosition: position, userDepartment: res.data.department }));
-                                await dispatch(saveBackEnd({ userDifficultAndOvercoming: res.data.difficultAndOvercoming, userImportantGroup: res.data.importantGroup, userPortfolioLink: res.data.portfolioLink, userStudyFramework: res.data.studyFramework }));
-                                await dispatch(saveCommon({ userMotiv: res.data.motive, userHardWork: res.data.hardWork, userKeyword: res.data.keyWord, userMostDeeplyWork: res.data.mostDeeplyWork }));
-                                await navigate('/common');
-                            } else {
-                                await dispatch(saveIndex({ userName: name, userID: id, userPhone: phone, userEmail: email, userPosition: position, userDepartment: department }));
-                                navigate('/common');
-                            }
-                        } else {
-                            alert("저장된 지원서가 없습니다!");
-                        }
-                    })
-            }
-
-            if (position === "프론트엔드") {
-                await axios.get(`/frontendApplication?sid=${id}`)
-                    .then(async (res) => {
-                        if (res.data.motiv || res.data.hardwork || res.data.keyword || res.data.mostDeeplyWork) {
-                            setTemp(!temp);
-                            if (window.confirm("임시저장된 게시물을 이어서 쓸까요?")) {
-                                await dispatch(saveIndex({ userName: res.data.name, userID: res.data.sid, userPhone: res.data.phoneNumber, userEmail: res.data.email, userPosition: position, userDepartment: res.data.department }));
-                                await dispatch(saveFrontEnd({ userWhyFrontend: res.data.whyFrontend, userUsingStack: res.data.usingStack, userTeamProject: res.data.teamProject, userAchieve: res.data.achieve, userPortfolioLinkFront: res.data.portfolioLink }));;
-                                await dispatch(saveCommon({ userMotiv: res.data.motive, userHardWork: res.data.hardWork, userKeyword: res.data.keyWord, userMostDeeplyWork: res.data.mostDeeplyWork }));
-                                await navigate('/common');
-                            } else {
-                                await dispatch(saveIndex({ userName: name, userID: id, userPhone: phone, userEmail: email, userPosition: position, userDepartment: department }));
-                                navigate('/common');
-                            }
-                        } else {
-                            alert("저장된 지원서가 없습니다!");
-                        }
-                    })
-            }
-
-            if (position === "디자인") {
-                await axios.get(`/backendApplication?sid=${id}`)
-                    .then(async (res) => {
-                        if (res.data.motiv || res.data.hardwork || res.data.keyword || res.data.mostDeeplyWork) {
-                            setTemp(!temp);
-                            if (window.confirm("임시저장된 게시물을 이어서 쓸까요?")) {
-                                await dispatch(saveIndex({ userName: res.data.name, userID: res.data.sid, userPhone: res.data.phoneNumber, userEmail: res.data.email, userPosition: position, userDepartment: res.data.department }));
-                                await dispatch(saveDesign({
-                                    userWhyDesign: res.data.whyDesign, userToolExperience: res.data.toolExperience, userTeamworkExperience: res.data.teamworkExperience, userPortfolioLinkDesign: res.data.portfolioLink, userDesignGrowth: res.data.designGrowth,
-                                }));
-                                await dispatch(saveCommon({ userMotiv: res.data.motive, userHardWork: res.data.hardWork, userKeyword: res.data.keyWord, userMostDeeplyWork: res.data.mostDeeplyWork }));
-                                await navigate('/common');
-                            } else {
-                                await dispatch(saveIndex({ userName: name, userID: id, userPhone: phone, userEmail: email, userPosition: position, userDepartment: department }));
-                                navigate('/common');
-                            }
-                        } else {
-                            alert("저장된 지원서가 없습니다!");
-                        }
-                    })
-            }
-        } else {
-            alert("포지션을 먼저 선택해주세요!");
-        }
-    }
 
     const handleClick = async () => {
         if (position) {
@@ -165,7 +101,7 @@ export default function Index() {
             }
 
             if (position === "디자인") {
-                await axios.get(`/backendApplication?sid=${id}`)
+                await axios.get(`/designApplication?sid=${id}`)
                     .then(async (res) => {
                         if (res.data.motiv || res.data.hardwork || res.data.keyword || res.data.mostDeeplyWork) {
                             setTemp(!temp);
@@ -184,7 +120,7 @@ export default function Index() {
             await axios.get(`/backendApplication?sid=${id}`)
                 .then(async (res) => {
                     await dispatch(saveIndex({ userName: res.data.name, userID: res.data.sid, userPhone: res.data.phoneNumber, userEmail: res.data.email, userPosition: position, userDepartment: res.data.department }));
-                    await dispatch(saveBackEnd({ userDifficultAndOvercoming: res.data.difficultAndOvercoming, userImportantGroup: res.data.importantGroup, userPortfolioLink: res.data.portfolioLink, userStudyFramework: res.data.studyFramework }));
+                    await dispatch(saveBackEnd({ userDifficultAndOvercoming: res.data.difficultAndOvercoming, userImportantGroup: res.data.importantGroup, userPortfolioLinkBack: res.data.portfolioLink, userStudyFramework: res.data.studyFramework }));
                     await dispatch(saveCommon({ userMotiv: res.data.motive, userHardWork: res.data.hardWork, userKeyword: res.data.keyWord, userMostDeeplyWork: res.data.mostDeeplyWork }));
                     await navigate('/common');
                 })
@@ -201,18 +137,18 @@ export default function Index() {
         }
 
         if (position === "디자인") {
-            await axios.get(`/backendApplication?sid=${id}`)
+            await axios.get(`/designApplication?sid=${id}`)
                 .then(async (res) => {
+                    console.log("design :", res.data);
                     await dispatch(saveIndex({ userName: res.data.name, userID: res.data.sid, userPhone: res.data.phoneNumber, userEmail: res.data.email, userPosition: position, userDepartment: res.data.department }));
-                    await dispatch(saveDesign({
-                        userWhyDesign: res.data.whyDesign, userToolExperience: res.data.toolExperience, userTeamworkExperience: res.data.teamworkExperience, userPortfolioLinkDesign: res.data.portfolioLink, userDesignGrowth: res.data.designGrowth,
-                    }));
+                    await dispatch(saveDesign({ userWhyDesign: res.data.whyDesign, userToolExperience: res.data.toolExperience, userTeamworkExperience: res.data.teamworkExperience, userPortfolioLinkDesign: res.data.portfolioLink, userDesignGrowth: res.data.designGrowth, }));
                     await dispatch(saveCommon({ userMotiv: res.data.motive, userHardWork: res.data.hardWork, userKeyword: res.data.keyWord, userMostDeeplyWork: res.data.mostDeeplyWork }));
                     await navigate('/common');
                 })
         }
     }
 
+    /* 저장된 글이 발견되고, 새로 작성하기를 누를 경우 기본 정보를 Redux에 저장시키고, 기존 Redux 정보를 새롭게 리셋 시킨다. */
     const newApply = async () => {
         await setTempCount((prev) => (prev + 1))
         await dispatch(saveIndex({ userName: name, userID: id, userPhone: phone, userEmail: email, userPosition: position, userDepartment: department }));
@@ -270,26 +206,30 @@ export default function Index() {
 
     const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.name === "이름") {
-            setName(event.target.value);
+            const eventName = event.target.value.replace(/[_/]|[0-9]|[ \[\]{}()<>?|`~!@#$%^&*-+=,.;:\"'\\]/g, '');
+            setName(eventName);
         }
         if (event.target.name === "학번") {
-            setID(event.target.value);
+            const eventID = event.target.value.replace(/[^0-9]/g, '');
+            setID(eventID);
         }
         if (event.target.name === "이메일") {
             setEmail(event.target.value);
         }
         if (event.target.name === "연락처") {
-            setPhone(event.target.value);
+            const eventPhone = event.target.value.replace(/[^0-9]/g, '');
+            setPhone(eventPhone);
         }
         if (event.target.name === "학과") {
-            setDepartment(event.target.value);
+            const eventDepartment = event.target.value.replace(/[_/]|[0-9]|[\[\]{}()<>?|`~!@#$%^&*-+=,.;:\"'\\]/g, '');
+            setDepartment(eventDepartment);
         }
     }
 
     return (
         <Section>
             {temp ?
-                <Modal>
+                <Modal text="앗, 저장된 지원서가 발견되었어요 계속 작성할까요?" imgSrc={human} alt="불러오기">
                     <Button name="임시저장" onClick={newApply} disabled={tempButtonState}>{tempCount >= 1 ? `잠시만 기다려주세요...` : `새로 작성하기`}</Button>
                     <Button name="제출하기" onClick={continueApply} disabled={tempButtonState}>{tempCount >= 1 ? `잠시만 기다려주세요...` : `이어서 작성하기`}</Button>
                 </Modal>
@@ -298,23 +238,23 @@ export default function Index() {
             <Banner />
             <Article>
                 <InputTitle>이름 <Require /> </InputTitle>
-                <InputBox type="text" placeholder="이름을 입력해주세요" name="이름" onChange={changeValue} value={name} />
+                <InputBox type="text" placeholder="이름을 입력해주세요" name="이름" maxLength={15} onChange={changeValue} value={name} />
             </Article>
             <Article>
                 <InputTitle>학번 <Require /> </InputTitle>
-                <InputBox type="number" placeholder="학번을 입력해주세요" name="학번" onChange={changeValue} value={id} />
+                <InputBox type="text" placeholder="학번 전체를 입력해주세요" name="학번" maxLength={9} onChange={changeValue} value={id} />
             </Article>
             <Article>
                 <InputTitle>학과 <Require /> </InputTitle>
-                <InputBox type="string" placeholder="학과를 입력해주세요" name="학과" onChange={changeValue} value={department} />
+                <InputBox type="text" placeholder="학과를 입력해주세요" name="학과" onChange={changeValue} maxLength={10} value={department} />
             </Article>
             <Article>
                 <InputTitle>이메일 <Require /> </InputTitle>
-                <InputBox type="text" placeholder="이메일을 입력해주세요" name="이메일" onChange={changeValue} value={email} />
+                <InputBox type="text" placeholder="이메일을 입력해주세요" name="이메일" maxLength={30} onChange={changeValue} value={email} />
             </Article>
             <Article>
                 <InputTitle>연락처 (하이픈을 제외한 숫자만 입력)<Require /> </InputTitle>
-                <InputBox type="number" placeholder="연락 가능한 번호를 입력해주세요" name="연락처" onChange={changeValue} value={phone} />
+                <InputBox type="text" placeholder="연락 가능한 번호를 입력해주세요" name="연락처" maxLength={11} onChange={changeValue} value={phone} />
             </Article>
             <Article>
                 <InputTitle>지원 포지션 <Require /> </InputTitle>

@@ -9,7 +9,6 @@ import { useMemo } from 'react';
 import { css, keyframes } from "@emotion/react";
 import { fadeLeft, fadeUp } from "../../styles/Keyframes";
 import { WrapperProps } from "../../App"
-import human from '../../images/human.png';
 
 
 export const TextAreaBox = (props: TextAreaType) => {
@@ -41,7 +40,7 @@ export const TextAreaBox = (props: TextAreaType) => {
             font-family: 'Pretendard-Regular';
             margin-left: 0.4em;
         }
-        `} maxLength={1000} {...props} />
+        `} {...props} maxLength={1000} />
     )
 }
 
@@ -107,7 +106,7 @@ export const InputBox = (props: InputType) => {
             font-family: 'Pretendard-Regular';
             margin-left: 0.4em;
         }
-        `} maxLength={30} {...props} />
+        `} {...props} maxLength={props.maxLength} />
     )
 }
 
@@ -172,7 +171,7 @@ export const ModalFrame = ({ children }: WrapperProps) => {
     )
 }
 
-export const Modal = ({ children }: WrapperProps) => {
+export const Modal = (props: WrapperProps) => {
     return (
         <ModalFrame>
             <div css={css`
@@ -199,18 +198,26 @@ export const Modal = ({ children }: WrapperProps) => {
                         display: flex;
                         flex-direction: column;
                         align-items: center;
+                        justify-content: center;
                         animation: ${fadeUp} 1.3s ease-in-out;
                     `}>
-                        <img alt="사람" src={human} css={css`
-                            width: 10em;
+                        <img alt="사람" src={props.imgSrc}
+                            css={css`
+                            width: 10.5em;
+                            ${props.alt === "최종제출" &&
+                                'width: 8em;'
+                                }
+                            ${props.alt === "불러오기" &&
+                                'width: 7.5em;'
+                                }
                             margin-bottom: 2em;
                             animation: ${fadeUp} 1.5s ease-in-out;
                         `} />
                         <span css={css`
                             animation: ${fadeUp} 1.5s ease-in-out;
-                        `}>앗, 임시저장된 지원서가 발견되었어요 다시 작성할까요?</span>
+                        `}>{props.text}</span>
                         <ButtonBox>
-                            {children}
+                            {props.children}
                         </ButtonBox>
                     </div>
                 </div>
@@ -236,9 +243,10 @@ export const Precautions = () => {
                 flex-direction: column;
                 row-gap: 0.5em;
             `}>
-                <span>· 지원서 최종 제출 후에도 지원서의 수정은 가능합니다.</span>
+                <span>· 지원 마감일 전으로 지원서 최종 제출 후에도 지원서의 수정이 가능합니다.</span>
                 <span>· 지원서의 정보 저장을 위해 제출 전 임시저장을 통해 데이터를 저장해주시기 바랍니다.</span>
                 <span>· 지원서 접수 마감일에는 지원자가 몰려 지원이 어려울 수 있으니, 여유있게 미리 제출해주시기바랍니다.</span>
+                <span>· 문항에 따른 올바른 입력을 해주셔야 지원서의 다음 단계로 이동하실 수 있습니다.</span>
                 <span>· 지원서의 내용이 사실과 다를 경우, 합격이 취소되거나 전형 상의 불이익을 받을 수 있습니다.</span>
                 <span>· 지원서는 문항별 최대 1000자의 제한을 두고 있으나, 문항을 다 채우실 필요는 없습니다.</span>
                 <span>· 문의사항은 <strong>kangnam@likelion.org</strong> 으로 문의해주시면 최대한 빠르게 도와드리겠습니다.</span>
@@ -367,7 +375,7 @@ export const Banner = () => {
             max-width: 1000px;
             border-radius: 12px;
             margin-bottom: 1em;
-            animation: ${fadeLeft} 1.8s ease-in-out;
+            // animation: ${fadeLeft} 1.8s ease-in-out;
         `} />
     )
 }
@@ -415,7 +423,7 @@ export const Article = ({ children }: WrapperProps) => {
             flex-direction: column;
             text-align: left;
             justify-content: center;
-            animation: ${fadeUp} 2s ease-in-out;
+            // animation: ${fadeUp} 2s ease-in-out;
         `}>
             {children}
         </article>
