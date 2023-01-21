@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react'
-import { ButtonBox, Section, Button, Require, Article, InputTitle, TextAreaBox, InputBox, Banner, WordLength } from './emotion/component'
+import { ButtonBox, Section, Button, Require, Article, InputTitle, TextAreaBox, InputBox, Banner, WordLength, Modal } from './emotion/component'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import { AppDispatch, TestState } from '../app/store';
 import { saveCommon, saveIndex, view, saveBackEnd, saveDesign, saveFrontEnd } from '../features/fetcherSlice';
 import { useEffect, useMemo } from 'react';
 import axios from 'axios';
+import tempImg from '../images/temp.png';
 
 export default function Common() {
 
@@ -18,6 +19,8 @@ export default function Common() {
     const [mostDeeplyWork, setMostDeeplyyWork] = useState<string>('');
     const [buttonState, setButtonState] = useState<boolean>(false);
     const [submitCount, setSubmitCount] = useState<number>(0);
+    const [tempState, setTempState] = useState<boolean>(false);
+    const [temp, setTemp] = useState(false);
 
     const userName = useSelector((state: TestState) => state.fetcher.userName);
     const userID = useSelector((state: TestState) => state.fetcher.userID);
@@ -71,6 +74,12 @@ export default function Common() {
     }, [])
 
     useMemo(() => {
+        if (motiv || hardwork || keyword || mostDeeplyWork) {
+            setTempState(false);
+        } else {
+            setTempState(true);
+        }
+
         if (motiv && hardwork && keyword && mostDeeplyWork) {
             setButtonState(false)
         } else {
@@ -154,7 +163,7 @@ export default function Common() {
                         userPhone: '',
                         userPosition: '',
                     }))
-                    navigate('/');
+                    setTemp(!temp);
                 })
         }
 
@@ -204,12 +213,11 @@ export default function Common() {
                         userPhone: '',
                         userPosition: '',
                     }))
-                    navigate('/');
+                    setTemp(!temp);
                 })
         }
 
         if (userPosition === "디자인") {
-
             axios.post('/designApplication', JSON.stringify({
                 department: userDepartment,
                 whyDesign: userWhyDesign,
@@ -257,31 +265,45 @@ export default function Common() {
                         userPhone: '',
                         userPosition: '',
                     }))
-                    navigate('/');
+                    setTemp(!temp);
                 })
         }
     }
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         if (event.target.name === "최종목표") {
-            setMotiv(event.target.value);
+            if (event.target.value.length <= 1000) {
+                setMotiv(event.target.value);
+            }
         }
 
         if (event.target.name === "활동") {
-            setHardwork(event.target.value);
+            if (event.target.value.length <= 1000) {
+                setHardwork(event.target.value);
+            }
         }
 
         if (event.target.name === "키워드") {
-            setKeyword(event.target.value);
+            if (event.target.value.length <= 1000) {
+                setKeyword(event.target.value);
+            }
         }
 
         if (event.target.name === "감명") {
-            setMostDeeplyyWork(event.target.value);
+            if (event.target.value.length <= 1000) {
+                setMostDeeplyyWork(event.target.value);
+            }
         }
     }
 
     return (
         <Section>
+            {temp ?
+                <Modal text="지원하신 학번으로 지원서가 저장이 되었어요!" imgSrc={tempImg}>
+                    <Button name="제출하기" onClick={() => navigate('/')}>메인 화면으로 이동</Button>
+                </Modal>
+                : null
+            }
             <Banner />
             <Article>
                 <InputTitle>지원자분의 인생의 최종 목표는 무엇인가요?<Require /> </InputTitle>
@@ -304,7 +326,7 @@ export default function Common() {
                 <WordLength>{mostDeeplyWork.length}</WordLength>
             </Article>
             <ButtonBox>
-                <Button name="임시저장" onClick={TempSave} disabled={buttonState}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `임시저장`}</Button>
+                <Button name="임시저장" onClick={TempSave} disabled={tempState}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `임시저장`}</Button>
                 <Button name="제출하기" onClick={Back}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `뒤로가기`}</Button>
                 <Button name="제출하기" onClick={PartHistoy} disabled={buttonState}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `파트별 문항 작성하기`}</Button>
             </ButtonBox>
