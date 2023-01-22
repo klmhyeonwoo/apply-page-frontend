@@ -45,7 +45,7 @@ export default function Frontend() {
     const userPortfolioLink = useSelector((state: TestState) => state.fetcher.userPortfolioLinkFront);
 
     useEffect(() => {
-
+        document.body.style.overflow = "unset";
         if (!userName && !userID && !userPhone && !userEmail && !userPosition) {
             alert('잘못된 접근입니다!');
             navigate('/')
@@ -116,7 +116,8 @@ export default function Frontend() {
                 portfolioLink: portfolioLink,
                 sid: userID,
                 teamProject: teamProject,
-                achieve: achieve
+                achieve: achieve,
+                submissionStatus: false,
             }),
                 {
                     headers: {
@@ -148,6 +149,7 @@ export default function Frontend() {
                         userPosition: '',
                     }))
                     setTemp(!temp);
+                    document.body.style.overflow = "hidden";
                 })
         }
     }
@@ -174,7 +176,8 @@ export default function Frontend() {
             portfolioLink: portfolioLink,
             sid: userID,
             teamProject: teamProject,
-            achieve: achieve
+            achieve: achieve,
+            submissionStatus: true,
         }),
             {
                 headers: {
@@ -206,6 +209,7 @@ export default function Frontend() {
                     userPosition: '',
                 }))
                 setComplete(!complete)
+                document.body.style.overflow = "hidden";
             })
     }
 

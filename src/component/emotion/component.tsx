@@ -115,6 +115,7 @@ export interface PositionType {
     onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
     children: React.ReactNode;
     state: string;
+    alt?: string;
 }
 
 export const Position = (props: PositionType) => {
@@ -124,6 +125,8 @@ export const Position = (props: PositionType) => {
             letter-spacing: -0.03em;
             font-size: 16px;
             height: 3.7em;
+            ${props.alt === "모달" && css`height: 3em;`} 
+            ${props.alt === "모달" && css`font-size: 14px;`} 
             border-radius: 50px;
             border: solid;
             border-width: 1px;
@@ -149,7 +152,7 @@ export const Position = (props: PositionType) => {
                 color:  #ff7828;
             }
             `}
-        `}{...props}>{props.children}</button>
+        `}{...props} tabIndex={-1}>{props.children}</button>
     )
 }
 
@@ -179,16 +182,19 @@ export const Modal = (props: WrapperProps) => {
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
+                display: flex;
+                justify-content: center;
             `}>
                 <div css={css`
                     font-family: 'Pretendard-Bold';
                     letter-spacing: -0.03em;
                     border-radius: 20px;
                     background-color: white;
-                    display: fixed;
+                    position: fixed;
                     font-size: 18px;
                     width: 40em;
                     height: 30em;
+                    ${props.alt === "찾기" && css`height: 28em`}
                     display: flex;
                     justify-content: center;
                     align-items: center;
@@ -201,21 +207,29 @@ export const Modal = (props: WrapperProps) => {
                         justify-content: center;
                         animation: ${fadeUp} 1.3s ease-in-out;
                     `}>
-                        <img alt="사람" src={props.imgSrc}
-                            css={css`
+                        {props.imgSrc &&
+                            <img alt="사람" src={props.imgSrc}
+                                css={css`
                             width: 10.5em;
+                            ${props.alt === "찾기" &&
+                                    'width: 7.5em;'
+                                    }
                             ${props.alt === "최종제출" &&
-                                'width: 8em;'
-                                }
+                                    'width: 8em;'
+                                    }
                             ${props.alt === "불러오기" &&
-                                'width: 7.5em;'
-                                }
+                                    'width: 7.5em;'
+                                    }
                             margin-bottom: 2em;
                             animation: ${fadeUp} 1.5s ease-in-out;
                         `} />
+                        }
                         <span css={css`
                             animation: ${fadeUp} 1.5s ease-in-out;
-                        `}>{props.text}</span>
+                            ${props.alt === "찾기" && css`margin-bottom: -1em;`}
+                        `}>
+                            {props.text}
+                        </span>
                         <ButtonBox>
                             {props.children}
                         </ButtonBox>
@@ -223,6 +237,41 @@ export const Modal = (props: WrapperProps) => {
                 </div>
             </div>
         </ModalFrame>
+    )
+}
+
+export const ModalInput = (props: InputType) => {
+    return (
+        <input css={css`
+        font-family: 'Pretendard-Medium';
+        letter-spacing: -0.03em;
+        padding: 0;
+        padding-left: 1em;
+        width: 22.5em;
+        border: solid;
+        border-radius: 7px;
+        border-color: #707070;
+        border-width: 1px;
+        font-size: 16px;
+        ${props.name === "저장된_학번" && css`font-size: 15px;`}
+        ${props.name === "저장된_학번" && css`width: 23.5em;`}
+        box-sizing: border-box;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        &:focus {
+            outline-color: #ff7828;
+        }
+
+        &::placeholder {
+            font-family: 'Pretendard-Regular';
+            margin-left: 0.4em;
+        }
+        `}{...props} />
     )
 }
 
@@ -243,7 +292,7 @@ export const Precautions = () => {
                 flex-direction: column;
                 row-gap: 0.5em;
             `}>
-                <span>· 지원 마감일 전으로 지원서 최종 제출 후에도 지원서의 수정이 가능합니다.</span>
+                <span>· 지원서 최종 제출 후에는 지원서의 수정이 불가능합니다.</span>
                 <span>· 지원서의 정보 저장을 위해 제출 전 임시저장을 통해 데이터를 저장해주시기 바랍니다.</span>
                 <span>· 지원서 접수 마감일에는 지원자가 몰려 지원이 어려울 수 있으니, 여유있게 미리 제출해주시기바랍니다.</span>
                 <span>· 문항에 따른 올바른 입력을 해주셔야 지원서의 다음 단계로 이동하실 수 있습니다.</span>
@@ -255,7 +304,7 @@ export const Precautions = () => {
     )
 }
 
-export const PositionBox = ({ children }: WrapperProps) => {
+export const PositionBox = (props: WrapperProps) => {
     return (
         <div css={css`
             display: grid;
@@ -263,8 +312,9 @@ export const PositionBox = ({ children }: WrapperProps) => {
             column-gap: 1em;
             font-size: 16px;
             width: 62.5em;
+            ${props.alt === "모달" && css`width: 30em;`} 
         `}>
-            {children}
+            {props.children}
         </div>
     )
 }
@@ -435,6 +485,7 @@ export interface ButtonType {
     children: React.ReactNode;
     disabled?: boolean;
     onClick?: () => void;
+    alt?: string;
 }
 
 export const Button = (props: ButtonType) => {
@@ -445,6 +496,10 @@ export const Button = (props: ButtonType) => {
             font-size: 16px;
             width: 15em;
             height: 3.5em;
+            ${props.alt === "불러오기" && css`
+                width: 7.5em;
+                font-size: 14px;
+            `}
             border: none;
             border-radius: 7px;
             color: white;
@@ -463,21 +518,22 @@ export const Button = (props: ButtonType) => {
                     }
                     `
             }
-        `} {...props}>
+        `} {...props} tabIndex={-1}>
             {props.children}
         </button>
     )
 }
 
-export const ButtonBox = ({ children }: WrapperProps) => {
+export const ButtonBox = (props: WrapperProps) => {
     return (
         <div css={css`
             display: flex;
             column-gap: 1em;
             margin-top: 3em;
             animation: ${fadeUp} 2s ease-in-out;
+            ${props.alt === "임시저장_모달" && css`margin-top: 2em;`}
         `}>
-            {children}
+            {props.children}
         </div>
     )
 }
