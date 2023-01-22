@@ -43,6 +43,7 @@ export default function Backend() {
     const userPortfolioLink = useSelector((state: TestState) => state.fetcher.userPortfolioLinkBack);
 
     useEffect(() => {
+        document.body.style.overflow = "unset";
 
         if (!userName && !userID && !userPhone && !userEmail && !userPosition) {
             alert('잘못된 접근입니다!');
@@ -112,6 +113,8 @@ export default function Backend() {
             portfolioLink: portfolioLink,
             sid: userID,
             studyFramework: studyFramework,
+            submissionStatus: false,
+
         }),
             {
                 headers: {
@@ -142,6 +145,7 @@ export default function Backend() {
                     userPosition: '',
                 }))
                 setTemp(!temp);
+                document.body.style.overflow = "hidden";
             })
     }
 
@@ -163,6 +167,7 @@ export default function Backend() {
             portfolioLink: portfolioLink,
             sid: userID,
             studyFramework: studyFramework,
+            submissionStatus: true,
         }),
             {
                 headers: {
@@ -193,6 +198,7 @@ export default function Backend() {
                     userPosition: '',
                 }))
                 setComplete(!complete);
+                document.body.style.overflow = "hidden";
             })
     }
 

@@ -52,7 +52,8 @@ export default function Common() {
     const userPortfolioLinkBack = useSelector((state: TestState) => state.fetcher.userPortfolioLinkBack);
 
     useEffect(() => {
-
+        document.body.style.overflow = "unset";
+        console.log("common :", userPosition);
         if (!userName && !userID && !userPhone && !userEmail && !userPosition) {
             alert('잘못된 접근입니다!');
             navigate('/')
@@ -98,18 +99,18 @@ export default function Common() {
         navigate('/');
     }
 
-    const PartHistoy = () => {
-        setSubmitCount((prev) => (prev + 1));
-        dispatch(saveCommon({ userMotiv: motiv, userHardWork: hardwork, userKeyword: keyword, userMostDeeplyWork: mostDeeplyWork }));
+    const PartHistoy = async () => {
+        await setSubmitCount((prev) => (prev + 1));
+        await dispatch(saveCommon({ userMotiv: motiv, userHardWork: hardwork, userKeyword: keyword, userMostDeeplyWork: mostDeeplyWork }));
         if (userPosition === "프론트엔드") {
-            navigate('/frontend');
+            await navigate('/frontend');
         } else if (userPosition === "백엔드") {
-            navigate('/backend')
+            await navigate('/backend')
         } else if (userPosition === "디자인") {
-            navigate('/design')
+            await navigate('/design')
         } else {
             alert("오류가 발생했습니다, 강남대학교 멋쟁이사자처럼에 문의해주세요!")
-            navigate('/');
+            await navigate('/');
         }
     }
 
@@ -133,6 +134,7 @@ export default function Common() {
                 sid: userID,
                 teamProject: userTeamProject,
                 achieve: userAchieve,
+                submissionStatus: false,
             }),
                 {
                     headers: {
@@ -164,6 +166,7 @@ export default function Common() {
                         userPosition: '',
                     }))
                     setTemp(!temp);
+                    document.body.style.overflow = "hidden";
                 })
         }
 
@@ -184,6 +187,7 @@ export default function Common() {
                 portfolioLink: userPortfolioLinkBack,
                 sid: userID,
                 studyFramework: userStudyFramework,
+                submissionStatus: false,
             }),
                 {
                     headers: {
@@ -214,6 +218,7 @@ export default function Common() {
                         userPosition: '',
                     }))
                     setTemp(!temp);
+                    document.body.style.overflow = "hidden";
                 })
         }
 
@@ -234,7 +239,8 @@ export default function Common() {
                 portfolioLink: userPortfolioLinkDesign,
                 sid: userID,
                 teamworkExperience: userTeamworkExperience,
-                designGrowth: userDesignGrowth
+                designGrowth: userDesignGrowth,
+                submissionStatus: false,
             }),
                 {
                     headers: {
@@ -266,6 +272,7 @@ export default function Common() {
                         userPosition: '',
                     }))
                     setTemp(!temp);
+                    document.body.style.overflow = "hidden";
                 })
         }
     }

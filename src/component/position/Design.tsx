@@ -46,6 +46,7 @@ export default function Design() {
 
 
     useEffect(() => {
+        document.body.style.overflow = "unset";
         if (!userName && !userID && !userPhone && !userEmail && !userPosition) {
             alert('잘못된 접근입니다!');
             navigate('/')
@@ -117,7 +118,8 @@ export default function Design() {
             portfolioLink: portfolioLink,
             sid: userID,
             teamworkExperience: teamworkExperience,
-            designGrowth: designGrowth
+            designGrowth: designGrowth,
+            submissionStatus: false,
         }),
             {
                 headers: {
@@ -149,6 +151,7 @@ export default function Design() {
                     userPosition: '',
                 }))
                 setTemp(!temp);
+                document.body.style.overflow = "hidden";
             })
     }
 
@@ -170,7 +173,8 @@ export default function Design() {
             portfolioLink: portfolioLink,
             sid: userID,
             teamworkExperience: teamworkExperience,
-            designGrowth: designGrowth
+            designGrowth: designGrowth,
+            submissionStatus: true,
         }),
             {
                 headers: {
@@ -202,6 +206,7 @@ export default function Design() {
                     userPosition: '',
                 }))
                 setComplete(!complete)
+                document.body.style.overflow = "hidden";
             })
     }
 
