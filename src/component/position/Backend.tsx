@@ -114,7 +114,6 @@ export default function Backend() {
             sid: userID,
             studyFramework: studyFramework,
             submissionStatus: false,
-
         }),
             {
                 headers: {

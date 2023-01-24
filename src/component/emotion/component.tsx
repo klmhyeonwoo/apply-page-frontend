@@ -111,10 +111,10 @@ export const InputBox = (props: InputType) => {
 }
 
 export interface PositionType {
-    name: string;
-    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    children: React.ReactNode;
-    state: string;
+    name?: string;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    children?: React.ReactNode;
+    state?: string;
     alt?: string;
 }
 
@@ -481,8 +481,8 @@ export const Article = ({ children }: WrapperProps) => {
 }
 
 export interface ButtonType {
-    name: string;
-    children: React.ReactNode;
+    name?: string;
+    children?: React.ReactNode;
     disabled?: boolean;
     onClick?: () => void;
     alt?: string;
