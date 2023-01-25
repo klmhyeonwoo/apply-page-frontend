@@ -4,6 +4,13 @@ html {
 
 a {
   text-decoration: none;
+  color: #ff7828;
+  font-family: 'Pretendard-Bold';
+  transition: 0.4s all;
+}
+
+a:hover {
+  opacity: 80%;
 }
 
 .App {

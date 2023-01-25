@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { css, keyframes } from "@emotion/react";
 import React, { ChangeEvent, useState } from 'react'
 import banner from '../../images/banner.png';
 import loading from '../../images/loading.gif';
@@ -6,7 +7,6 @@ import axios from 'axios';
 import checkBox from '../images/checkBox.svg';
 import checkedBox from '../images/checkedBox.svg';
 import { useMemo } from 'react';
-import { css, keyframes } from "@emotion/react";
 import { fadeLeft, fadeUp } from "../../styles/Keyframes";
 import { WrapperProps } from "../../App"
 

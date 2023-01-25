@@ -14,16 +14,18 @@ export default function Frontend() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const [whyFrontend, setWhyFrontend] = useState('');
-    const [usingStack, setUsingStack] = useState('');
-    const [teamProject, setTeamProject] = useState('');
-    const [achieve, setAchieve] = useState('');
+
     const [buttonState, setButtonState] = useState(false);
-    const [portfolioLink, setPortfolioLink] = useState('');
     const [submitCount, setSubmitCount] = useState<number>(0);
     const [tempState, setTempState] = useState<boolean>(false);
     const [temp, setTemp] = useState<boolean>(false);
     const [complete, setComplete] = useState<boolean>(false);
+
+    const [whyFrontend, setWhyFrontend] = useState('');
+    const [usingStack, setUsingStack] = useState('');
+    const [teamProject, setTeamProject] = useState('');
+    const [achieve, setAchieve] = useState('');
+    const [portfolioLink, setPortfolioLink] = useState('');
 
 
     const userName = useSelector((state: TestState) => state.fetcher.userName);
@@ -47,8 +49,7 @@ export default function Frontend() {
     useEffect(() => {
         document.body.style.overflow = "unset";
         if (!userName && !userID && !userPhone && !userEmail && !userPosition) {
-            alert('잘못된 접근입니다!');
-            navigate('/')
+            navigate('/404')
         }
 
         // 이전 값들을 저장하기 위해서 Redux 사용
@@ -265,7 +266,7 @@ export default function Frontend() {
                 <WordLength>{whyFrontend.length}</WordLength>
             </Article>
             <Article>
-                <InputTitle>프론트엔드 개발과 관련된 프레임워크나 html, css, js 등의 언어를 사용해 보신 적 있으신가요? 있으시다면 어디까지 사용해 보셨는지 구체적으로 적어주세요.<Require /> </InputTitle>
+                <InputTitle>프론트엔드 개발과 관련된 프레임워크나 html, css, js 등의 언어를 사용해 보신 적 있으신가요? 있으시다면 어디까지 사용해 보셨는지 구체적으로 적어주세요<Require /> </InputTitle>
                 <TextAreaBox placeholder="텍스트를 입력해주세요" name="프레임워크" onChange={handleChange} value={usingStack} />
                 <WordLength>{usingStack.length}</WordLength>
             </Article>
