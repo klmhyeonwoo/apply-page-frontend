@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { WrapperProps } from '../../../App'
 import { css, keyframes } from "@emotion/react";
 import { AgreeType, ButtonType, InputType } from '../../emotion/component';
 import { PositionType } from '../../emotion/component';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import oops from '../../../images/oops.png';
 import { fadeUp } from '../../../styles/Keyframes';
 
@@ -76,33 +76,10 @@ export const Button = (props: ButtonType) => {
     )
 }
 
-interface HeaderType {
-    path: string;
+export interface HeaderType {
+    path?: string;
     children?: React.ReactNode;
     url?: string;
-}
-
-export const Header = (props: HeaderType) => {
-    return (
-        <div css={css`
-            width: 100%;
-            height: 7em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            column-gap: 4em;
-        `}>
-            <Link to="/admin/main">
-                <HeaderText path={props.path} url={"/admin/main"}>지원서 보기</HeaderText>
-            </Link>
-            <Link to="/admin/pass">
-                <HeaderText path={props.path} url={"/admin/pass"}>합격자 보기</HeaderText>
-            </Link>
-            <Link to="/admin/fail">
-                <HeaderText path={props.path} url={"/admin/fail"}>불합격 보기</HeaderText>
-            </Link>
-        </div>
-    )
 }
 
 export const HeaderText = (props: HeaderType) => {
@@ -270,16 +247,22 @@ export const Input = (props: InputType) => {
                 font-family: 'Pretendard-Regular';
                 margin-left: 0.4em;
             }
-        `} />
+        `} {...props} />
     )
 }
 
-interface ListType {
-    name: string;
-    id: string;
-    department: string;
-    email: string;
-    position: string;
+export interface ListType {
+    name?: string;
+    id?: string;
+    department?: string;
+    email?: string;
+    position?: string;
+    onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+    children?: React.ReactNode;
+}
+
+export interface onModalType {
+    (userID: string): void;
 }
 
 export const List = (props: ListType) => {
@@ -307,25 +290,25 @@ export const List = (props: ListType) => {
                     cursor: pointer;
                 }
             `}
-        `}>
-            <ListText>{props.name}</ListText>
-            <ListText>{props.position}</ListText>
-            <ListText>{props.department}</ListText>
-            <ListText>{props.id}</ListText>
-            <ListText>{props.email}</ListText>
+        `} onClick={props.onClick}>
+            <ListText onClick={props.onClick}>{props.name}</ListText>
+            <ListText onClick={props.onClick}>{props.position}</ListText>
+            <ListText onClick={props.onClick}>{props.department}</ListText>
+            <ListText onClick={props.onClick}>{props.id}</ListText>
+            <ListText onClick={props.onClick}>{props.email}</ListText>
         </div>
     )
 }
 
-export const ListText = ({ children }: WrapperProps) => {
+export const ListText = (props: ListType) => {
     return (
         <div css={css`
             width: 18em;
             display: flex;
             align-items: center;
             justify-content: center;
-        `}>
-            {children}
+        `} {...props}>
+            {props.children}
         </div>
     )
 }

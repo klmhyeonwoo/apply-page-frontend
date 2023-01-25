@@ -46,8 +46,7 @@ export default function Backend() {
         document.body.style.overflow = "unset";
 
         if (!userName && !userID && !userPhone && !userEmail && !userPosition) {
-            alert('잘못된 접근입니다!');
-            navigate('/')
+            navigate('/404')
         }
 
         // 이전 값들을 저장하기 위해서 Redux 사용
