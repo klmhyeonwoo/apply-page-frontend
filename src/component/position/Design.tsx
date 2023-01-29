@@ -128,27 +128,6 @@ export default function Design() {
         )
             .then((res) => {
                 console.log(res);
-                dispatch(saveDesign({
-                    userWhyDesign: '',
-                    userToolExperience: '',
-                    userTeamworkExperience: '',
-                    userPortfolioLinkDesign: '',
-                    userDesignGrowth: '',
-                }));
-                dispatch(saveCommon({
-                    userMotiv: '',
-                    userHardWork: '',
-                    userKeyWord: '',
-                    userMostDeeplyWork: '',
-                }))
-                dispatch(saveIndex({
-                    userName: '',
-                    userID: '',
-                    userDepartment: '',
-                    userEmail: '',
-                    userPhone: '',
-                    userPosition: '',
-                }))
                 setTemp(!temp);
                 document.body.style.overflow = "hidden";
             })
@@ -239,6 +218,38 @@ export default function Design() {
         }
     }
 
+    const TempBack = async () => {
+        setTemp(false);
+        setSubmitCount(0);
+        setTempState(false);
+        setButtonState(false);
+    }
+
+    const TempHome = async () => {
+        await dispatch(saveDesign({
+            userWhyDesign: '',
+            userToolExperience: '',
+            userTeamworkExperience: '',
+            userPortfolioLinkDesign: '',
+            userDesignGrowth: '',
+        }));
+        await dispatch(saveCommon({
+            userMotiv: '',
+            userHardWork: '',
+            userKeyWord: '',
+            userMostDeeplyWork: '',
+        }))
+        await dispatch(saveIndex({
+            userName: '',
+            userID: '',
+            userDepartment: '',
+            userEmail: '',
+            userPhone: '',
+            userPosition: '',
+        }))
+        await navigate('/');
+    }
+
     return (
         <Section>
             {complete ?
@@ -249,7 +260,8 @@ export default function Design() {
             }
             {temp ?
                 <Modal text="지원하신 학번으로 지원서가 저장이 되었어요!" imgSrc={tempImg}>
-                    <Button name="제출하기" onClick={() => navigate('/')}>메인 화면으로 이동</Button>
+                    <Button name="임시저장" onClick={TempHome}>메인 화면으로 이동</Button>
+                    <Button name="제출하기" onClick={TempBack}>이어서 작성하기</Button>
                 </Modal>
                 : null
             }

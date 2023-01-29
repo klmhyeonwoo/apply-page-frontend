@@ -7,4 +7,5 @@ export interface DetailType {
 
 export interface ImgClickType {
     onClick?: () => void;
+    alt?: string;
 }

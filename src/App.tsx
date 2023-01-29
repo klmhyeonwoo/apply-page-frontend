@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 import { TestState } from './app/store';
 
 export interface WrapperProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   name?: string;
   text?: string;
   imgSrc?: string;

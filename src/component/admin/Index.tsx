@@ -31,8 +31,8 @@ export default function Index() {
             .then(async (res) => {
                 console.log(res);
                 if (res.data === true) {
-                await dispatch(saveAdminState({ adminState: true }));
-                await navigate('/admin/main');
+                    await dispatch(saveAdminState({ adminState: true }));
+                    await navigate('/admin/main');
                 } else {
                     alert("잘못된 접근입니다!");
                 }
