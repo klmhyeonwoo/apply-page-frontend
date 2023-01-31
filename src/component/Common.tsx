@@ -246,6 +246,7 @@ export default function Common() {
         setSubmitCount(0);
         setTempState(false);
         setButtonState(false);
+        document.body.style.overflow = "unset";
     }
 
     const TempHome = async () => {

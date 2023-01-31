@@ -8,3 +8,13 @@ export interface userType {
     sid: string;
     key: React.Key;
 }
+
+export interface MailType {
+    position?: string;
+    onClick?: () => void;
+}
+
+export interface emailType {
+    email: string;
+    name: string;
+}

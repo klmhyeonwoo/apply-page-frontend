@@ -7,6 +7,7 @@ import { PositionType } from '../../emotion/component';
 import { Link, useLocation } from 'react-router-dom';
 import oops from '../../../images/oops.png';
 import { fadeUp } from '../../../styles/Keyframes';
+import { MailType } from '../partition/Type';
 
 export const Section = ({ children }: WrapperProps) => {
     return (
@@ -51,14 +52,36 @@ export const Content = ({ children }: WrapperProps) => {
     )
 }
 
+
+export const FailMailSend = (props: MailType) => {
+    return (
+        <div css={css`
+            margin-top: -3em;
+            margin-bottom: 3em;
+            font-family: 'Pretendard-Medium';
+            letter-spacing: -0.03em;
+            font-size: 14px;
+            color: #ff7828;
+            cursor: pointer;
+            transition: 0.4s all;
+
+            &:hover {
+                opacity: 80%;
+            }
+
+        `} {...props}> <span css={css`
+            font-family: 'Pretendard-Bold';
+        `}>{props.position}</span> 포지션의 불합격 메일 전체 전송을 하고싶으신가요? </div>
+    )
+}
+
 export const Button = (props: ButtonType) => {
     return (
         <button css={css`
-            font-size: 15px;
+            font-size: 13px;
             width: 26em;
             height: 3.5em;
             border-radius: 7px;
-            font-size: 15px;
             border: none;
             font-family: 'Pretendard-Bold';
             letter-spacing: -0.03em;
@@ -137,7 +160,7 @@ interface ImgType {
 export const Img = (props: ImgType) => {
     return (
         <img css={css`
-            width: 9em;
+            width: 8em;
         `} alt="어드민 이미지" src={props.src} />
     )
 }
@@ -225,7 +248,7 @@ export const Input = (props: InputType) => {
             width: 25em;
             height: 3.5em;
             border-radius: 7px;
-            font-size: 15px;
+            font-size: 13px;
             border: none;
             font-family: 'Pretendard-Regular';
             letter-spacing: -0.03em;

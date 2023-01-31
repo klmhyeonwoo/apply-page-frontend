@@ -48,7 +48,7 @@ function App() {
             <Route path='/admin/main' element={<Main />} />
             <Route path='/admin/pass' element={<Pass />} />
             <Route path='/admin/fail' element={<Fail />} />
-            <Route path='/admin/detail/:position' element={<Detail />} />
+            {/* <Route path='/admin/detail/:position' element={<Detail />} /> */}
           </Route>
         </Routes>
       </BrowserRouter >
