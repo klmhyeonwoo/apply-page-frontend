@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css, keyframes } from "@emotion/react";
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import banner from '../../images/banner.png';
 import loading from '../../images/loading.gif';
 import axios from 'axios';
@@ -173,14 +173,15 @@ export const ModalFrame = ({ children }: WrapperProps) => {
     return (
         <div css={css`
         position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
-        height:100%;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
         background-color: rgba(0, 0, 0, 0.4);
         z-index: 999;
         cursor: pointer;
-        display: block;
         `}>
             {children}
         </div>
@@ -188,22 +189,29 @@ export const ModalFrame = ({ children }: WrapperProps) => {
 }
 
 export const Modal = (props: WrapperProps) => {
+
+    var aa = (document.body.scrollTop + (window.innerHeight / 2));
+
     return (
         <ModalFrame>
             <div css={css`
                 position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
+                width: 100%;
+                height: 100%;
+                border: solid;
+                
                 display: flex;
                 justify-content: center;
+                align-items: center;
             `}>
                 <div css={css`
+                    position: fixed;
+                    top: ${(window.screen.height - 480) / 4 + window.scrollY}px;
+
                     font-family: 'Pretendard-Bold';
                     letter-spacing: -0.03em;
                     border-radius: 20px;
                     background-color: white;
-                    position: fixed;
                     font-size: 16px;
                     width: 40em;
                     height: 30em;
@@ -359,7 +367,7 @@ export const Precautions = () => {
                 <span>· 문항에 따른 올바른 입력을 해주셔야 지원서의 다음 단계로 이동하실 수 있습니다.</span>
                 <span>· 지원서의 내용이 사실과 다를 경우, 합격이 취소되거나 전형 상의 불이익을 받을 수 있습니다.</span>
                 <span>· 지원서는 문항별 최대 1000자의 제한을 두고 있으나, 문항을 다 채우실 필요는 없습니다.</span>
-                <span>· 문의사항은 <strong>kangnam@likelion.org</strong> 으로 문의해주시면 최대한 빠르게 도와드리겠습니다.</span>
+                <span>· 문의사항은 우측 하단 채널 톡으로 문의해주시면 최대한 빠르게 도와드리겠습니다.</span>
             </div>
         </div >
     )
@@ -505,14 +513,16 @@ export const Argree = ((props: AgreeType) => {
 })
 
 export const Banner = () => {
+
     return (
         <img alt="배너 이미지" src={banner} css={css`
             margin-top: 40px;
             max-width: 900px;
             border-radius: 12px;
+            height: auto;
             margin-bottom: 1em;
             // animation: ${fadeLeft} 1.8s ease-in-out;
-        `} />
+        `} loading="lazy" />
     )
 }
 

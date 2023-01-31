@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 import human from '../images/human.png';
 import isTemp from '../images/isTemp.png';
 import { classList } from './class';
+import Confetti from '../hooks/Confetti';
 
 export default function Index() {
     const [name, setName] = useState<string>('');
@@ -682,7 +683,7 @@ export default function Index() {
                     <Button name="임시저장" onClick={isSave}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `지원서 불러오기`}</Button>
                     <Button name="제출하기" disabled={buttonState} onClick={handleClick}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `공통문항 작성하기`}</Button>
                 </ButtonBox>
-            </Section >
+            </Section>
         )
     }
 }
