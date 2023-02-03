@@ -43,6 +43,9 @@ export default function Backend() {
     const userImportantGroup = useSelector((state: TestState) => state.fetcher.userImportantGroup);
     const userPortfolioLink = useSelector((state: TestState) => state.fetcher.userPortfolioLinkBack);
 
+    const [name, setName] = useState<string>('');
+
+
     useEffect(() => {
         document.body.style.overflow = "unset";
 
@@ -65,6 +68,10 @@ export default function Backend() {
 
         if (userPortfolioLink) {
             setPortfolioLink(userPortfolioLink)
+        }
+
+        if (userName) {
+            setName(userName)
         }
     }, [])
 
@@ -242,7 +249,7 @@ export default function Backend() {
         <Section>
             {complete && <Confetti />}
             {complete ?
-                <Modal text="지원서가 정상적으로 제출되었습니다!" imgSrc={completeImg} alt="최종제출">
+                <Modal text={`${name}님의 소중한 지원서가 정상적으로 제출되었어요!`} imgSrc={completeImg} alt="최종제출">
                     <Button name="제출하기" onClick={TempHome}>메인 화면으로 이동</Button>
                 </Modal>
                 : null

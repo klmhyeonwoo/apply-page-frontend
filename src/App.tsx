@@ -18,6 +18,8 @@ import Detail from './component/admin/detail/Detail';
 import Error from './component/404/Error';
 import { useSelector } from 'react-redux';
 import { TestState } from './app/store';
+import { IndexHeader } from './component/emotion/component';
+import Temp from './component/admin/partition/Temp';
 
 export interface WrapperProps {
   children?: React.ReactNode;
@@ -35,18 +37,22 @@ function App() {
         <GlobalStyles />
         <ScrollToTop />
         <Routes>
-          <Route path='/' element={<Index />} />
-          <Route path='/common' element={<Common />} />
-          <Route path='/frontend' element={<Frontend />} />
-          <Route path='/backend' element={<Backend />} />
-          <Route path='/design' element={<Design />} />
+          <Route element={<IndexHeader />}>
+            <Route path='/' element={<Index />} />
+            <Route path='/common' element={<Common />} />
+            <Route path='/frontend' element={<Frontend />} />
+            <Route path='/backend' element={<Backend />} />
+            <Route path='/design' element={<Design />} />
+            <Route path='/*' element={<Error />} />
+          </Route>
+
           <Route path='/admin' element={<Admin />} />
-          <Route path='/*' element={<Error />} />
           <Route path='/404' element={<Error />} />
 
           <Route element={<Header />}>
             <Route path='/admin/main' element={<Main />} />
             <Route path='/admin/pass' element={<Pass />} />
+            <Route path='/admin/temp' element={<Temp />} />
             <Route path='/admin/fail' element={<Fail />} />
             {/* <Route path='/admin/detail/:position' element={<Detail />} /> */}
           </Route>

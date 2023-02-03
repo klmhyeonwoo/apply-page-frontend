@@ -551,7 +551,7 @@ export default function Index() {
                     : null
                 }
                 {load ?
-                    <Modal text="반가워요, 저장된 지원서를 이어서 작성하시겠어요?" imgSrc={isTemp} alt="찾기">
+                    <Modal text="작성하신 지원서의 이메일과 학번을 통해 지원서를 불러올 수 있어요" imgSrc={isTemp} alt="찾기">
                         <div css={css`
                         display: flex;
                         flex-direction: column;
@@ -611,7 +611,7 @@ export default function Index() {
                         {openSearch && <span css={css`
                                 margin-left: 1em;
                                 color: #707070;
-                                font-family: 'Pretendard-Medium';
+                                font-family: 'Pretendard-Regular';
                                 letter-spacing: -0.05em;
                                 // text-decoration: underline;
                                 // text-underline-offset: 0.2em;
@@ -634,7 +634,7 @@ export default function Index() {
                                         }
                                     `} onClick={() => SearchCheck(item)}>
                                         <span css={css`
-                                            color: #ff7828;
+                                            color: #4F85E8;
                                         `}>{item.slice(0, department.length)}</span>
                                         <span>{item.slice(department.length, item.length)}</span>
                                     </div>
