@@ -7,6 +7,7 @@ export interface userType {
     email: string;
     sid: string;
     key: React.Key;
+    sendMail: boolean;
 }
 
 export interface MailType {
@@ -17,4 +18,11 @@ export interface MailType {
 export interface emailType {
     email: string;
     name: string;
+    id?: string;
+}
+
+export interface mailUserType {
+    id?: string;
+    name?: string;
+    email?: string;
 }

@@ -39,7 +39,7 @@ export default function Main() {
         }
 
         dispatch(saveModalState(false));
-        axios.get('/backendApplication/getAllApplications')
+        axios.get('/backendApplication/getSubmissionApplications?bool=true')
             .then((res) => {
                 setBackend(() => {
                     return res.data
@@ -58,7 +58,7 @@ export default function Main() {
         setPosition(name);
 
         if (name === "백엔드") {
-            axios.get('/backendApplication/getAllApplications')
+            axios.get('/backendApplication/getSubmissionApplications?bool=true')
                 .then((res) => {
                     setBackend(res.data);
 
@@ -71,7 +71,7 @@ export default function Main() {
         }
 
         if (name === "프론트엔드") {
-            axios.get('/frontendApplication/getAllApplications')
+            axios.get('/frontendApplication/getSubmissionApplications?bool=true')
                 .then((res) => {
                     setFrontend(res.data);
 
@@ -84,7 +84,7 @@ export default function Main() {
         }
 
         if (name === "디자인") {
-            axios.get('/designApplication/getAllApplications')
+            axios.get('/designApplication/getSubmissionApplications?bool=true')
                 .then((res) => {
                     setDesign(res.data);
 
@@ -113,13 +113,13 @@ export default function Main() {
                             <Position name="프론트엔드" onClick={CheckPosition} state={position}>프론트엔드</Position>
                             <Position name="디자인" onClick={CheckPosition} state={position}>디자인</Position>
                         </PositionBox >
-                        <List name="이름" position="지원분야" department="학과" id="학번" email="이메일" />
+                        <List check="체크 없음" name="이름" position="트랙" department="학과" id="학번" email="이메일" />
                         {/* 백엔드 로직 */}
                         {position === '백엔드' && backendState && <Loading />}
                         {
                             position === '백엔드' && backend.length >= 1 && backend.map((item: userType) => {
                                 return (
-                                    <List key={item.sid} name={item.name} position={position} department={item.department} id={item.sid} email={item.email} onClick={() => onModal(item.sid)} />
+                                    <List check="체크 없음" key={item.sid} name={item.name} position={position} department={item.department} id={item.sid} email={item.email} onClick={() => onModal(item.sid)} />
                                 )
                             })
                         }
@@ -130,7 +130,7 @@ export default function Main() {
                         {
                             position === '프론트엔드' && frontend.length >= 1 && frontend.map((item: userType) => {
                                 return (
-                                    <List key={item.sid} name={item.name} position={position} department={item.department} id={item.sid} email={item.email} onClick={() => onModal(item.sid)} />
+                                    <List check="체크 없음" key={item.sid} name={item.name} position={position} department={item.department} id={item.sid} email={item.email} onClick={() => onModal(item.sid)} />
                                 )
                             })
                         }
@@ -141,7 +141,7 @@ export default function Main() {
                         {
                             position === '디자인' && design.length >= 1 && design.map((item: userType) => {
                                 return (
-                                    <List key={item.sid} name={item.name} position={position} department={item.department} id={item.sid} email={item.email} onClick={() => onModal(item.sid)} />
+                                    <List check="체크 없음" key={item.sid} name={item.name} position={position} department={item.department} id={item.sid} email={item.email} onClick={() => onModal(item.sid)} />
                                 )
                             })
                         }

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { WrapperProps } from '../../../App'
 import { css, keyframes } from "@emotion/react";
 import { AgreeType, ButtonType, InputType } from '../../emotion/component';
@@ -7,7 +7,12 @@ import { PositionType } from '../../emotion/component';
 import { Link, useLocation } from 'react-router-dom';
 import oops from '../../../images/oops.png';
 import { fadeUp } from '../../../styles/Keyframes';
-import { MailType } from '../partition/Type';
+import { MailType, mailUserType } from '../partition/Type';
+import checkBox from '../../../images/checkBox.svg';
+import checkedBox from '../../../images/checkedBox.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, TestState } from '../../../app/store';
+import { updatePassMailList } from '../../../features/fetcherSlice';
 
 export const Section = ({ children }: WrapperProps) => {
     return (
@@ -40,6 +45,48 @@ export const LoginBox = ({ children }: WrapperProps) => {
     )
 }
 
+export const PassUserContent = ({ children }: WrapperProps) => {
+    return (
+        <div css={css`
+        border: solid;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        height: 2em;
+        padding: 0.2em 1.6em 0.2em 1.6em;
+        border-radius: 40px;
+
+        border-color: #4F85E8;
+        color: #4F85E8;
+    `}>
+            {children}
+        </div>
+
+    )
+}
+
+export const PassUser = ({ children }: WrapperProps) => {
+    return (
+        <div css={css`
+                display: flex;
+                justify-content: left;
+                align-items: center;
+                width: 34em;
+                flex-wrap: wrap;
+                white-space:normal;
+                font-size: 13px;  
+                white-space: pre-line; 
+                column-gap: 1em;
+                row-gap: 1em;
+                margin-bottom: 1.7em;
+            `}>
+            {children}
+        </div>
+    )
+}
+
 export const Content = ({ children }: WrapperProps) => {
     return (
         <section css={css`
@@ -61,7 +108,7 @@ export const FailMailSend = (props: MailType) => {
             font-family: 'Pretendard-Medium';
             letter-spacing: -0.03em;
             font-size: 14px;
-            color: #ff7828;
+            color: #4F85E8;
             cursor: pointer;
             transition: 0.4s all;
 
@@ -72,6 +119,31 @@ export const FailMailSend = (props: MailType) => {
         `} {...props}> <span css={css`
             font-family: 'Pretendard-Bold';
         `}>{props.position}</span> 포지션의 불합격 메일 전체 전송을 하고싶으신가요? </div>
+    )
+}
+
+export const PassMailSend = (props: MailType) => {
+
+    const passMailList = useSelector((state: TestState) => state.fetcher.passMailList);
+
+    return (
+        <div css={css`
+            margin-top: -3em;
+            margin-bottom: 3em;
+            font-family: 'Pretendard-Medium';
+            letter-spacing: -0.03em;
+            font-size: 14px;
+            color: #4F85E8;
+            cursor: pointer;
+            transition: 0.4s all;
+
+            &:hover {
+                opacity: 80%;
+            }
+
+        `} {...props}> <span css={css`
+            font-family: 'Pretendard-Bold';
+        `}>{props.position}</span> 포지션의 합격 메일 전송을 하고싶으신가요?</div>
     )
 }
 
@@ -90,7 +162,7 @@ export const Button = (props: ButtonType) => {
             transition: 0.5s all;
             cursor: pointer;
 
-            background-color: #ff7828;
+            background-color: #4F85E8;
 
             &:hover {
                 opacity: 80%;
@@ -116,7 +188,7 @@ export const HeaderText = (props: HeaderType) => {
             border-width: 0.17em;
             font-size: 17px;
             text-decoration: none;
-            color: white;
+            color: #4e5968;
             cursor: pointer;
 
             &:hover {
@@ -125,7 +197,7 @@ export const HeaderText = (props: HeaderType) => {
                 border-left: 0;
                 border-right: 0;
                 border: color;
-                border-bottom: 0.12em solid white;
+                border-bottom: 0.12em solid #4e5968;
                 margin-bottom: -0.12em;
             }
 
@@ -135,8 +207,8 @@ export const HeaderText = (props: HeaderType) => {
                 border-left: 0;
                 border-right: 0;
                 border: color;
-                color: #ff7828;
-                border-bottom: 0.12em solid #ff7828;
+                color: #4F85E8;
+                border-bottom: 0.12em solid #4F85E8;
                 margin-bottom: -0.12em;
 
                 &:hover {
@@ -145,11 +217,11 @@ export const HeaderText = (props: HeaderType) => {
                     border-left: 0;
                     border-right: 0;
                     border: color;
-                    border-bottom: 0.12em solid #ff7828;
+                    border-bottom: 0.12em solid #4F85E8;
                     margin-bottom: -0.12em;
                 }
             `}
-        `}>{props.children}</div>
+        `} tabIndex={-1}>{props.children}</div>
     )
 }
 
@@ -160,7 +232,8 @@ interface ImgType {
 export const Img = (props: ImgType) => {
     return (
         <img css={css`
-            width: 8em;
+            width: 16em;
+            margin-bottom: 1em;
         `} alt="어드민 이미지" src={props.src} />
     )
 }
@@ -176,22 +249,22 @@ export const Position = (props: PositionType) => {
             border-radius: 50px;
             border: solid;
             border-width: 1px;
-            border-color: #707070;
+            border-color: #e6e8ea;
             transition: 0.5s all;
             cursor: pointer;
 
             ${props.name === props.state ? css`
             color: white;
-            background-color: #ff7828;
+            background-color: #4F85E8;
             border: none;
             ` : css`
             background-color: transparent;
-            color: white;
-            border-color: white;
+            color: #707070;
+            border-color: #e6e8ea;
 
             &:hover {
-                border-color: #ff7828;
-                color:  #ff7828;
+                border-color: #4F85E8;
+                color:  #4F85E8;
             }
             &:focus {
                 outline: none;
@@ -249,7 +322,8 @@ export const Input = (props: InputType) => {
             height: 3.5em;
             border-radius: 7px;
             font-size: 13px;
-            border: none;
+            border: solid;
+            border-color: #e6e8ea;
             font-family: 'Pretendard-Regular';
             letter-spacing: -0.03em;
             padding-left: 1em;
@@ -262,8 +336,8 @@ export const Input = (props: InputType) => {
     
             &:focus {
                 outline-style: solid;
-                outline-width: 2.5px;
-                outline-color: #ff7828;
+                outline-width: 2px;
+                outline-color: #4F85E8;
             }
     
             &::placeholder {
@@ -274,27 +348,65 @@ export const Input = (props: InputType) => {
     )
 }
 
+export interface ChangeCheckStateType {
+    (userName: string, userEmail: string, userId: string): void;
+}
+
 export interface ListType {
     name?: string;
     id?: string;
     department?: string;
     email?: string;
     position?: string;
+    check?: string;
     onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
     children?: React.ReactNode;
+    mailState?: boolean;
 }
 
 export interface onModalType {
     (userID: string): void;
 }
 
-export const List = (props: ListType) => {
+export const List = React.memo(function List(props: ListType) {
+
+    const [checkState, setCheckState] = useState<boolean>(false);
+    const [checkList, setCheckList] = useState<mailUserType[]>([]);
+    const [userEmail, setEmail] = useState<string>('');
+    const [userName, setName] = useState<string>('');
+    const [userId, setId] = useState<string>('');
+
+    const dispatch = useDispatch<AppDispatch>();
+    const passMailList = useSelector((state: TestState) => state.fetcher.passMailList);
+    const newList = useSelector((state: TestState) => (state.fetcher.newList));
+
+    const ChangeCheckState: ChangeCheckStateType = useCallback((userEmail: string, userName: string, userId: string) => {
+        setCheckState(!checkState);
+        setEmail(userEmail);
+        setName(userName);
+        setId(userId);
+        // await setCheckList(user)
+        // 전역 상태로 업데이트 할 것!
+    }, [checkState]);
+
+    useEffect(() => {
+        setCheckState(false);
+    }, [newList])
+
+    useEffect(() => {
+        if (checkState) {
+            dispatch(updatePassMailList([...passMailList, { id: userId as string, name: userName as string, email: userEmail as string }]))
+        } else if (!checkState) {
+            dispatch(updatePassMailList(passMailList.filter((items: mailUserType) => { return items.id !== userId })))
+        }
+    }, [checkState])
+
     return (
         <div css={css`
-            font-family: 'Pretendard-Bold';
+            font-family: 'Pretendard-Medium';
             font-size: 14px;
             letter-spacing: -0.03em;
-            color: white;
+            color: #4e5968;
 
             display: flex;
             justify-content: center;
@@ -305,28 +417,38 @@ export const List = (props: ListType) => {
             margin-bottom: 1em;
             padding-bottom: 1em;
             box-sizing: border-box;
+            transition: 0.4s all;
 
             ${props.name !== "이름" && css`
                 &:hover {
-                    color: #ff7828;
-                    border-color: white;
+                    opacity: 80%;
                     cursor: pointer;
                 }
             `}
-        `} onClick={props.onClick}>
+
+            ${checkState && css`
+                color: #4F85E8;
+                border-color: #4F85E8;
+                cursor: pointer;
+            `}
+        `}>
             <ListText onClick={props.onClick}>{props.name}</ListText>
             <ListText onClick={props.onClick}>{props.position}</ListText>
             <ListText onClick={props.onClick}>{props.department}</ListText>
-            <ListText onClick={props.onClick}>{props.id}</ListText>
-            <ListText onClick={props.onClick}>{props.email}</ListText>
+            <ListText onClick={props.onClick}>
+                {props.id !== "학번" && props.mailState ? <span css={css` color: #11BD7E `}> {props.id} </span> : props.id}
+            </ListText>
+            {/* <ListText onClick={props.onClick}>{props.email}</ListText> */}
+            {props.check === "체크 없음" && null}
+            {props.check === "전송 체크" ? <ListText> {props.check} </ListText> : !props.check && <ListText onClick={() => ChangeCheckState(props.email as string, props.name as string, props.id as string)}> <img src={checkState ? checkedBox : checkBox} css={css` width : 1.2em; `} /> </ListText>}
         </div>
     )
-}
+});
 
 export const ListText = (props: ListType) => {
     return (
         <div css={css`
-            width: 18em;
+            width: 16em;
             display: flex;
             align-items: center;
             justify-content: center;

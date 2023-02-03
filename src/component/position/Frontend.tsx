@@ -28,6 +28,8 @@ export default function Frontend() {
     const [achieve, setAchieve] = useState('');
     const [portfolioLink, setPortfolioLink] = useState('');
 
+    const [name, setName] = useState('');
+
 
     const userName = useSelector((state: TestState) => state.fetcher.userName);
     const userID = useSelector((state: TestState) => state.fetcher.userID);
@@ -69,6 +71,10 @@ export default function Frontend() {
         }
         if (userPortfolioLink) {
             setPortfolioLink(userPortfolioLink)
+        }
+
+        if (userName) {
+            setName(userName)
         }
     }, [])
 
@@ -263,7 +269,7 @@ export default function Frontend() {
         <Section>
             {complete && <Confetti />}
             {complete ?
-                <Modal text="지원서가 정상적으로 제출되었습니다!" imgSrc={completeImg} alt="최종제출">
+                <Modal text={`${name}님의 소중한 지원서가 정상적으로 제출되었어요!`} imgSrc={completeImg} alt="최종제출">
                     <Button name="제출하기" onClick={TempHome}>메인 화면으로 이동</Button>
                 </Modal>
                 : null

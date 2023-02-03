@@ -25,7 +25,7 @@ export default function Error() {
             <span css={css`
                 font-family: 'Pretendard-Bold';
                 letter-spacing: -0.03em;
-                color: white;
+                color: black;
                 margin-top: 1em;
                 animation: ${fadeUp} 1s ease-in-out;
             `}>웁스웁스, 잘못된 접근을 하셨어요</span>
@@ -39,7 +39,7 @@ export default function Error() {
                 border: none;
                 border-radius: 7px;
                 color: white;
-                background-color: #ff7828;
+                background-color: #4F85E8;
                 cursor: pointer;
                 transition: 0.5s all;
                 margin-top: 2em;
