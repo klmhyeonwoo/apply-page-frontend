@@ -20,6 +20,7 @@ import { useSelector } from 'react-redux';
 import { TestState } from './app/store';
 import { IndexHeader } from './component/emotion/component';
 import Temp from './component/admin/partition/Temp';
+import NotTime from './component/404/NotTime';
 
 export interface WrapperProps {
   children?: React.ReactNode;
@@ -43,11 +44,12 @@ function App() {
             <Route path='/frontend' element={<Frontend />} />
             <Route path='/backend' element={<Backend />} />
             <Route path='/design' element={<Design />} />
-            <Route path='/*' element={<Error />} />
           </Route>
 
           <Route path='/admin' element={<Admin />} />
           <Route path='/404' element={<Error />} />
+          <Route path='/*' element={<Error />} />
+          <Route path='/notTime' element={<NotTime/>} />
 
           <Route element={<Header />}>
             <Route path='/admin/main' element={<Main />} />

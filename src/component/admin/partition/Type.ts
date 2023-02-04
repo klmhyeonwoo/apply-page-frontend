@@ -19,6 +19,7 @@ export interface emailType {
     email: string;
     name: string;
     id?: string;
+    sid?: string;
 }
 
 export interface mailUserType {

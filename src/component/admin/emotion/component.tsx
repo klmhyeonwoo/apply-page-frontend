@@ -53,10 +53,11 @@ export const PassUserContent = ({ children }: WrapperProps) => {
         display: flex;
         justify-content: center;
         align-items: center;
+        font-size: 0.77vw;
 
         height: 2em;
         padding: 0.2em 1.6em 0.2em 1.6em;
-        border-radius: 40px;
+        border-radius: 3.07em;
 
         border-color: #4F85E8;
         color: #4F85E8;
@@ -76,7 +77,7 @@ export const PassUser = ({ children }: WrapperProps) => {
                 width: 34em;
                 flex-wrap: wrap;
                 white-space:normal;
-                font-size: 13px;  
+                font-size: 0.77vw;  
                 white-space: pre-line; 
                 column-gap: 1em;
                 row-gap: 1em;
@@ -107,7 +108,7 @@ export const FailMailSend = (props: MailType) => {
             margin-bottom: 3em;
             font-family: 'Pretendard-Medium';
             letter-spacing: -0.03em;
-            font-size: 14px;
+            font-size: 0.83vw;
             color: #4F85E8;
             cursor: pointer;
             transition: 0.4s all;
@@ -132,7 +133,7 @@ export const PassMailSend = (props: MailType) => {
             margin-bottom: 3em;
             font-family: 'Pretendard-Medium';
             letter-spacing: -0.03em;
-            font-size: 14px;
+            font-size: 0.83vw;
             color: #4F85E8;
             cursor: pointer;
             transition: 0.4s all;
@@ -150,10 +151,10 @@ export const PassMailSend = (props: MailType) => {
 export const Button = (props: ButtonType) => {
     return (
         <button css={css`
-            font-size: 13px;
+            font-size: 0.77vw;
             width: 26em;
             height: 3.5em;
-            border-radius: 7px;
+            border-radius: 0.53em;
             border: none;
             font-family: 'Pretendard-Bold';
             letter-spacing: -0.03em;
@@ -186,7 +187,7 @@ export const HeaderText = (props: HeaderType) => {
             border:none;
             padding-bottom: 0.7em;
             border-width: 0.17em;
-            font-size: 17px;
+            font-size: 1.01vw;
             text-decoration: none;
             color: #4e5968;
             cursor: pointer;
@@ -232,6 +233,7 @@ interface ImgType {
 export const Img = (props: ImgType) => {
     return (
         <img css={css`
+            font-size: 0.95vw;
             width: 16em;
             margin-bottom: 1em;
         `} alt="어드민 이미지" src={props.src} />
@@ -244,8 +246,9 @@ export const Position = (props: PositionType) => {
             font-family: 'Pretendard-Medium';
             letter-spacing: -0.03em;
             height: 3.7em;
+            font-size: 0.77vw;
             ${props.alt === "모달" && css`height: 3em;`} 
-            ${props.alt === "모달" && css`font-size: 14px;`} 
+            ${props.alt === "모달" && css`font-size: 0.83vw;`} 
             border-radius: 50px;
             border: solid;
             border-width: 1px;
@@ -268,8 +271,8 @@ export const Position = (props: PositionType) => {
             }
             &:focus {
                 outline: none;
-                border-color: #ff7828;
-                color:  #ff7828;
+                border-color: #4F85E8;
+                color:  #4F85E8;
             }
             `}
         `}{...props} tabIndex={-1}>{props.children}</button>
@@ -304,7 +307,7 @@ export const PositionBox = (props: WrapperProps) => {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             column-gap: 2em;
-            font-size: 12px;
+            font-size: 0.71vw;
             width: 55.5em;
             margin-top: 4em;
             margin-bottom: 8em;
@@ -318,10 +321,10 @@ export const PositionBox = (props: WrapperProps) => {
 export const Input = (props: InputType) => {
     return (
         <input placeholder={props.placeholder} css={css`
+            font-size: 0.77vw;
             width: 25em;
             height: 3.5em;
-            border-radius: 7px;
-            font-size: 13px;
+            border-radius: 0.53em;
             border: solid;
             border-color: #e6e8ea;
             font-family: 'Pretendard-Regular';
@@ -336,7 +339,7 @@ export const Input = (props: InputType) => {
     
             &:focus {
                 outline-style: solid;
-                outline-width: 2px;
+                outline-width: 0.15em;
                 outline-color: #4F85E8;
             }
     
@@ -404,7 +407,7 @@ export const List = React.memo(function List(props: ListType) {
     return (
         <div css={css`
             font-family: 'Pretendard-Medium';
-            font-size: 14px;
+            font-size: 0.83vw;
             letter-spacing: -0.03em;
             color: #4e5968;
 

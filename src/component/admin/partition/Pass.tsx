@@ -58,7 +58,7 @@ export default function Pass() {
         }
 
         dispatch(saveModalState(false));
-        axios.get('/backendApplication/getApplications?bool=true')
+        axios.get('/backendApplication/getApplicationWithPassOrNotAndSubmission?passOrNot=true&submission=true')
             .then((res) => {
                 setBackend(() => {
                     return res.data
@@ -75,7 +75,7 @@ export default function Pass() {
     useEffect(() => {
         dispatch(updatePassMailList([]));
         if (position === "백엔드") {
-            axios.get('/backendApplication/getApplications?bool=true')
+            axios.get('/backendApplication/getApplicationWithPassOrNotAndSubmission?passOrNot=true&submission=true')
                 .then((res) => {
                     setBackend(res.data);
 
@@ -88,7 +88,7 @@ export default function Pass() {
         }
 
         if (position === "프론트엔드") {
-            axios.get('/frontendApplication/getApplications?bool=true')
+            axios.get('/frontendApplication/getApplicationsWithPassOrNotAndSubmission?passOrNot=true&submission=true')
                 .then((res) => {
                     setFrontend(res.data);
 
@@ -101,7 +101,7 @@ export default function Pass() {
         }
 
         if (position === "디자인") {
-            axios.get('/designApplication/getApplications?bool=true')
+            axios.get('/designApplication/getApplicationsWithPassOrNotAndSubmission?passOrNot=true&submission=true')
                 .then((res) => {
                     setDesign(res.data);
 
@@ -120,7 +120,7 @@ export default function Pass() {
         setPosition(name);
 
         if (name === "백엔드") {
-            axios.get('/backendApplication/getApplications?bool=true')
+            axios.get('/backendApplication/getApplicationWithPassOrNotAndSubmission?passOrNot=true&submission=true')
                 .then((res) => {
                     setBackend(res.data);
 
@@ -133,7 +133,7 @@ export default function Pass() {
         }
 
         if (name === "프론트엔드") {
-            axios.get('/frontendApplication/getApplications?bool=true')
+            axios.get('/frontendApplication/getApplicationsWithPassOrNotAndSubmission?passOrNot=true&submission=true')
                 .then((res) => {
                     setFrontend(res.data);
 
@@ -146,7 +146,7 @@ export default function Pass() {
         }
 
         if (name === "디자인") {
-            axios.get('/designApplication/getApplications?bool=true')
+            axios.get('/designApplication/getApplicationsWithPassOrNotAndSubmission?passOrNot=true&submission=true')
                 .then((res) => {
                     setDesign(res.data);
 
@@ -182,9 +182,9 @@ export default function Pass() {
         await passMailList.map(async (data: emailType) => {
             await axios.post(`/emailSender/sendAcceptMail`, JSON.stringify([{
                 email: data.email,
-                interviewDate: playTime,
+                interviewDate: time,
                 interviewLocation: place,
-                interviewTime: time,
+                interviewTime: playTime,
                 name: data.name,
             }]),
                 {
@@ -201,8 +201,8 @@ export default function Pass() {
                                     await setMailButtonState(true);
                                 })
                                 .catch(async (error) => {
-                                    await setMailMessage(`${data.name}님에게 합격 메일 전송 완료!`);
-                                    alert("메일 전송은 되었으나, 메일 전송 여부를 바꾸는 과정에서 에러가 발생했어요!");
+                                    await setMailMessage(`${data.name}님에게 메일을 보내는 과정에서 에러가 발생했어요!`);
+                                    alert(`${data.name}님에게 메일을 보내는 과정에서 에러가 발생했어요!`);
                                     await setMailButtonState(true);
                                 })
                         })
@@ -214,8 +214,8 @@ export default function Pass() {
                                     await setMailButtonState(true);
                                 })
                                 .catch(async (error) => {
-                                    await setMailMessage(`${data.name}님에게 합격 메일 전송 완료!`);
-                                    alert("메일 전송은 되었으나, 메일 전송 여부를 바꾸는 과정에서 에러가 발생했어요!");
+                                    await setMailMessage(`${data.name}님에게 메일을 보내는 과정에서 에러가 발생했어요!`);
+                                    alert(`${data.name}님에게 메일을 보내는 과정에서 에러가 발생했어요!`);
                                     await setMailButtonState(true);
                                 })
                         })
@@ -228,12 +228,17 @@ export default function Pass() {
                                     await setMailButtonState(true);
                                 })
                                 .catch(async (error) => {
-                                    await setMailMessage(`${data.name}님에게 합격 메일 전송 완료!`);
-                                    alert("메일 전송은 되었으나, 메일 전송 여부를 바꾸는 과정에서 에러가 발생했어요!");
+                                    await setMailMessage(`${data.name}님에게 메일을 보내는 과정에서 에러가 발생했어요!`);
+                                    alert(`${data.name}님에게 메일을 보내는 과정에서 에러가 발생했어요!`);
                                     await setMailButtonState(true);
                                 })
                         })
                     }
+                })
+                .catch(async (error) => {
+                    alert(`${data.name}님에게 메일을 보내는 과정에서 에러가 발생했어요!`);
+                    await setMailMessage(`${data.name}님에게 메일을 보내는 과정에서 에러가 발생했어요!`);
+                    await setMailButtonState(true);
                 })
         })
     }
