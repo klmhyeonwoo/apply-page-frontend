@@ -185,7 +185,7 @@ export const InputBox = (props: InputType) => {
         width: 64.28em;
         height: 3.7em;
         border: solid;
-        border-radius: 0.714em;
+        border-radius: 0.614em;
         border-color: #e6e8ea;
         border-width: 0.0714em;
         box-sizing: border-box;
