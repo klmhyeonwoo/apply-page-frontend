@@ -16,6 +16,9 @@ import human from '../images/human.png';
 import isTemp from '../images/isTemp.png';
 import { classList } from './class';
 import Confetti from '../hooks/Confetti';
+import NotWidth from './404/NotWidth';
+import NotTime from './404/NotTime';
+import { currentTime, endTime } from './time/time';
 
 export default function Index() {
     const [name, setName] = useState<string>('');
@@ -57,9 +60,7 @@ export default function Index() {
     const userDepartment = useSelector((state: TestState) => state.fetcher.userDepartment);
 
     const [timeState, setTimeState] = useState<boolean>(false);
-
-    const endTime = new Date('2023-03-07 00:00:00');
-    const currentTime = new Date();
+    const [widthState, setWidthState] = useState<boolean>(false);
     const EMAIL_REGEX = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 
@@ -69,6 +70,13 @@ export default function Index() {
             setTimeState(true);
         } else {
             setTimeState(false);
+        }
+
+        // 사용자의 해상도가 1100보다 작을 경우, widthState를 true로 만들어줍니다.
+        if (window.innerWidth && document.body.clientWidth < 1100) {
+            setWidthState(true);
+        } else {
+            setWidthState(false);
         }
 
         document.body.style.overflow = "unset";
@@ -131,7 +139,7 @@ export default function Index() {
             if (position === "백엔드") {
                 await axios.get(`/backendApplication?sid=${id}`)
                     .then(async (res) => {
-                        console.log("백엔드", res.data);
+                        // console.log("백엔드", res.data);
                         if (res.data.motive || res.data.hardWork || res.data.keyWord || res.data.mostDeeplyWork) {
                             if (res.data.submissionStatus) {
                                 setSubmit(!submit);
@@ -150,7 +158,7 @@ export default function Index() {
             if (position === "프론트엔드") {
                 await axios.get(`/frontendApplication?sid=${id}`)
                     .then(async (res) => {
-                        console.log("프론트엔드", res.data);
+                        // console.log("프론트엔드", res.data);
                         if (res.data.motive || res.data.hardWork || res.data.keyWord || res.data.mostDeeplyWork) {
                             if (res.data.submissionStatus) {
                                 setSubmit(!submit);
@@ -169,7 +177,7 @@ export default function Index() {
             if (position === "디자인") {
                 await axios.get(`/designApplication?sid=${id}`)
                     .then(async (res) => {
-                        console.log("디자인", res.data);
+                        // console.log("디자인", res.data);
                         if (res.data.motive || res.data.hardWork || res.data.keyWord || res.data.mostDeeplyWork) {
                             if (res.data.submissionStatus) {
                                 setSubmit(!submit);
@@ -213,7 +221,7 @@ export default function Index() {
         if (position === "디자인") {
             await axios.get(`/designApplication?sid=${id}`)
                 .then(async (res) => {
-                    console.log("design :", res.data);
+                    // console.log("design :", res.data);
                     await dispatch(saveIndex({ userName: res.data.name, userID: res.data.sid, userPhone: res.data.phoneNumber, userEmail: res.data.email, userPosition: position, userDepartment: res.data.department }));
                     await dispatch(saveDesign({ userWhyDesign: res.data.whyDesign, userToolExperience: res.data.toolExperience, userTeamworkExperience: res.data.teamworkExperience, userPortfolioLinkDesign: res.data.portfolioLink, userDesignGrowth: res.data.designGrowth, }));
                     await dispatch(saveCommon({ userMotiv: res.data.motive, userHardWork: res.data.hardWork, userKeyword: res.data.keyWord, userMostDeeplyWork: res.data.mostDeeplyWork }));
@@ -248,7 +256,7 @@ export default function Index() {
         if (tempPosition === "디자인") {
             await axios.get(`/designApplication?sid=${tempId}`)
                 .then(async (res) => {
-                    console.log("design :", res.data);
+                    // console.log("design :", res.data);
                     await dispatch(saveIndex({ userName: res.data.name, userID: res.data.sid, userPhone: res.data.phoneNumber, userEmail: res.data.email, userPosition: tempPosition, userDepartment: res.data.department }));
                     await dispatch(saveDesign({ userWhyDesign: res.data.whyDesign, userToolExperience: res.data.toolExperience, userTeamworkExperience: res.data.teamworkExperience, userPortfolioLinkDesign: res.data.portfolioLink, userDesignGrowth: res.data.designGrowth, }));
                     await dispatch(saveCommon({ userMotiv: res.data.motive, userHardWork: res.data.hardWork, userKeyword: res.data.keyWord, userMostDeeplyWork: res.data.mostDeeplyWork }));
@@ -265,7 +273,7 @@ export default function Index() {
             if (tempPosition === "백엔드") {
                 await axios.get(`/backendApplication/getBackendApplicationWithEmail?email=${tempEmail}&sid=${tempId}`)
                     .then(async (res) => {
-                        console.log("백엔드", res.data);
+                        // console.log("백엔드", res.data);
                         if (res.data.motive || res.data.hardWork || res.data.keyWord || res.data.mostDeeplyWork) {
                             if (res.data.submissionStatus) {
                                 setSubmit(!submit);
@@ -284,7 +292,7 @@ export default function Index() {
             if (tempPosition === "프론트엔드") {
                 await axios.get(`/frontendApplication/getFrontendApplicationWithEmail?email=${tempEmail}&sid=${tempId}`)
                     .then(async (res) => {
-                        console.log("임시저장 프론트엔드", res.data);
+                        // console.log("임시저장 프론트엔드", res.data);
                         if (res.data.motive || res.data.hardWork || res.data.keyWord || res.data.mostDeeplyWork) {
                             if (res.data.submissionStatus === true) {
                                 setSubmit(!submit);
@@ -303,7 +311,7 @@ export default function Index() {
             if (tempPosition === "디자인") {
                 await axios.get(`/designApplication/getDesignApplicationWithEmail?email=${tempEmail}&sid=${tempId}`)
                     .then(async (res) => {
-                        console.log("임시저장 디자인", res.data);
+                        // console.log("임시저장 디자인", res.data);
                         if (res.data.motive || res.data.hardWork || res.data.keyWord || res.data.mostDeeplyWork) {
                             if (res.data.submissionStatus) {
                                 setSubmit(!submit);
@@ -385,7 +393,7 @@ export default function Index() {
         if (tempPosition === "디자인") {
             await axios.get(`/designApplication?sid=${tempId}`)
                 .then(async (res) => {
-                    console.log("design :", res.data);
+                    // console.log("design :", res.data);
                     await dispatch(saveIndex({ userName: res.data.name, userID: res.data.sid, userPhone: res.data.phoneNumber, userEmail: res.data.email, userPosition: tempPosition, userDepartment: res.data.department }));
                     await dispatch(saveDesign({ userWhyDesign: '', userToolExperience: '', userTeamworkExperience: '', userPortfolioLinkDesign: '', userDesignGrowth: '', }));
                 })
@@ -533,9 +541,12 @@ export default function Index() {
     }
 
     if (timeState) {
-        return <EndTime />
-    } else {
-
+        return <NotTime />
+    }
+    else if (widthState) {
+        return <NotWidth />
+    }
+    else {
         return (
             <Section>
                 {itIsTemp ?
@@ -612,10 +623,10 @@ export default function Index() {
                                 margin-left: 1em;
                                 color: #707070;
                                 font-family: 'Pretendard-Regular';
+                                font-size: 0.71vw;
                                 letter-spacing: -0.05em;
                                 // text-decoration: underline;
                                 // text-underline-offset: 0.2em;
-                                font-size: 12px;
                                 cursor: pointer;
                                 margin-left: 58.5em;
                             `} onClick={RevertDepartment}>학과를 다시 입력하고 싶으신가요?</span>}

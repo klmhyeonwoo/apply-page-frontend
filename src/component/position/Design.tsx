@@ -10,6 +10,7 @@ import axios from 'axios';
 import tempImg from '../../images/temp.png';
 import completeImg from '../../images/complete.png';
 import Confetti from '../../hooks/Confetti';
+import { currentTime, endTime } from '../time/time';
 
 
 export default function Design() {
@@ -47,12 +48,15 @@ export default function Design() {
 
     const [name, setName] = useState<string>('');
 
-
-
     useEffect(() => {
         document.body.style.overflow = "unset";
         if (!userName && !userID && !userPhone && !userEmail && !userPosition) {
             navigate('/404')
+        }
+
+        if (currentTime > endTime) {
+            alert("제출 기간이 마감되었습니다!");
+            navigate('/notTime');
         }
 
         // 이전 값들을 저장하기 위해서 Redux 사용
@@ -119,7 +123,8 @@ export default function Design() {
             mostDeeplyWork: userMostDeeplyWork,
             motive: userMotiv,
             name: userName,
-            passOrNot: true,
+            passOrNot: false,
+            sendMail: false,
             phoneNumber: userPhone,
             portfolioFile: "",
             portfolioLink: portfolioLink,
@@ -135,65 +140,73 @@ export default function Design() {
             }
         )
             .then((res) => {
-                console.log(res);
                 setTemp(!temp);
                 document.body.style.overflow = "hidden";
             })
     }
 
     const Submit = async () => {
-        setSubmitCount((prev) => (prev + 1))
-        axios.post('/designApplication', JSON.stringify({
-            department: userDepartment,
-            whyDesign: whyDesign,
-            email: userEmail,
-            hardWork: userHardWork,
-            toolExperience: toolExperience,
-            keyWord: userKeyWord,
-            mostDeeplyWork: userMostDeeplyWork,
-            motive: userMotiv,
-            name: userName,
-            passOrNot: true,
-            phoneNumber: userPhone,
-            portfolioFile: "",
-            portfolioLink: portfolioLink,
-            sid: userID,
-            teamworkExperience: teamworkExperience,
-            designGrowth: designGrowth,
-            submissionStatus: true,
-        }),
-            {
-                headers: {
-                    "Content-type": "application/json",
+
+        const time = new Date();
+
+        if (time > endTime) {
+            alert("제출 기간이 마감되었습니다!");
+            navigate('/notTime');
+        }
+        else if (window.confirm("제출하면 수정이 불가해요, 제출하시겠어요?")) {
+            setSubmitCount((prev) => (prev + 1))
+            axios.post('/designApplication', JSON.stringify({
+                department: userDepartment,
+                whyDesign: whyDesign,
+                email: userEmail,
+                hardWork: userHardWork,
+                toolExperience: toolExperience,
+                keyWord: userKeyWord,
+                mostDeeplyWork: userMostDeeplyWork,
+                motive: userMotiv,
+                name: userName,
+                passOrNot: false,
+                sendMail: false,
+                phoneNumber: userPhone,
+                portfolioFile: "",
+                portfolioLink: portfolioLink,
+                sid: userID,
+                teamworkExperience: teamworkExperience,
+                designGrowth: designGrowth,
+                submissionStatus: true,
+            }),
+                {
+                    headers: {
+                        "Content-type": "application/json",
+                    }
                 }
-            }
-        )
-            .then((res) => {
-                console.log(res);
-                dispatch(saveDesign({
-                    userWhyDesign: '',
-                    userToolExperience: '',
-                    userTeamworkExperience: '',
-                    userPortfolioLinkDesign: '',
-                    userDesignGrowth: '',
-                }));
-                dispatch(saveCommon({
-                    userMotiv: '',
-                    userHardWork: '',
-                    userKeyWord: '',
-                    userMostDeeplyWork: '',
-                }))
-                dispatch(saveIndex({
-                    userName: '',
-                    userID: '',
-                    userDepartment: '',
-                    userEmail: '',
-                    userPhone: '',
-                    userPosition: '',
-                }))
-                setComplete(!complete)
-                document.body.style.overflow = "hidden";
-            })
+            )
+                .then((res) => {
+                    dispatch(saveDesign({
+                        userWhyDesign: '',
+                        userToolExperience: '',
+                        userTeamworkExperience: '',
+                        userPortfolioLinkDesign: '',
+                        userDesignGrowth: '',
+                    }));
+                    dispatch(saveCommon({
+                        userMotiv: '',
+                        userHardWork: '',
+                        userKeyWord: '',
+                        userMostDeeplyWork: '',
+                    }))
+                    dispatch(saveIndex({
+                        userName: '',
+                        userID: '',
+                        userDepartment: '',
+                        userEmail: '',
+                        userPhone: '',
+                        userPosition: '',
+                    }))
+                    setComplete(!complete)
+                    document.body.style.overflow = "hidden";
+                })
+        }
     }
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>) => {

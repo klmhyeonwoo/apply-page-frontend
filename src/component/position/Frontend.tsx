@@ -10,6 +10,7 @@ import axios from 'axios';
 import tempImg from '../../images/temp.png';
 import completeImg from '../../images/complete.png';
 import Confetti from '../../hooks/Confetti';
+import { currentTime, endTime } from '../time/time';
 
 export default function Frontend() {
 
@@ -28,7 +29,7 @@ export default function Frontend() {
     const [achieve, setAchieve] = useState('');
     const [portfolioLink, setPortfolioLink] = useState('');
 
-    const [name, setName] = useState('');
+    const [name, setName] = useState<string>('');
 
 
     const userName = useSelector((state: TestState) => state.fetcher.userName);
@@ -53,6 +54,11 @@ export default function Frontend() {
         document.body.style.overflow = "unset";
         if (!userName && !userID && !userPhone && !userEmail && !userPosition) {
             navigate('/404')
+        }
+
+        if (currentTime > endTime) {
+            alert("제출 기간이 마감되었습니다!");
+            navigate('/notTime');
         }
 
         // 이전 값들을 저장하기 위해서 Redux 사용
@@ -118,7 +124,8 @@ export default function Frontend() {
                 mostDeeplyWork: userMostDeeplyWork,
                 motive: userMotiv,
                 name: userName,
-                passOrNot: true,
+                passOrNot: false,
+                sendMail: false,
                 phoneNumber: userPhone,
                 portfolioFile: "",
                 portfolioLink: portfolioLink,
@@ -134,7 +141,6 @@ export default function Frontend() {
                 }
             )
                 .then((res) => {
-                    console.log(res);
                     setTemp(!temp);
                     document.body.style.overflow = "hidden";
                 })
@@ -146,58 +152,68 @@ export default function Frontend() {
     }
 
     const Submit = () => {
-        setSubmitCount((prev) => (prev + 1))
-        axios.post('/frontendApplication', JSON.stringify({
-            department: userDepartment,
-            whyFrontend: whyFrontend,
-            email: userEmail,
-            hardWork: userHardWork,
-            usingStack: usingStack,
-            keyWord: userKeyWord,
-            mostDeeplyWork: userMostDeeplyWork,
-            motive: userMotiv,
-            name: userName,
-            passOrNot: true,
-            phoneNumber: userPhone,
-            portfolioFile: "",
-            portfolioLink: portfolioLink,
-            sid: userID,
-            teamProject: teamProject,
-            achieve: achieve,
-            submissionStatus: true,
-        }),
-            {
-                headers: {
-                    "Content-type": "application/json",
+
+        const time = new Date();
+
+        if (time > endTime) {
+            alert("제출 기간이 마감되었습니다!");
+            navigate('/notTime');
+        }
+
+        else if (window.confirm("제출하면 수정이 불가해요, 제출하시겠어요?")) {
+            setSubmitCount((prev) => (prev + 1))
+            axios.post('/frontendApplication', JSON.stringify({
+                department: userDepartment,
+                whyFrontend: whyFrontend,
+                email: userEmail,
+                hardWork: userHardWork,
+                usingStack: usingStack,
+                keyWord: userKeyWord,
+                mostDeeplyWork: userMostDeeplyWork,
+                motive: userMotiv,
+                name: userName,
+                passOrNot: false,
+                sendMail: false,
+                phoneNumber: userPhone,
+                portfolioFile: "",
+                portfolioLink: portfolioLink,
+                sid: userID,
+                teamProject: teamProject,
+                achieve: achieve,
+                submissionStatus: true,
+            }),
+                {
+                    headers: {
+                        "Content-type": "application/json",
+                    }
                 }
-            }
-        )
-            .then((res) => {
-                console.log(res);
-                dispatch(saveFrontEnd({
-                    userWhyFrontend: '',
-                    userUsingStack: '',
-                    userAchieve: '',
-                    userPortfolioLinkFront: '',
-                    userTeamProject: '',
-                }));
-                dispatch(saveCommon({
-                    userMotiv: '',
-                    userHardWork: '',
-                    userKeyWord: '',
-                    userMostDeeplyWork: '',
-                }))
-                dispatch(saveIndex({
-                    userName: '',
-                    userID: '',
-                    userDepartment: '',
-                    userEmail: '',
-                    userPhone: '',
-                    userPosition: '',
-                }))
-                setComplete(!complete)
-                document.body.style.overflow = "hidden";
-            })
+            )
+                .then((res) => {
+                    dispatch(saveFrontEnd({
+                        userWhyFrontend: '',
+                        userUsingStack: '',
+                        userAchieve: '',
+                        userPortfolioLinkFront: '',
+                        userTeamProject: '',
+                    }));
+                    dispatch(saveCommon({
+                        userMotiv: '',
+                        userHardWork: '',
+                        userKeyWord: '',
+                        userMostDeeplyWork: '',
+                    }))
+                    dispatch(saveIndex({
+                        userName: '',
+                        userID: '',
+                        userDepartment: '',
+                        userEmail: '',
+                        userPhone: '',
+                        userPosition: '',
+                    }))
+                    setComplete(!complete)
+                    document.body.style.overflow = "hidden";
+                })
+        }
     }
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>) => {
