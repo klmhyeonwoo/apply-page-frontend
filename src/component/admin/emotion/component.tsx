@@ -181,7 +181,7 @@ export interface HeaderType {
 export const HeaderText = (props: HeaderType) => {
     return (
         <div css={css`
-            font-family: 'Pretendard-Bold';
+            font-family: 'Pretendard-Medium';
             letter-spacing: -0.03em;
             width: 9em;
             border:none;
@@ -327,6 +327,7 @@ export const Input = (props: InputType) => {
             border-radius: 0.53em;
             border: solid;
             border-color: #e6e8ea;
+            border-width: 0.0714em;
             font-family: 'Pretendard-Regular';
             letter-spacing: -0.03em;
             padding-left: 1em;
@@ -421,6 +422,7 @@ export const List = React.memo(function List(props: ListType) {
             padding-bottom: 1em;
             box-sizing: border-box;
             transition: 0.4s all;
+            border-width: 0.08em;
 
             ${props.name !== "이름" && css`
                 &:hover {
