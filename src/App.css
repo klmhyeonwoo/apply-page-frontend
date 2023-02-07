@@ -1,3 +1,18 @@
+html {
+  background-color: #fff;
+}
+
+a {
+  text-decoration: none;
+  color: #4F85E8;
+  font-family: 'Pretendard-Bold';
+  transition: 0.4s all;
+}
+
+a:hover {
+  opacity: 80%;
+}
+
 .App {
   text-align: center;
 }
@@ -32,6 +47,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
