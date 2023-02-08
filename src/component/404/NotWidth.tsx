@@ -15,9 +15,13 @@ export default function NotWidth() {
             transform: translate(-50%, -50%);
             width: 60%;
 
-            display: flex;
+            display: none;
             flex-direction: column;
             align-items: center;
+
+            @media (max-width: 1099px) {
+                display: flex;
+            }
         `}>
             <img alt="404" src={oops} css={css`
                 width: 8.5em;
