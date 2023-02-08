@@ -319,15 +319,14 @@ export default function Frontend() {
                 <WordLength>{achieve.length}</WordLength>
             </Article>
             <Article>
-                <InputTitle>포트폴리오 링크가 있다면 첨부해주세요 </InputTitle>
-                <InputBox type="text" placeholder="포트폴리오 링크를 입력해주세요" maxLength={200} name="포트폴리오" onChange={handleChange} value={portfolioLink} />
+                <InputTitle>깃허브 또는 포트폴리오 링크가 있다면 첨부해주세요 </InputTitle>
+                <InputBox type="text" placeholder="https 또는 http를 포함하는 링크 전체를 입력해주세요" maxLength={200} name="포트폴리오" onChange={handleChange} value={portfolioLink} />
             </Article>
             <ButtonBox>
                 <Button name="임시저장" onClick={TempSave} disabled={tempState}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `임시저장`}</Button>
                 <Button name="제출하기" onClick={Back}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `뒤로가기`}</Button>
                 <Button name="제출하기" onClick={Submit} disabled={buttonState}>{submitCount >= 1 ? `잠시만 기다려주세요...` : `제출하기`}</Button>
             </ButtonBox>
-            <Footer />
         </Section>
     )
 }
