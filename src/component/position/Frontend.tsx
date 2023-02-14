@@ -304,7 +304,7 @@ export default function Frontend() {
                 <WordLength>{whyFrontend.length}</WordLength>
             </Article>
             <Article>
-                <InputTitle>프론트엔드 개발과 관련된 프레임워크나 html, css, js 등의 언어를 사용해 보신 적 있으신가요? 있으시다면 어디까지 사용해 보셨는지 구체적으로 적어주세요<Require /> </InputTitle>
+                <InputTitle>프론트엔드 개발과 관련된 프레임워크나 html, css, js 등의 언어를 사용해보신 경험에 대해 구체적으로 적어주세요<Require /> </InputTitle>
                 <TextAreaBox placeholder="텍스트를 입력해주세요" name="프레임워크" onChange={handleChange} value={usingStack} />
                 <WordLength>{usingStack.length}</WordLength>
             </Article>

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useRef, useState } from 'react'
 import axios from 'axios';
 import checkBox from '../images/checkBox.svg';
 import checkedBox from '../images/checkedBox.svg';
@@ -18,7 +18,7 @@ import { classList } from './class';
 import Confetti from '../hooks/Confetti';
 import NotWidth from './404/NotWidth';
 import NotTime from './404/NotTime';
-import { currentTime, endTime } from './time/time';
+import { currentTime, endTime, startTime } from './time/time';
 
 export default function Index() {
     const [name, setName] = useState<string>('');
@@ -45,6 +45,7 @@ export default function Index() {
     const [isNotTempState, setIsNotTempState] = useState<boolean>(false);
     const [openSearch, setOpenSearch] = useState<boolean>(false);
     const [itIsTemp, setItIsTemp] = useState<boolean>(false);
+    const [isDepartment, setIsDepartment] = useState<boolean>(false);
 
     const [userNameCheck, setUserNameCheck] = useState<boolean | null>(null);
     const [userIDCheck, setUserIDCheck] = useState<boolean | null>(null);
@@ -60,14 +61,22 @@ export default function Index() {
     const userPosition = useSelector((state: TestState) => state.fetcher.userPosition);
     const userDepartment = useSelector((state: TestState) => state.fetcher.userDepartment);
 
+    const departmentRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+
     const [timeState, setTimeState] = useState<boolean>(false);
     // const [widthState, setWidthState] = useState<boolean>(false);
-    const EMAIL_REGEX = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    const EMAIL_REGEX = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
 
 
     useEffect(() => {
         // 현재 시간이 엔드타임보다 클 경우에는 timesState를 true로 만들어줍니다.
-        if (currentTime > endTime) {
+        // 현재 시간이 스타트타임보다 작을 경우에는 timsState를 true로 만들어줍니다.
+        // timeState가 true라면 모달창을 띄웁니다.
+
+        if (currentTime <= startTime) {
+            setTimeState(true);
+        }
+        else if (currentTime > endTime) {
             setTimeState(true);
         } else {
             setTimeState(false);
@@ -511,6 +520,10 @@ export default function Index() {
         if (event.target.name === "학과") {
             const eventDepartment = event.target.value.replace(/[_/]|[0-9]|[\[\]{}()<>?|`~!@#$%^&*-+=,.;:\"'\\]/g, '');
             setDepartment(eventDepartment);
+
+            // if (event.target.value.length === 0) {
+            //     setIsDepartment(false);
+            // }
         }
 
         if (event.target.name === "저장된_학번") {
@@ -631,9 +644,9 @@ export default function Index() {
                                 // text-decoration: underline;
                                 // text-underline-offset: 0.2em;
                                 cursor: pointer;
-                                margin-left: auto;
-                                margin-right: 1em;
+                                margin-right: .8em;
                                 transition: 0.4s all;
+                                float: right;
 
                                 &:hover {
                                     opacity: 80%;
@@ -642,7 +655,7 @@ export default function Index() {
                     </InputTitle>
                     <InputBox type="text" placeholder="학과를 입력해주세요 (예시 : 교육학과)" name="학과" onChange={changeValue} maxLength={10} value={department} disabled={openSearch} tabIndex={tabIndex} />
                     {!openSearch && department.length >= 1 && <SearchDepartment>
-                        {classList.map((item) => {
+                        {classList.map((item, key) => {
                             if (department.length >= 1 && item.slice(0, department.length) === department) {
                                 return (
                                     <div css={css`
@@ -654,7 +667,7 @@ export default function Index() {
                                         &:hover {
                                             opacity: 80%;
                                         }
-                                    `} onClick={() => SearchCheck(item)}>
+                                    `} onClick={() => SearchCheck(item)} key={key}>
                                         <span css={css`
                                             color: #4F85E8;
                                             font-family: 'Pretendard-Medium';

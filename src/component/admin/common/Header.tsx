@@ -21,6 +21,7 @@ export default function Header() {
             column-gap: .2em;
         }; 
 
+
         width: 100%;
         height: 7em;
         display: flex;
