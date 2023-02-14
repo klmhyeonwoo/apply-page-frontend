@@ -28,7 +28,7 @@ export default function NotTime() {
                 letter-spacing: -0.03em;
                 color: #333d4b;
                 margin-top: 1em;
-                font-size: .88vw;
+                font-size: 15px;
                 animation: ${fadeUp} 1s ease-in-out;
             `}>현재는 지원 기간이 아닙니다!</span>
         </div>

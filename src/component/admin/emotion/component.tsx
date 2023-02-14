@@ -520,11 +520,12 @@ export const List = React.memo(function List(props: ListType) {
         <div css={css`
             @media (max-width:768px) { 
                 font-size: 7px;
-                column-gap: 2em;
+                column-gap: 3.5em;
                 width: 100%;
             }; 
             @media all and (min-width:768px) and (max-width:1059px) { 
-                font-size: 15.5px;
+                font-size: 15px;
+                width: 100%;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
                 font-size: 15.5px;

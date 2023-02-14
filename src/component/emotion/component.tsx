@@ -348,7 +348,7 @@ export const Modal = (props: WrapperProps) => {
                     border-radius: 1.25em;
                     background-color: white;
                     @media (max-width:768px) { 
-                        font-size: 13px;
+                        font-size: 11px;
                         width: ${window.screen.width / 2 + 140}px;
                         height: 15em;
                         padding-top: 6em;
@@ -407,8 +407,8 @@ export const Modal = (props: WrapperProps) => {
                         <span css={css`
                             @media (max-width:768px) { 
                                 padding: 1em;
-                                font-size: 13px;
-                                width: 70%;
+                                font-size: 11px;
+                                width: 100%;
                                 margin-bottom: -2em;
                             }; 
                             @media all and (min-width:768px) and (max-width:1059px) { 
@@ -489,7 +489,7 @@ export const ModalInput = (props: InputType) => {
         height: 3.5em;
         `}
         ${props.name === "저장된_학번" && css`
-        @media all and (min-width:768px) and (max-width:1059px) { 
+        @media all and (min-width:768px) and (max-width:1099px) { 
             font-size: 12px;
         }; 
         @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -499,7 +499,7 @@ export const ModalInput = (props: InputType) => {
         height: 3.5em;
         `}
         ${props.name === "저장된_이메일" && css`
-        @media all and (min-width:768px) and (max-width:1059px) { 
+        @media all and (min-width:768px) and (max-width:1099px) { 
             font-size: 12px;
         }; 
         @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -516,8 +516,18 @@ export const ModalInput = (props: InputType) => {
             margin: 0;
         }
 
+
         &:focus {
             outline-color: #4F85E8;
+
+            &:hover {
+                box-shadow: none;
+            }
+            // box-shadow: inset 0 0 0 2px #4F85E8;
+        }
+
+        &:hover {
+            box-shadow: inset 0 0 0 2px #90c2ff;
         }
 
         &::placeholder {
@@ -544,7 +554,7 @@ export const EndTime = () => {
                 height: 25em;
                 border-radius: 0.714em;
                 border: none;
-                @media all and (min-width:768px) and (max-width:1059px) { 
+                @media all and (min-width:768px) and (max-width:1099px) { 
                     font-size: 16px;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -563,7 +573,7 @@ export const EndTime = () => {
                     width: 8em;
                 `} />
                 <span css={css`
-                    @media all and (min-width:768px) and (max-width:1059px) { 
+                    @media all and (min-width:768px) and (max-width:1099px) { 
                         font-size: 17px;
                     }; 
                     @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -591,7 +601,7 @@ export const Precautions = () => {
             text-align: left;
             width: 46.88vw;
 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 14px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -600,7 +610,7 @@ export const Precautions = () => {
 
 
             span {
-                @media all and (min-width:768px) and (max-width:1059px) { 
+                @media all and (min-width:768px) and (max-width:1099px) { 
                     font-size: 14.5px;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -612,7 +622,7 @@ export const Precautions = () => {
             <div css={css`
                 display: flex;
 
-                @media all and (min-width:768px) and (max-width:1059px) { 
+                @media all and (min-width:768px) and (max-width:1099px) { 
                     font-size: 14px;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -640,7 +650,7 @@ export const Precautions = () => {
 export const PositionBox = (props: WrapperProps) => {
     return (
         <div css={css`
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 12.7px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -664,7 +674,7 @@ export const Loading = () => {
             @media (max-width:768px) { 
                 font-size: 6px;
             }; 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 12.7px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -687,7 +697,7 @@ export const Quit = (props: ImgClickType) => {
             cursor: pointer;
 
             ${props.alt === "찾기" && css`
-                @media all and (min-width:768px) and (max-width:1059px) { 
+                @media all and (min-width:768px) and (max-width:1099px) { 
                     font-size: 12.5px;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -716,7 +726,7 @@ export const WordLength = ({ children }: WrapperProps) => {
             font-family: 'Pretendard-Medium';
             letter-spacing: -0.03em;
 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 13px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -742,7 +752,7 @@ export const WordLength = ({ children }: WrapperProps) => {
                 margin-right: 0.3em;
             `}>/</span>
             <span css={css`
-                @media all and (min-width:768px) and (max-width:1059px) { 
+                @media all and (min-width:768px) and (max-width:1099px) { 
                     font-size: 13px;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -760,7 +770,7 @@ export const Require = () => {
             margin-left: 0.4em;
             font-family: 'Pretendard-Medium';
             letter-spacing: -0.02em;
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 14px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -799,7 +809,7 @@ export const Argree = ((props: AgreeType) => {
             display: flex;
             flex-direction: column;
             width: 46.88vw;
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 14.5px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -815,7 +825,7 @@ export const Argree = ((props: AgreeType) => {
                     cursor: pointer;
                 `} />
                 <span css={css`
-                    @media all and (min-width:768px) and (max-width:1059px) { 
+                    @media all and (min-width:768px) and (max-width:1099px) { 
                         font-size: 14.5px;
                     }; 
                     @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -847,7 +857,7 @@ export const Footer = () => {
             padding-bottom: 4em;
         `}>
             <div css={css`
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 14px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -870,7 +880,7 @@ export const Footer = () => {
                 <span css={css`
                 font-family: 'Pretendard-Bold';
                 color: #333d4b;
-                @media all and (min-width:768px) and (max-width:1059px) { 
+                @media all and (min-width:768px) and (max-width:1099px) { 
                     font-size: 15.5px;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -890,7 +900,7 @@ export const Banner = () => {
 
     return (
         <img alt="배너 이미지" src={banner} css={css`
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 15px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -941,16 +951,17 @@ export const InputTitle = ({ children }: WrapperProps) => {
         <p css={css`
             font-family: 'Pretendard-Medium';
             letter-spacing: -0.03em;
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 15px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
                 font-size: 15px;
             }; 
             color: #4e5968;
-            display: flex;
             width: 46.88vw;
             align-items: center;
+            
+            
         `}>
             {children}
         </p>
@@ -1028,6 +1039,7 @@ export const CollectDescription = ({ children }: WrapperProps) => {
             position: absolute;
             font-family: 'Pretendard-Regular';
             letter-spacing: -0.03em;
+            font-size: 13px;
             @media all and (min-width:768px) and (max-width:1059px) { 
                 font-size: 13px;
             }; 
