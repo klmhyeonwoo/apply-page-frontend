@@ -19,7 +19,7 @@ export default function NotWidth() {
             flex-direction: column;
             align-items: center;
 
-            @media (max-width: 1099px) {
+            @media (max-width: 1024px) {
                 display: flex;
             }
         `}>

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css, keyframes } from "@emotion/react";
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import banner from '../../images/banner.png';
 import loading from '../../images/loading.gif';
 import axios from 'axios';
@@ -15,6 +15,7 @@ import oops from '../../images/oops.png';
 import logo from '../../images/logo.png';
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import NotWidth from "../404/NotWidth";
+import { KeyboardIOS } from "../../hooks/KeyboardIOS";
 
 
 // 공통 질문, 각 포지션별 질문에 해당하는 textarea 태그
@@ -35,7 +36,7 @@ export const TextAreaBox = (props: TextAreaType) => {
         border-radius: 1.07em;
         border-color: #e6e8ea;
         border-width: 0.0714em;
-        @media all and (min-width:768px) and (max-width:1059px) { 
+        @media all and (min-width:768px) and (max-width:1099px) { 
             font-size: 14px;
         }; 
         @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -121,7 +122,7 @@ export const IndexHeader = () => {
                 `}
 
                 a {
-                    @media all and (min-width:768px) and (max-width:1059px) { 
+                    @media all and (min-width:768px) and (max-width:1099px) { 
                         font-size: 14.8px;
                     }; 
                     @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -196,8 +197,8 @@ export const UploadButton = () => {
 export const InputBox = (props: InputType) => {
     return (
         <input css={css`
-        @media all and (min-width:768px) and (max-width:1059px) { 
-            font-size: 14.5px;
+        @media all and (min-width:768px) and (max-width:1099px) { 
+            font-size: 13px;
         }; 
         @media all and (min-width:1100px) and (max-width:2000px) { 
             font-size: 14.5px;
@@ -259,16 +260,17 @@ export const Position = (props: PositionType) => {
         <button css={css`
             font-family: 'Pretendard-Medium';
             letter-spacing: -0.03em;
-            @media all and (min-width:768px) and (max-width:1059px) { 
-                font-size: 15px;
+            @media all and (min-width:768px) and (max-width:1099px) { 
+                font-size: 13px;
+                height: 40px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
                 font-size: 14px;
             };  
-            height: 2.92vw;
+            height: 56px;
             ${props.alt === "모달" && css`height: 3em;`} 
             ${props.alt === "모달" && css`
-                @media all and (min-width:768px) and (max-width:1059px) { 
+                @media all and (min-width:768px) and (max-width:1099px) { 
                     font-size: 12px;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -318,6 +320,7 @@ export const ModalFrame = ({ children }: WrapperProps) => {
         background-color: rgba(0, 0, 0, 0.4);
         z-index: 999;
         cursor: pointer;
+        padding-bottom: 10em;
         `}>
             {children}
         </div>
@@ -327,10 +330,19 @@ export const ModalFrame = ({ children }: WrapperProps) => {
 // 모달을 띄울 때 사용하는 모달 컴포넌트
 export const Modal = (props: WrapperProps) => {
 
+    const ModalRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (ModalRef.current != null) {
+            // console.log("모달 등장!", ModalRef.current.style);
+            ModalRef.current.style.top = `${(window.screen.height - 480) / 4 + window.scrollY}px`;
+        }
+    }, [])
+
     return (
         <ModalFrame>
             <div css={css`
-                position: fixed;
+                position: absolute;
                 width: 100%;
                 height: 100%;
                 border: none;
@@ -340,22 +352,23 @@ export const Modal = (props: WrapperProps) => {
                 align-items: center;
             `}>
                 <div css={css`
-                    position: fixed;
-                    top: ${(window.screen.height - 480) / 4 + window.scrollY}px;
+                    position: absolute;  
+                    // top: ${(window.screen.height - 480) / 4 + window.scrollY}px;
+                    -webkit-overflow-scrolling:touch;
 
                     font-family: 'Pretendard-Bold';
                     letter-spacing: -0.03em;
                     border-radius: 1.25em;
                     background-color: white;
                     @media (max-width:768px) { 
-                        font-size: 13px;
+                        font-size: 11px;
                         width: ${window.screen.width / 2 + 140}px;
                         height: 15em;
                         padding-top: 6em;
                         padding-bottom: 6em;
                     }; 
-                    @media all and (min-width:768px) and (max-width:1059px) { 
-                        font-size: 13px;
+                    @media all and (min-width:768px) and (max-width:1099px) { 
+                        font-size: 13.5px;
                     }; 
                     @media all and (min-width:1100px) and (max-width:2000px) { 
                         font-size: 18px;
@@ -381,7 +394,7 @@ export const Modal = (props: WrapperProps) => {
                     justify-content: center;    
                     align-items: center;
                     animation: ${fadeIn} 0.5s ease-in-out;
-                `}>
+                `} ref={ModalRef}>
                     <div css={css`
                         display: flex;
                         flex-direction: column;
@@ -407,11 +420,11 @@ export const Modal = (props: WrapperProps) => {
                         <span css={css`
                             @media (max-width:768px) { 
                                 padding: 1em;
-                                font-size: 13px;
-                                width: 70%;
+                                font-size: 11px;
+                                width: 100%;
                                 margin-bottom: -2em;
                             }; 
-                            @media all and (min-width:768px) and (max-width:1059px) { 
+                            @media all and (min-width:768px) and (max-width:1099px) { 
                                 font-size: 14px;
                             }; 
                             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -436,7 +449,7 @@ export const ModalInput = (props: InputType) => {
         <input css={css`
         font-family: 'Pretendard-Medium';
         letter-spacing: -0.03em;
-        @media all and (min-width:768px) and (max-width:1059px) { 
+        @media all and (min-width:768px) and (max-width:1099px) { 
             font-size: 14px;
         }; 
         @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -453,7 +466,7 @@ export const ModalInput = (props: InputType) => {
         @media (max-width:768px) { 
             font-size: 8px;
         }; 
-        @media all and (min-width:768px) and (max-width:1059px) { 
+        @media all and (min-width:768px) and (max-width:1099px) { 
             font-size: 11px;
         }; 
         @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -466,7 +479,7 @@ export const ModalInput = (props: InputType) => {
         @media (max-width:768px) { 
             font-size: 8px;
         }; 
-        @media all and (min-width:768px) and (max-width:1059px) { 
+        @media all and (min-width:768px) and (max-width:1099px) { 
             font-size: 11px;
         }; 
         @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -479,7 +492,7 @@ export const ModalInput = (props: InputType) => {
         @media (max-width:768px) { 
             font-size: 8px;
         }; 
-        @media all and (min-width:768px) and (max-width:1059px) { 
+        @media all and (min-width:768px) and (max-width:1099px) { 
             font-size: 11px;
         }; 
         @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -489,7 +502,7 @@ export const ModalInput = (props: InputType) => {
         height: 3.5em;
         `}
         ${props.name === "저장된_학번" && css`
-        @media all and (min-width:768px) and (max-width:1059px) { 
+        @media all and (min-width:768px) and (max-width:1099px) { 
             font-size: 12px;
         }; 
         @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -499,7 +512,7 @@ export const ModalInput = (props: InputType) => {
         height: 3.5em;
         `}
         ${props.name === "저장된_이메일" && css`
-        @media all and (min-width:768px) and (max-width:1059px) { 
+        @media all and (min-width:768px) and (max-width:1099px) { 
             font-size: 12px;
         }; 
         @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -516,8 +529,18 @@ export const ModalInput = (props: InputType) => {
             margin: 0;
         }
 
+
         &:focus {
             outline-color: #4F85E8;
+
+            &:hover {
+                box-shadow: none;
+            }
+            // box-shadow: inset 0 0 0 2px #4F85E8;
+        }
+
+        &:hover {
+            box-shadow: inset 0 0 0 2px #90c2ff;
         }
 
         &::placeholder {
@@ -525,7 +548,7 @@ export const ModalInput = (props: InputType) => {
             color: #8B95A1;
             margin-left: 0.4em;
         }
-        `}{...props} />
+        `}{...props} onClick={() => { return false }} />
     )
 }
 
@@ -544,7 +567,7 @@ export const EndTime = () => {
                 height: 25em;
                 border-radius: 0.714em;
                 border: none;
-                @media all and (min-width:768px) and (max-width:1059px) { 
+                @media all and (min-width:768px) and (max-width:1099px) { 
                     font-size: 16px;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -563,7 +586,7 @@ export const EndTime = () => {
                     width: 8em;
                 `} />
                 <span css={css`
-                    @media all and (min-width:768px) and (max-width:1059px) { 
+                    @media all and (min-width:768px) and (max-width:1099px) { 
                         font-size: 17px;
                     }; 
                     @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -591,7 +614,7 @@ export const Precautions = () => {
             text-align: left;
             width: 46.88vw;
 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 14px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -600,7 +623,7 @@ export const Precautions = () => {
 
 
             span {
-                @media all and (min-width:768px) and (max-width:1059px) { 
+                @media all and (min-width:768px) and (max-width:1099px) { 
                     font-size: 14.5px;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -612,7 +635,10 @@ export const Precautions = () => {
             <div css={css`
                 display: flex;
 
-                @media all and (min-width:768px) and (max-width:1059px) { 
+                @media all and (min-width:768px) and (max-width:1099px) { 
+                    span {
+                        font-size: 13px;
+                    }
                     font-size: 14px;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -640,7 +666,7 @@ export const Precautions = () => {
 export const PositionBox = (props: WrapperProps) => {
     return (
         <div css={css`
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 12.7px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -664,7 +690,7 @@ export const Loading = () => {
             @media (max-width:768px) { 
                 font-size: 6px;
             }; 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 12.7px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -687,8 +713,9 @@ export const Quit = (props: ImgClickType) => {
             cursor: pointer;
 
             ${props.alt === "찾기" && css`
-                @media all and (min-width:768px) and (max-width:1059px) { 
-                    font-size: 12.5px;
+                @media all and (min-width:768px) and (max-width:1099px) { 
+                    font-size: 13px;
+                    margin-top: -16.8em;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
                     font-size: 17.5px;
@@ -716,7 +743,7 @@ export const WordLength = ({ children }: WrapperProps) => {
             font-family: 'Pretendard-Medium';
             letter-spacing: -0.03em;
 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 13px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -742,7 +769,7 @@ export const WordLength = ({ children }: WrapperProps) => {
                 margin-right: 0.3em;
             `}>/</span>
             <span css={css`
-                @media all and (min-width:768px) and (max-width:1059px) { 
+                @media all and (min-width:768px) and (max-width:1099px) { 
                     font-size: 13px;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -760,7 +787,7 @@ export const Require = () => {
             margin-left: 0.4em;
             font-family: 'Pretendard-Medium';
             letter-spacing: -0.02em;
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 14px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -799,7 +826,7 @@ export const Argree = ((props: AgreeType) => {
             display: flex;
             flex-direction: column;
             width: 46.88vw;
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 14.5px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -815,8 +842,8 @@ export const Argree = ((props: AgreeType) => {
                     cursor: pointer;
                 `} />
                 <span css={css`
-                    @media all and (min-width:768px) and (max-width:1059px) { 
-                        font-size: 14.5px;
+                    @media all and (min-width:768px) and (max-width:1099px) { 
+                        font-size: 13px;
                     }; 
                     @media all and (min-width:1100px) and (max-width:2000px) { 
                         font-size: 14.5px;
@@ -847,8 +874,12 @@ export const Footer = () => {
             padding-bottom: 4em;
         `}>
             <div css={css`
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 14px;
+
+                span {
+                    font-size: 12px;
+                }
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
                 font-size: 14px;
@@ -870,11 +901,12 @@ export const Footer = () => {
                 <span css={css`
                 font-family: 'Pretendard-Bold';
                 color: #333d4b;
-                @media all and (min-width:768px) and (max-width:1059px) { 
-                    font-size: 15.5px;
+                @media all and (min-width:768px) and (max-width:1099px) { 
+                    font-size: 14.5px !important;
+
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
-                    font-size: 15.7px;
+                    font-size: 15.7px !important;
                 }; 
                 margin-bottom: 0.6em;
             `}> 멋쟁이사자처럼 강남대학교 11기</span>
@@ -890,7 +922,7 @@ export const Banner = () => {
 
     return (
         <img alt="배너 이미지" src={banner} css={css`
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 15px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -922,7 +954,7 @@ export const Section = ({ children }: WrapperProps) => {
             align-items: center;
             row-gap: 1.5em;
 
-            @media (max-width: 1099px) {
+            @media (max-width: 1024px) {
                 display: none;
             }
 
@@ -941,16 +973,17 @@ export const InputTitle = ({ children }: WrapperProps) => {
         <p css={css`
             font-family: 'Pretendard-Medium';
             letter-spacing: -0.03em;
-            @media all and (min-width:768px) and (max-width:1059px) { 
-                font-size: 15px;
+            @media all and (min-width:768px) and (max-width:1099px) { 
+                font-size: 14px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
                 font-size: 15px;
             }; 
             color: #4e5968;
-            display: flex;
             width: 46.88vw;
             align-items: center;
+            
+            
         `}>
             {children}
         </p>
@@ -966,7 +999,8 @@ export const SearchDepartment = ({ children }: WrapperProps) => {
             background-color: white;
             border: none;
             border-radius: 0.769em;
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) {
+                margin-top: 0.18em; 
                 font-size: 15px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -1006,7 +1040,8 @@ export const ErrorDescription = ({ children }: WrapperProps) => {
             position: absolute;
             font-family: 'Pretendard-Regular';
             letter-spacing: -0.03em;
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            font-size:13px;
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 13px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -1028,7 +1063,8 @@ export const CollectDescription = ({ children }: WrapperProps) => {
             position: absolute;
             font-family: 'Pretendard-Regular';
             letter-spacing: -0.03em;
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            font-size: 13px;
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 13px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -1061,7 +1097,7 @@ export const Button = (props: ButtonType) => {
                 font-size: 6px;
                 border-radius: 4px;
             }; 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 11.5px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -1074,7 +1110,7 @@ export const Button = (props: ButtonType) => {
             ${props.alt === "불러오기" && css`
                 width: 40em;
 
-                @media all and (min-width:768px) and (max-width:1059px) { 
+                @media all and (min-width:768px) and (max-width:1099px) { 
                     font-size: 11px;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 

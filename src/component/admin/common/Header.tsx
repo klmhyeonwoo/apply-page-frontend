@@ -21,6 +21,7 @@ export default function Header() {
             column-gap: .2em;
         }; 
 
+
         width: 100%;
         height: 7em;
         display: flex;
@@ -47,7 +48,7 @@ export default function Header() {
             @media (max-width:768px) { 
                 font-size: 14.5px;
             }; 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 21px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
