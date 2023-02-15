@@ -56,7 +56,7 @@ export const PassUserContent = ({ children }: WrapperProps) => {
         @media (max-width:768px) { 
             font-size: 9px;
         }; 
-        @media all and (min-width:768px) and (max-width:1059px) { 
+        @media all and (min-width:768px) and (max-width:1099px) { 
             font-size: 11px;
         }; 
         @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -88,7 +88,7 @@ export const PassUser = ({ children }: WrapperProps) => {
                 @media (max-width:768px) { 
                     font-size: 8px;
                 }; 
-                @media all and (min-width:768px) and (max-width:1059px) { 
+                @media all and (min-width:768px) and (max-width:1099px) { 
                     font-size: 11px;
                 }; 
                 @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -132,7 +132,7 @@ export const FailMailSend = (props: MailType) => {
             @media (max-width:768px) { 
                 font-size: 10px;
             }; 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 16px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -166,7 +166,7 @@ export const PassMailSend = (props: MailType) => {
             @media (max-width:768px) { 
                 font-size: 10px;
             }; 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 16px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -194,13 +194,13 @@ export const Button = (props: ButtonType) => {
                 font-size: 13px;
                 width: 22.3em;
             }; 
-            @media all and (min-width:768px) and (max-width:1059px) { 
-                font-size: 15px;
+            @media all and (min-width:768px) and (max-width:1099px) { 
+                font-size: 12px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
                 font-size: 15px;
             }; 
-
+            font-size: 14.5px;
             width: 26.3em;
             height: 4em;
             border-radius: 0.53em;
@@ -237,7 +237,7 @@ export const HeaderText = (props: HeaderType) => {
             padding-bottom: 0.7em;
             border-width: 0.37em;
 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 15px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -272,7 +272,7 @@ export const Img = (props: ImgType) => {
             @media (max-width:768px) { 
                 font-size: 15px;
             }; 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 18px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -290,7 +290,7 @@ export const HeaderDescription = ({ children }: WrapperProps) => {
             @media (max-width:768px) { 
                 font-size: 10px;
             }; 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 14px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -317,7 +317,7 @@ export const Position = (props: PositionType) => {
                 font-size: 10px;
             }; 
 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 14.5px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -391,7 +391,7 @@ export const PositionBox = (props: WrapperProps) => {
                 font-size: 9px;
                 column-gap: 1.5em;
             }; 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 15px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
@@ -415,8 +415,8 @@ export const Input = (props: InputType) => {
                 font-size: 13px;
                 width: 21em;
             }; 
-            @media all and (min-width:768px) and (max-width:1059px) { 
-                font-size: 14px;
+            @media all and (min-width:768px) and (max-width:1099px) { 
+                font-size: 11px;
             }; 
             @media all and (min-width:1100px) and (max-width:2000px) { 
                 font-size: 14px;
@@ -523,7 +523,7 @@ export const List = React.memo(function List(props: ListType) {
                 column-gap: 3.5em;
                 width: 100%;
             }; 
-            @media all and (min-width:768px) and (max-width:1059px) { 
+            @media all and (min-width:768px) and (max-width:1099px) { 
                 font-size: 15px;
                 width: 100%;
             }; 

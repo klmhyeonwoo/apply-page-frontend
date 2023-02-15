@@ -300,6 +300,7 @@ export default function Detail(props: DetailType) {
                         @media all and (min-width:1100px) and (max-width:2000px) { 
                             font-size: 30px;
                         }; 
+                        font-size: 30px;
 
                     `}>
                         <span css={css`
@@ -327,7 +328,8 @@ export default function Detail(props: DetailType) {
                         }; 
                         @media all and (min-width:1100px) and (max-width:2000px) { 
                             font-size: 16px;
-                        }; 
+                        };
+                        font-size: 16px;
 
                         margin-bottom: 3em;
                     `}> 지원서 상태 :

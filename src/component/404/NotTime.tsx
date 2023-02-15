@@ -30,7 +30,7 @@ export default function NotTime() {
                 margin-top: 1em;
                 font-size: 15px;
                 animation: ${fadeUp} 1s ease-in-out;
-            `}>현재는 지원 기간이 아닙니다!</span>
+            `}>현재는 예비 사자 모집 기간이 아니에요!</span>
         </div>
     )
 }

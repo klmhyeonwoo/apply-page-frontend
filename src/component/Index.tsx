@@ -662,6 +662,12 @@ export default function Index() {
                                         cursor: pointer;
                                         transition: 0.4s all;
                                         font-family: 'Pretendard-Regular';
+                                        @media all and (min-width:768px) and (max-width:1099px) { 
+                                            span {
+                                                font-size: 13px;
+                                            }
+                                            font-size: 13px;
+                                        }; 
                                         font-size: 14.5px;
                                         letter-spacing: -0.05em;
                                         &:hover {
