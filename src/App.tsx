@@ -22,6 +22,7 @@ import { Footer, IndexHeader } from './component/emotion/component';
 import Temp from './component/admin/partition/Temp';
 import NotTime from './component/404/NotTime';
 import ChannelService from './api/ChannelService';
+import { KeyboardIOS } from './hooks/KeyboardIOS';
 
 export interface WrapperProps {
   children?: React.ReactNode;
