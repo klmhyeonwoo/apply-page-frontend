@@ -22,7 +22,7 @@
   },
   "include": [
     "src",
-    "src/custom.d.ts",
+    "src/hooks/@types/custom.d.ts",
     "src/index.d.ts",
   ]
 }
