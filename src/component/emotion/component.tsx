@@ -133,15 +133,17 @@ export const IndexHeader = () => {
                     letter-spacing: -0.03em;
                 }
             `}>
-                <img alt="로고" src={logo} css={css`
-                    height: auto;
-                    width: 155px;
-                    transition: 0.4s all;
+                <Link to="/">
+                    <img alt="로고" src={logo} css={css`
+                        height: auto;
+                        width: 155px;
+                        transition: 0.4s all;
 
-                    &:hover {
-                        opacity : 70%;
-                    }
-                `} />
+                        &:hover {
+                            opacity : 70%;
+                        }
+                    `} />
+                </Link>
                 <nav css={css`
                     height: 100%;
                     display: flex;
@@ -151,6 +153,7 @@ export const IndexHeader = () => {
                     <a href="https://ripe-launch-04b.notion.site/88de609dd84e4fcab616b1cf2cf491e2" target="_blank" tabIndex={-1}>조직 소개</a>
                     <a href="https://ripe-launch-04b.notion.site/24b3c0a0d41d4162b1c458055fe86dd8" target="_blank" tabIndex={-1}>합류 여정</a>
                     <a href="https://ripe-launch-04b.notion.site/2bde1551815e455ab4306ab5ca190519" target="_blank" tabIndex={-1}>강남멋사 조직도</a>
+                    <Link to="/register"><a tabIndex={-1}>회원가입</a></Link>
                 </nav>
 
 
