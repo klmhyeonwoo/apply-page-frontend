@@ -280,12 +280,13 @@ export const EmailButton = (props: ButtonType) => {
   );
 };
 
+// 이메일을 담는 컨테이너
 export const EmailBox = (props: any) => {
   return (
     <div
       css={css`
+        position: relative;
         display: flex;
-        margin-top: 20px;
         width: 46.88vw;
         gap: 20px;
         align-items: center;
@@ -357,6 +358,20 @@ export const Argree = (props: AgreeType) => {
         </span>
       </div>
     </div>
+  );
+};
+
+// 남은 시간 표시
+export const Timer = (props: any) => {
+  return (
+    <span
+      css={css`
+        position: absolute;
+        left: 65%;
+      `}
+    >
+      {props.children}
+    </span>
   );
 };
 
