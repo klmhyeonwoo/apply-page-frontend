@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { WrapperProps } from "../../../App";
-import { ButtonType } from "../../emotion/component";
+import { ChangeEvent } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
+import { Require } from "../../emotion/component";
 
 export const Title = ({ text }: WrapperProps) => {
   return (
@@ -85,9 +87,104 @@ export const TextBox = () => {
   );
 };
 
-export const SummitButton = (props: ButtonType) => {
+export interface InputType {
+  type?: string;
+  placeholder?: string;
+  value?: string | number;
+  disabled?: boolean;
+  maxLength?: number;
+  name?: string;
+  tabIndex?: number;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  register?: UseFormRegisterReturn;
+}
+
+export const InputBox = (props: InputType) => {
+  return (
+    <input
+      css={css`
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 13px;
+        }
+        @media all and (min-width: 1100px) and (max-width: 2000px) {
+          font-size: 14.5px;
+        }
+        font-family: "Pretendard-Regular";
+        letter-spacing: -0.03em;
+        padding: 0;
+        padding-left: 1em;
+        width: 46.88vw; // 900px;
+        height: 3.7em; // 51.8px
+        border: solid;
+        border-radius: 0.614em; // 0.8596px;
+        border-color: #e6e8ea;
+        border-width: 0.0614em; // 1px
+        box-sizing: border-box;
+        transition: 0.2s all;
+        outline-color: #4f85e8;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+        &:focus {
+          outline-color: #4f85e8;
+
+          &:hover {
+            box-shadow: none;
+          }
+          // box-shadow: inset 0 0 0 2px #4F85E8;
+        }
+
+        &:hover {
+          box-shadow: inset 0 0 0 2px #90c2ff;
+        }
+
+        &::placeholder {
+          font-family: "Pretendard-Regular";
+          color: #8b95a1;
+          margin-left: 0.4em;
+        }
+      `}
+      {...props}
+      {...props.register}
+      maxLength={props.maxLength}
+      tabIndex={props.tabIndex}
+    />
+  );
+};
+
+// 사용자가 잘못된 입력을 했을 때 나타내주는 컴포넌트
+export const ErrorDescription = ({ children }: any) => {
+  return (
+    <span
+      css={css`
+        position: absolute;
+        font-family: "Pretendard-Regular";
+        letter-spacing: -0.03em;
+        font-size: 13px;
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 13px;
+        }
+        @media all and (min-width: 1100px) and (max-width: 2000px) {
+          font-size: 13px;
+        }
+        margin-top: 10.2em;
+        margin-left: 0.5em;
+        color: red;
+      `}
+    >
+      {children}
+    </span>
+  );
+};
+
+export const SubmitButton = (props: ButtonType) => {
   return (
     <button
+      type="submit"
       css={css`
         font-family: "Pretendard-Bold";
         letter-spacing: -0.03em;
@@ -109,10 +206,18 @@ export const SummitButton = (props: ButtonType) => {
         background-color: #4f85e8;
         transition: 0.5s all;
 
-        cursor: pointer;
-        &:hover {
-          opacity: 80%;
-        }
+        ${props.disabled
+          ? css`
+              cursor: auto;
+              filter: grayscale(100%);
+              background-color: #828282;
+            `
+          : css`
+              cursor: pointer;
+              &:hover {
+                opacity: 80%;
+              }
+            `}
       `}
       {...props}
     >
@@ -120,6 +225,15 @@ export const SummitButton = (props: ButtonType) => {
     </button>
   );
 };
+
+// React-hook-form > typeFiledError 적용 필요
+export interface ButtonType {
+  name?: string;
+  children?: React.ReactNode;
+  disabled?: boolean | any;
+  onClick?: () => void;
+  alt?: string;
+}
 
 export const EmailButton = (props: ButtonType) => {
   return (
@@ -141,26 +255,110 @@ export const EmailButton = (props: ButtonType) => {
         height: 3.5em;
         border: 1px solid;
         border-radius: 8px;
-        color: #ddd;
-        // background-color: #4f85e8;
+        color: white;
+        background-color: #4f85e8;
         transition: 0.5s all;
 
-        cursor: pointer;
-        &:hover {
-          opacity: 80%;
-        }
+        ${props.disabled
+          ? css`
+              cursor: auto;
+              filter: grayscale(100%);
+              background-color: #828282;
+            `
+          : css`
+              cursor: pointer;
+              &:hover {
+                opacity: 80%;
+              }
+            `}
       `}
       {...props}
+      type="button"
     >
       {props.children}
     </button>
   );
 };
 
-export const EmailBox = (props:any) =>{
-  return <div css={css`display: flex; margin-top: 20px; width: 46.88vw; gap: 20px;`}>{props.children}</div>
+export const EmailBox = (props: any) => {
+  return (
+    <div
+      css={css`
+        display: flex;
+        margin-top: 20px;
+        width: 46.88vw;
+        gap: 20px;
+        align-items: center;
+      `}
+    >
+      {props.children}
+    </div>
+  );
+};
 
+export interface AgreeType {
+  src: string;
+  text: string;
+  onClick: (event: React.MouseEvent<HTMLImageElement | HTMLDivElement>) => void;
+  name: string;
+  require?: boolean;
 }
+
+// 체크박스 컴포넌트
+export const Argree = (props: AgreeType) => {
+  return (
+    <div
+      css={css`
+        display: flex;
+        flex-direction: column;
+        width: 46.88vw;
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 14.5px;
+        }
+        @media all and (min-width: 1100px) and (max-width: 2000px) {
+          font-size: 14.5px;
+        }
+      `}
+    >
+      <div
+        css={css`
+          display: flex;
+          align-items: center;
+        `}
+      >
+        <img
+          alt={props.name}
+          onClick={props.onClick}
+          src={props.src}
+          css={css`
+            width: 1.1em;
+            cursor: pointer;
+          `}
+        />
+        <span
+          css={css`
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              font-size: 13px;
+            }
+            @media all and (min-width: 1100px) and (max-width: 2000px) {
+              font-size: 14.5px;
+            }
+            font-family: "Pretendard-Medium";
+            letter-spacing: -0.03em;
+            margin-left: 0.4em;
+            cursor: pointer;
+            color: #333d4b;
+          `}
+          onClick={props.onClick}
+          id={props.name}
+        >
+          {props.text}
+          {props.require && <Require></Require>}
+        </span>
+      </div>
+    </div>
+  );
+};
 
 const text = `1. 수집하는 개인정보의 항목
 \n  [선택항목]
