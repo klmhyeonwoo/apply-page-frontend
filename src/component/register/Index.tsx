@@ -3,16 +3,27 @@
 import { useState } from "react";
 import { classList } from "../class";
 import {
+  Argree,
+  ArgreeBox,
   Article,
   CollectDescription,
-  ErrorDescription,
   InputBox,
   InputTitle,
   SearchDepartment,
   Section,
 } from "../emotion/component";
 import { css } from "@emotion/react";
-import { SubTitle, Title } from "./emotion/component";
+import {
+  SubTitle,
+  Title,
+  TextBox,
+  SummitButton,
+  EmailButton,
+  EmailBox,
+} from "./emotion/component";
+
+import checkBox from "../../images/checkBox.svg";
+import checkedBox from "../../images/checkedBox.svg";
 
 const Index = () => {
   const [openSearch, setOpenSearch] = useState<boolean>(false);
@@ -20,6 +31,8 @@ const Index = () => {
   const [userDepartmentCheck, setUserDepartmentCheck] = useState<
     boolean | null
   >(null);
+  const [requireCheckBox, setRequireCheckBox] = useState<Boolean>(false);
+  const [optionalCheckBox, setOptionalCheckBox] = useState<Boolean>(false);
 
   /* 학과를 검색하고, 사용자가 재검색을 하고 싶을 경우 해당 버튼을 누르면 기존 값들을 다시 false 값으로 바꿔줍니다 */
   const RevertDepartment = async () => {
@@ -210,6 +223,10 @@ const Index = () => {
             이메일이 정상적으로 입력되었습니다
           </CollectDescription>
         )} */}
+        <EmailBox>
+          <InputBox></InputBox>
+          <EmailButton>이메일 확인</EmailButton>
+        </EmailBox>
       </Article>
       <Article>
         <InputTitle>전화번호</InputTitle>
@@ -230,6 +247,33 @@ const Index = () => {
           </CollectDescription>
         )} */}
       </Article>
+
+      <Article>
+        <SubTitle text="팀 합류를 위해 인적사항을 기재해 주세요"></SubTitle>
+        <ArgreeBox>
+          <Argree
+            name="필수항목"
+            src={requireCheckBox ? checkedBox : checkBox}
+            text="개인정보 필수항목 수집 및 이용동의"
+            onClick={() => {
+              setRequireCheckBox(!requireCheckBox);
+            }}
+          />
+          <TextBox></TextBox>
+        </ArgreeBox>
+        <ArgreeBox>
+          <Argree
+            name="선택항목"
+            src={optionalCheckBox ? checkedBox : checkBox}
+            text="개인정보 선택항목 수집 및 이용 동의"
+            onClick={() => {
+              setOptionalCheckBox(!optionalCheckBox);
+            }}
+          />
+          <TextBox></TextBox>
+        </ArgreeBox>
+      </Article>
+      <SummitButton name="제출하기">회원가입</SummitButton>
     </Section>
   );
 };
