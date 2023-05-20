@@ -7,31 +7,35 @@ import { Require } from "../../emotion/component";
 
 export const Title = ({ text }: WrapperProps) => {
   return (
-    <h1
+    <span
       css={css`
-        font-family: "Pretendard-Medium";
+        font-family: "Pretendard-Bold";
         letter-spacing: -0.03em;
         width: 46.88vw;
         font-size: 36px;
-        margin-top: 150px;
+        margin-top: 130px;
+        color: #333d4b;
       `}
     >
       {text}
-    </h1>
+    </span>
   );
 };
 export const SubTitle = ({ text }: WrapperProps) => {
   return (
-    <h3
+    <span
       css={css`
+        margin-top: 1.5em;
         font-family: "Pretendard-Medium";
         letter-spacing: -0.03em;
         width: 46.88vw;
-        font-size: 18px;
+        font-size: 17px;
+        color: #4e5968;
+        margin-bottom: 1.4em;
       `}
     >
       {text}
-    </h3>
+    </span>
   );
 };
 

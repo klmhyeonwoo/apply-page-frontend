@@ -1,8 +1,15 @@
 /** @jsxImportSource @emotion/react */
-
 import { useState, useEffect, useRef } from "react";
 import { classList } from "../class";
-import { ArgreeBox, Article, CollectDescription, InputTitle, SearchDepartment, Section } from "../emotion/component";
+import {
+  ArgreeBox,
+  Article,
+  CollectDescription,
+  InputTitle,
+  Require,
+  SearchDepartment,
+  Section,
+} from "../emotion/component";
 import { css } from "@emotion/react";
 import {
   Argree,
@@ -24,7 +31,9 @@ import { useForm } from "react-hook-form";
 const Index = () => {
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [department, setDepartment] = useState<string>("");
-  const [userDepartmentCheck, setUserDepartmentCheck] = useState<boolean | null>(null);
+  const [userDepartmentCheck, setUserDepartmentCheck] = useState<
+    boolean | null
+  >(null);
   const [requireCheckBox, setRequireCheckBox] = useState<boolean>(false);
   const [optionalCheckBox, setOptionalCheckBox] = useState<boolean>(false);
 
@@ -45,7 +54,10 @@ const Index = () => {
   };
 
   const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const eventDepartment = event.target.value.replace(/[_/]|[0-9]|[\[\]{}()<>?|`~!@#$%^&*-+=,.;:\"'\\]/g, "");
+    const eventDepartment = event.target.value.replace(
+      /[_/]|[0-9]|[\[\]{}()<>?|`~!@#$%^&*-+=,.;:\"'\\]/g,
+      ""
+    );
     setDepartment(eventDepartment);
   };
 
@@ -101,22 +113,33 @@ const Index = () => {
     <form onSubmit={handleSubmit((data) => console.log(data))}>
       <Section>
         <Article>
-          <Title text="팀 합류하기"></Title>
-          <SubTitle text="팀 합류를 위해 인적사항을 기재해 주세요"></SubTitle>
+          <Title text="멋쟁이사자처럼 팀 합류하기"></Title>
+          <SubTitle text="멋쟁이사자처럼 팀 합류를 위해 지원자님의 인적사항을 기재 받고 있어요"></SubTitle>
         </Article>
 
         <Article>
-          <InputTitle>이름</InputTitle>
-          <InputBox type="text" maxLength={15} register={register("name", { required: "이름을 입력해주세요." })} />
+          <InputTitle>
+            이름
+            <Require />
+          </InputTitle>
+          <InputBox
+            type="text"
+            maxLength={15}
+            register={register("name", { required: "이름을 입력해주세요." })}
+          />
           {errors.name || !isSubmitted ? (
             <ErrorDescription>{errors?.name?.message}</ErrorDescription>
           ) : (
-            <CollectDescription>이름이 정상적으로 입력되었습니다.</CollectDescription>
+            <CollectDescription>
+              이름이 정상적으로 입력되었습니다.
+            </CollectDescription>
           )}
         </Article>
 
         <Article>
-          <InputTitle>학번</InputTitle>
+          <InputTitle>
+            학번 <Require />
+          </InputTitle>
           <InputBox
             type="number"
             register={register("studentId", {
@@ -135,13 +158,16 @@ const Index = () => {
           {errors.studentId || !isSubmitted ? (
             <ErrorDescription>{errors?.studentId?.message}</ErrorDescription>
           ) : (
-            <CollectDescription>학번이 정상적으로 입력되었습니다.</CollectDescription>
+            <CollectDescription>
+              학번이 정상적으로 입력되었습니다.
+            </CollectDescription>
           )}
         </Article>
 
         <Article>
           <InputTitle>
             학과
+            <Require />
             {openSearch && (
               <span
                 css={css`
@@ -179,7 +205,10 @@ const Index = () => {
           {!openSearch && department.length >= 1 && (
             <SearchDepartment>
               {classList.map((item, key) => {
-                if (department.length >= 1 && item.slice(0, department.length) === department) {
+                if (
+                  department.length >= 1 &&
+                  item.slice(0, department.length) === department
+                ) {
                   return (
                     <div
                       css={css`
@@ -222,20 +251,27 @@ const Index = () => {
               })}
             </SearchDepartment>
           )}
-          {openSearch && <CollectDescription>학과가 정상적으로 입력되었습니다</CollectDescription>}
+          {openSearch && (
+            <CollectDescription>
+              학과가 정상적으로 입력되었습니다
+            </CollectDescription>
+          )}
 
           {/* {/* <ErrorDescription>학과를 제대로 입력해주세요!</ErrorDescription> */}
         </Article>
 
         <Article>
-          <InputTitle>생년월일</InputTitle>
+          <InputTitle>
+            생년월일 <Require />
+          </InputTitle>
           <InputBox
             type="text"
             maxLength={10}
             register={register("birth", {
               required: "생년월일을 입력해주세요.",
               pattern: {
-                value: /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/,
+                value:
+                  /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/,
                 message: "1999-01-01 형식으로 입력해주세요.",
               },
             })}
@@ -243,12 +279,16 @@ const Index = () => {
           {errors.birth || !isSubmitted ? (
             <ErrorDescription>{errors?.birth?.message}</ErrorDescription>
           ) : (
-            <CollectDescription>생년월일이 정상적으로 입력되었습니다.</CollectDescription>
+            <CollectDescription>
+              생년월일이 정상적으로 입력되었습니다.
+            </CollectDescription>
           )}
         </Article>
 
         <Article>
-          <InputTitle>이메일</InputTitle>
+          <InputTitle>
+            이메일 <Require />
+          </InputTitle>
           <EmailBox>
             <InputBox
               type="email"
@@ -268,7 +308,9 @@ const Index = () => {
           {errors.email || !isSubmitted ? (
             <ErrorDescription>{errors?.email?.message}</ErrorDescription>
           ) : (
-            <CollectDescription>이메일이 정상적으로 입력되었습니다.</CollectDescription>
+            <CollectDescription>
+              이메일이 정상적으로 입력되었습니다.
+            </CollectDescription>
           )}
         </Article>
 
@@ -277,25 +319,36 @@ const Index = () => {
             <EmailBox>
               <InputBox
                 type="number"
-                register={register("certificationNumber", { required: "인증번호를 입력해주세요." })}
+                register={register("certificationNumber", {
+                  required: "인증번호를 입력해주세요.",
+                })}
               ></InputBox>
               <Timer>
                 {minutes} : {seconds}
               </Timer>
-              <EmailButton disabled={errors.email || timeOut} onClick={checkEmail}>
+              <EmailButton
+                disabled={errors.email || timeOut}
+                onClick={checkEmail}
+              >
                 인증번호 확인
               </EmailButton>
               {errors.certificationNumber || !isSubmitted ? (
-                <ErrorDescription>{errors?.certificationNumber?.message}</ErrorDescription>
+                <ErrorDescription>
+                  {errors?.certificationNumber?.message}
+                </ErrorDescription>
               ) : (
-                <CollectDescription>이메일이 정상적으로 인증되었습니다.</CollectDescription>
+                <CollectDescription>
+                  이메일이 정상적으로 인증되었습니다.
+                </CollectDescription>
               )}
             </EmailBox>
           </Article>
         )}
 
         <Article>
-          <InputTitle>전화번호</InputTitle>
+          <InputTitle>
+            전화번호 <Require />
+          </InputTitle>
           <InputBox
             type="text"
             maxLength={13}
@@ -310,12 +363,14 @@ const Index = () => {
           {errors.phoneNumber || !isSubmitted ? (
             <ErrorDescription>{errors?.phoneNumber?.message}</ErrorDescription>
           ) : (
-            <CollectDescription>전화번호가 정상적으로 입력되었습니다.</CollectDescription>
+            <CollectDescription>
+              전화번호가 정상적으로 입력되었습니다.
+            </CollectDescription>
           )}
         </Article>
 
         <Article>
-          <SubTitle text="지원을 위해 다음 사항을 확인해주세요"></SubTitle>
+          <SubTitle text="마지막으로 지원을 위해 다음 개인정보 관련 사항을 확인해주세요"></SubTitle>
           <ArgreeBox>
             <Argree
               name="필수항목"
