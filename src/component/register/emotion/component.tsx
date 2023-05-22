@@ -160,6 +160,33 @@ export const InputBox = (props: InputType) => {
   );
 };
 
+export const ResetMajor = (props: any) => {
+  return (
+    <span
+      css={css`
+        margin-left: 1em;
+        color: #6b7684;
+        font-family: "Pretendard-Regular";
+        font-size: 14px;
+        letter-spacing: -0.03em;
+        // text-decoration: underline;
+        // text-underline-offset: 0.2em;
+        cursor: pointer;
+        margin-right: 0.8em;
+        transition: 0.4s all;
+        float: right;
+
+        &:hover {
+          opacity: 80%;
+        }
+      `}
+      {...props}
+    >
+      학과 재설정
+    </span>
+  );
+};
+
 // 사용자가 잘못된 입력을 했을 때 나타내주는 컴포넌트
 export const ErrorDescription = ({ children }: any) => {
   return (
