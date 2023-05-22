@@ -116,14 +116,19 @@ const Index = () => {
             type="text"
             maxLength={15}
             register={register("name", {
-              required: "이름을 입력해주세요.",
-              minLength: { value: 2, message: "2글자 이상의 이름을 입력해주세요." },
+              required: "올바른 형식의 이름을 입력해주세요",
+              minLength: {
+                value: 2,
+                message: "올바른 형식의 이름을 입력해주세요",
+              },
             })}
           />
           {errors.name || !getValues("name") ? (
             <ErrorDescription>{errors?.name?.message}</ErrorDescription>
           ) : (
-            <CollectDescription>이름이 정상적으로 입력되었습니다.</CollectDescription>
+            <CollectDescription>
+              이름이 정상적으로 입력되었습니다.
+            </CollectDescription>
           )}
         </Article>
 
@@ -135,10 +140,13 @@ const Index = () => {
             type="text"
             maxLength={9}
             register={register("studentId", {
-              required: "학번을 입력해주세요.",
-              pattern: { value: /^[0-9]{9}$/, message: "숫자만 입력해주세요." },
+              required: "올바른 형식의 학번을 입력해주세요",
+              pattern: {
+                value: /^[0-9]{9}$/,
+                message: "올바른 형식의 학번을 입력해주세요",
+              },
               minLength: {
-                message: "학번을 모두 입력해주세요.",
+                message: "올바른 형식의 학번을 입력해주세요",
                 value: 9,
               },
             })}
@@ -147,7 +155,9 @@ const Index = () => {
           {errors.studentId || !getValues("studentId") ? (
             <ErrorDescription>{errors?.studentId?.message}</ErrorDescription>
           ) : (
-            <CollectDescription>학번이 정상적으로 입력되었습니다.</CollectDescription>
+            <CollectDescription>
+              학번이 정상적으로 입력되었습니다
+            </CollectDescription>
           )}
         </Article>
 
@@ -162,12 +172,17 @@ const Index = () => {
             name="학과"
             maxLength={10}
             disabled={openSearch}
-            register={register("major", { required: "학과를 입력해주세요." })}
+            register={register("major", {
+              required: "올바른 형식의 학과를 입력해주세요",
+            })}
           />
           {!openSearch && watch("major") && (
             <SearchDepartment>
               {classList.map((item, key) => {
-                if (watch("major").length >= 1 && item.slice(0, watch("major").length) === getValues("major")) {
+                if (
+                  watch("major").length >= 1 &&
+                  item.slice(0, watch("major").length) === getValues("major")
+                ) {
                   return (
                     <div
                       css={css`
@@ -211,7 +226,11 @@ const Index = () => {
             </SearchDepartment>
           )}
           <ErrorDescription>{errors?.major?.message}</ErrorDescription>
-          {openSearch && <CollectDescription>학과가 정상적으로 입력되었습니다</CollectDescription>}
+          {openSearch && (
+            <CollectDescription>
+              학과가 정상적으로 입력되었습니다
+            </CollectDescription>
+          )}
         </Article>
 
         <Article>
@@ -222,17 +241,20 @@ const Index = () => {
             type="text"
             maxLength={8}
             register={register("birth", {
-              required: "생년월일을 입력해주세요.",
+              required: "올바른 형식의 생년월일을 입력해주세요",
               pattern: {
-                value: /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/,
-                message: "19990101 형식으로 입력해주세요.",
+                value:
+                  /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/,
+                message: "올바른 형식의 생년월일을 입력해주세요",
               },
             })}
           />
           {errors.birth || !getValues("birth") ? (
             <ErrorDescription>{errors?.birth?.message}</ErrorDescription>
           ) : (
-            <CollectDescription>생년월일이 정상적으로 입력되었습니다.</CollectDescription>
+            <CollectDescription>
+              생년월일이 정상적으로 입력되었습니다.
+            </CollectDescription>
           )}
         </Article>
 
@@ -245,21 +267,26 @@ const Index = () => {
               type="email"
               maxLength={30}
               register={register("email", {
-                required: "이메일을 입력해주세요.",
+                required: "올바른 형식의 이메일을 입력해주세요",
                 pattern: {
                   value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                  message: "올바른 형식의 이메일을 입력해주세요.",
+                  message: "올바른 형식의 이메일을 입력해주세요",
                 },
               })}
             />
-            <EmailButton disabled={errors.email || !reSend || !getValues("email")} onClick={sendEmail}>
+            <EmailButton
+              disabled={errors.email || !reSend || !getValues("email")}
+              onClick={sendEmail}
+            >
               {sentEmail ? "이메일 재전송" : "이메일 보내기"}
             </EmailButton>
           </EmailBox>
           {errors.email || !getValues("email") ? (
             <ErrorDescription>{errors?.email?.message}</ErrorDescription>
           ) : (
-            <CollectDescription>이메일이 정상적으로 입력되었습니다.</CollectDescription>
+            <CollectDescription>
+              이메일이 정상적으로 입력되었습니다.
+            </CollectDescription>
           )}
         </Article>
 
@@ -273,22 +300,35 @@ const Index = () => {
                 type="text"
                 maxLength={5}
                 register={register("certificationNumber", {
-                  required: "인증번호를 입력해주세요.",
-                  minLength: { value: 5, message: "다섯자리의 인증번호를 입력해주세요." },
-                  pattern: { value: /^[0-9]{5}$/, message: "숫자만 입력해주세요." },
+                  required: "올바른 인증번호를 입력해주세요",
+                  minLength: {
+                    value: 5,
+                    message: "올바른 인증번호를 입력해주세요",
+                  },
+                  pattern: {
+                    value: /^[0-9]{5}$/,
+                    message: "올바른 인증번호를 입력해주세요",
+                  },
                 })}
               ></InputBox>
               <Timer>
                 {minutes} : {seconds}
               </Timer>
-              <EmailButton disabled={errors.email || timeOut} onClick={checkEmail}>
+              <EmailButton
+                disabled={errors.email || timeOut}
+                onClick={checkEmail}
+              >
                 인증번호 확인
               </EmailButton>
             </EmailBox>
             {errors.certificationNumber || !getValues("certificationNumber") ? (
-              <ErrorDescription>{errors?.certificationNumber?.message}</ErrorDescription>
+              <ErrorDescription>
+                {errors?.certificationNumber?.message}
+              </ErrorDescription>
             ) : (
-              <CollectDescription>인증번호가 정상적으로 인증되었습니다.</CollectDescription>
+              <CollectDescription>
+                인증번호가 정상적으로 인증되었습니다
+              </CollectDescription>
             )}
           </Article>
         )}
@@ -301,17 +341,19 @@ const Index = () => {
             type="text"
             maxLength={13}
             register={register("phoneNumber", {
-              required: "전화번호를 입력해주세요.",
+              required: "올바른 형식의 전화번호를 입력해주세요",
               pattern: {
                 value: /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/,
-                message: "010-1234-5678 형식의 전화번호를 입력해주세요.",
+                message: "올바른 형식의 전화번호를 입력해주세요",
               },
             })}
           />
           {errors.phoneNumber || !getValues("phoneNumber") ? (
             <ErrorDescription>{errors?.phoneNumber?.message}</ErrorDescription>
           ) : (
-            <CollectDescription>전화번호가 정상적으로 입력되었습니다.</CollectDescription>
+            <CollectDescription>
+              전화번호가 정상적으로 입력되었습니다
+            </CollectDescription>
           )}
         </Article>
 
