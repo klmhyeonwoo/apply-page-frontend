@@ -101,16 +101,16 @@ export const IndexHeader = () => {
           align-items: center;
           padding-top: 0.6em;
           padding-bottom: 0.6em;
-          @media (max-width: 1099px) {
+          @media (max-width: 1024px) {
             display: none;
           }
           @media all and (min-width: 768px) and (max-width: 1099px) {
-            font-size: 18px;
+            font-size: 16px;
           }
           @media all and (min-width: 1100px) and (max-width: 2000px) {
             font-size: 18px;
           }
-          column-gap: 30em;
+          column-gap: 23em;
           background-color: white;
 
           ${scrollState &&
@@ -154,7 +154,7 @@ export const IndexHeader = () => {
           css={css`
             height: 100%;
             display: flex;
-            column-gap: 1.7em;
+            column-gap: 1.5em;
             transition: 0.4s all;
             a {
               &:hover {
