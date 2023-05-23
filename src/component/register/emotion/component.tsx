@@ -160,7 +160,7 @@ export const InputBox = (props: InputType) => {
   );
 };
 
-export const ResetMajor = (props: any) => {
+export const ResetInput = (props: any) => {
   return (
     <span
       css={css`
@@ -182,7 +182,7 @@ export const ResetMajor = (props: any) => {
       `}
       {...props}
     >
-      학과 재설정
+      {props.children}
     </span>
   );
 };
@@ -398,7 +398,18 @@ export const Timer = (props: any) => {
     <span
       css={css`
         position: absolute;
-        left: 65%;
+        text-align: right;
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 13px;
+        }
+        @media all and (min-width: 1100px) and (max-width: 2000px) {
+          font-size: 14.5px;
+        }
+        font-family: "Pretendard-Regular";
+        letter-spacing: -0.03em;
+        padding: 0;
+        width: calc(46.88vw * 0.7); // 900px;
+        pointer-events: none;
       `}
     >
       {props.children}
