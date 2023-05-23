@@ -351,7 +351,10 @@ const Index = () => {
                   validate: { validateEmailCode },
                 })}
               ></InputBox>
-              <Timer>{minutes + " : " + seconds}</Timer>
+              <Timer>
+                {minutes.toString().padStart(2, "0")} :{" "}
+                {seconds.toString().length < 2 ? "0" + seconds.toString() : seconds.toString()}
+              </Timer>
               <EmailButton disabled={timeOut || errors.emailCode || !getValues("emailCode")} onClick={checkEmail}>
                 인증번호 확인
               </EmailButton>
