@@ -152,10 +152,14 @@ const Index = () => {
       setSentEmail(true);
       setTimeOut(false);
       setReSend(false);
+      setPassEmail(false);
+
       setMinutes(2);
       setSeconds(59);
-      setPassEmail(false);
+
+      setValue("emailCode", "");
       clearErrors("email");
+      clearErrors("emailCode");
 
       return true;
     }
