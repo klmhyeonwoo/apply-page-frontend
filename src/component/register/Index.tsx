@@ -346,11 +346,11 @@ const Index = () => {
                   required: "올바른 인증번호를 입력해주세요",
                   minLength: {
                     value: 5,
-                    message: "올바른 인증번호를 입력해주세요",
+                    message: "5자리의 인증번호를 입력해주세요",
                   },
                   pattern: {
                     value: /^[0-9]{5}$/,
-                    message: "올바른 인증번호를 입력해주세요",
+                    message: "인증번호는 숫자로 입력해주세요",
                   },
                   validate: { validateEmailCode },
                 })}
