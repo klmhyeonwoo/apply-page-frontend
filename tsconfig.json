@@ -20,6 +20,7 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
+  "typeRoots": ["types"],
   "include": [
     "src",
     "src/hooks/@types/custom.d.ts",

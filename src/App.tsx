@@ -10,6 +10,7 @@ import Design from './component/position/Design';
 import Backend from './component/position/Backend';
 import ScrollToTop from './hooks/ScrollToTop';
 import Admin from './component/admin/Index';
+import Register from './component/register/Index';
 import Main from './component/admin/partition/Main';
 import Fail from './component/admin/partition/Fail';
 import Pass from './component/admin/partition/Pass';
@@ -52,6 +53,7 @@ function App() {
             <Route path='/frontend' element={<Frontend />} />
             <Route path='/backend' element={<Backend />} />
             <Route path='/design' element={<Design />} />
+            <Route path='/register' element={<Register />} />
           </Route>
 
           <Route path='/admin' element={<Admin />} />
